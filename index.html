@@ -7,6 +7,10 @@
       <link rel="stylesheet" href="style.css">
   </head>
   <body>
+        <audio id="bgMusic" autoplay loop> 
+            <source src="assets/bg_music/tianmimi.mp3" type="audio/mp3">
+        </audio>
+
         <div class="banner">
             <video autoplay loop muted plays-inline>
                 <source src="assets/video1.mp4" type="video/mp4">
@@ -72,32 +76,41 @@
                 <p class="section-description">Pilih kamar yang sesuai dengan kebutuhan Anda</p>
                 <div class="rooms-grid">
                     <div class="room-card">
-                        <div class="room-image" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('assets/deluxe.jpg'); background-size: cover;">
+                        <div class="room-image" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('assets/room_photo/deluxe_room.jpg'); background-size: cover;">
                             <span class="room-badge">Popular</span>
                         </div>
                         <div class="room-info">
                             <h3>Deluxe Room</h3>
-                            <p>Kamar deluxe dengan pemandangan kota</p>
+                            <p>Kamar deluxe dengan pemandangan kota, AC, TV LED 42", WiFi gratis</p>
                             <div class="room-price">Rp 500.000 <span>/malam</span></div>
                         </div>
                     </div>
                     <div class="room-card">
-                        <div class="room-image" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('assets/suite.jpg'); background-size: cover;">
+                        <div class="room-image" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('assets/room_photo/suite_room.jpg'); background-size: cover;">
                             <span class="room-badge luxury">Luxury</span>
                         </div>
                         <div class="room-info">
                             <h3>Suite Room</h3>
-                            <p>Suite mewah dengan ruang tamu terpisah</p>
+                            <p>Suite room mewah dengan ruang tamu terpisah, jacuzzi, dan balkon pribadi</p>
                             <div class="room-price">Rp 1.000.000 <span>/malam</span></div>
                         </div>
                     </div>
                     <div class="room-card">
-                        <div class="room-image" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('assets/standard.jpg'); background-size: cover;">
+                        <div class="room-image" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('assets/room_photo/standard_room.jpg'); background-size: cover;">
                         </div>
                         <div class="room-info">
                             <h3>Standard Room</h3>
-                            <p>Kamar nyaman dengan fasilitas lengkap</p>
+                            <p>Kamar standard nyaman dengan fasilitas lengkap</p>
                             <div class="room-price">Rp 350.000 <span>/malam</span></div>
+                        </div>
+                    </div>
+                    <div class="room-card">
+                        <div class="room-image" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('assets/room_photo/presidential_suite.png'); background-size: cover;">
+                        </div>
+                        <div class="room-info">
+                            <h3>Presidential Suite</h3>
+                            <p>Suite presidential dengan 2 kamar tidur, ruang makan, dan butler service</p>
+                            <div class="room-price">Rp 2.500.000 <span>/malam</span></div>
                         </div>
                     </div>
                 </div>
@@ -119,10 +132,6 @@
                     <div class="facility-item">
                         <div class="facility-icon">🅿️</div>
                         <h4>Free Parking</h4>
-                    </div>
-                    <div class="facility-item">
-                        <div class="facility-icon">🍳</div>
-                        <h4>Breakfast</h4>
                     </div>
                     <div class="facility-item">
                         <div class="facility-icon">🏋️</div>
@@ -166,5 +175,9 @@
                 </div>
             </div>
         </footer>
+        <script>
+            const music = document.getElementById("bgMusic");
+            music.volume = 0.6;   // 60% volume
+        </script>
   </body>
 </html>

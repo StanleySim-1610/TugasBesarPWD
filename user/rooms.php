@@ -29,6 +29,8 @@ $rooms = $conn->query("SELECT * FROM kamar WHERE jumlah_tersedia > 0 ORDER BY ha
             overflow: hidden;
             box-shadow: 0 5px 20px rgba(0,0,0,0.1);
             transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
         }
         .showcase-card:hover {
             transform: translateY(-10px);
@@ -36,14 +38,20 @@ $rooms = $conn->query("SELECT * FROM kamar WHERE jumlah_tersedia > 0 ORDER BY ha
         }
         .showcase-image {
             height: 220px;
-            background: var(--accent);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 60px;
+            width: 100%;
+            padding: 0;
+            background: #eee;
+        }
+        .showcase-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
         .showcase-content {
             padding: 25px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
         }
         .showcase-header {
             display: flex;
@@ -69,6 +77,7 @@ $rooms = $conn->query("SELECT * FROM kamar WHERE jumlah_tersedia > 0 ORDER BY ha
             line-height: 1.6;
             margin-bottom: 20px;
             font-size: 14px;
+            flex-grow: 1;
         }
         .showcase-price {
             font-size: 28px;
@@ -138,10 +147,25 @@ $rooms = $conn->query("SELECT * FROM kamar WHERE jumlah_tersedia > 0 ORDER BY ha
                 <p style="color: #666; margin-bottom: 30px;">Choose the perfect room for your stay</p>
                 
                 <div class="rooms-showcase">
-                    <?php while($room = $rooms->fetch_assoc()): ?>
+                    <?php while($room = $rooms->fetch_assoc()): 
+                        // Logika Penentuan Gambar
+                        $tipe = strtolower($room['tipe_kamar']);
+                        
+                        // Default gambar (hanya nama file)
+                        $gambar = 'standard_room.jpg'; 
+                        
+                        if (strpos($tipe, 'presidential') !== false) {
+                            // Pastikan ekstensi file sesuai dengan yang ada di folder (biasanya .jpg)
+                            $gambar = 'presidential_suite.png'; 
+                        } elseif (strpos($tipe, 'suite') !== false) {
+                            $gambar = 'suite_room.jpg';
+                        } elseif (strpos($tipe, 'deluxe') !== false) {
+                            $gambar = 'deluxe_room.jpg';
+                        }
+                    ?>
                     <div class="showcase-card">
                         <div class="showcase-image">
-                            🏨
+                            <img src="../assets/room_photo/<?php echo $gambar; ?>" alt="<?php echo htmlspecialchars($room['tipe_kamar']); ?>">
                         </div>
                         <div class="showcase-content">
                             <div class="showcase-header">

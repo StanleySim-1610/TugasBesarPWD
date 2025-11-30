@@ -123,7 +123,9 @@ body {
 
 .btn-primary {
     background: var(--accent);
-    color: white;
+    border: 2px solid rgb(255, 89, 89);
+    border-radius: 8px;
+    color: rgb(255, 110, 110);
 }
 
 .btn-primary:hover {

@@ -7,6 +7,7 @@ requireLogin();
 $user_id = $_SESSION['user_id'];
 
 // Get user's reservations
+// Mengambil data reservasi beserta status pembayarannya
 $reservations = $conn->query("
     SELECT r.*, k.tipe_kamar, k.harga,
            DATEDIFF(r.check_out, r.check_in) as jumlah_hari,
@@ -36,24 +37,19 @@ $reservations = $conn->query("
             </div>
             <nav class="sidebar-nav">
                 <a href="dashboard.php" class="nav-item">
-                    <span class="nav-icon">🏠</span>
-                    Dashboard
+                    <span class="nav-icon">🏠</span> Dashboard
                 </a>
                 <a href="reservations.php" class="nav-item active">
-                    <span class="nav-icon">📅</span>
-                    My Reservations
+                    <span class="nav-icon">📅</span> My Reservations
                 </a>
                 <a href="rooms.php" class="nav-item">
-                    <span class="nav-icon">🏨</span>
-                    Browse Rooms
+                    <span class="nav-icon">🏨</span> Browse Rooms
                 </a>
                 <a href="profile.php" class="nav-item">
-                    <span class="nav-icon">👤</span>
-                    Profile
+                    <span class="nav-icon">👤</span> Profile
                 </a>
                 <a href="../logout.php" class="nav-item">
-                    <span class="nav-icon">🚪</span>
-                    Logout
+                    <span class="nav-icon">🚪</span> Logout
                 </a>
             </nav>
         </aside>
@@ -75,11 +71,10 @@ $reservations = $conn->query("
                                 <th>Check In</th>
                                 <th>Check Out</th>
                                 <th>Duration</th>
-                                <th>Guests</th>
                                 <th>Total</th>
                                 <th>Payment</th>
                                 <th>Status</th>
-                                <th>Action</th>
+                                <th style="min-width: 140px;">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -90,13 +85,10 @@ $reservations = $conn->query("
                                 <td><?php echo date('d M Y', strtotime($res['check_in'])); ?></td>
                                 <td><?php echo date('d M Y', strtotime($res['check_out'])); ?></td>
                                 <td><?php echo $res['jumlah_hari']; ?> nights</td>
-                                <td><?php echo $res['jumlah_orang']; ?> person(s)</td>
                                 <td><strong><?php echo formatRupiah($res['total_harga']); ?></strong></td>
                                 <td>
-                                    <?php if ($res['payment_status']): ?>
-                                        <span class="status-badge status-<?php echo $res['payment_status']; ?>">
-                                            <?php echo ucfirst($res['payment_status']); ?>
-                                        </span>
+                                    <?php if ($res['payment_status'] == 'paid'): ?>
+                                        <span class="status-badge status-paid">Paid</span>
                                     <?php else: ?>
                                         <span class="status-badge status-pending">Unpaid</span>
                                     <?php endif; ?>
@@ -107,18 +99,47 @@ $reservations = $conn->query("
                                     </span>
                                 </td>
                                 <td>
-                                    <a href="reservation_detail.php?id=<?php echo $res['id_reservation']; ?>" class="btn btn-sm">View</a>
-                                    <?php
-                                        // Allow rescheduling for future reservations (including same-day check-in) only
-                                        $today = strtotime(date('Y-m-d'));
-                                        $is_future_or_today = strtotime($res['check_in']) >= $today;
+                                    <?php 
+                                    $is_paid = ($res['payment_status'] == 'paid');
+                                    // Cek apakah status masih aktif (bukan cancelled/completed)
+                                    $is_active = in_array($res['status'], ['pending', 'confirmed']);
                                     ?>
-                                    <?php if ($is_future_or_today && in_array($res['status'], ['pending','confirmed'])): ?>
-                                        <a href="edit_reservation.php?id=<?php echo $res['id_reservation']; ?>" class="btn btn-sm" style="background: var(--brand-pink); color: white;">Edit</a>
-                                    <?php endif; ?>
-                                    <?php if ($res['status'] == 'pending' && !$res['payment_status']): ?>
-                                        <a href="payment.php?reservation=<?php echo $res['id_reservation']; ?>" class="btn btn-sm" style="background: #4CAF50;">Pay</a>
-                                    <?php endif; ?>
+                                    
+                                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                                        
+                                        <div style="display: flex; gap: 5px; width: 100%;">
+                                            <a href="reservation_detail.php?id=<?php echo $res['id_reservation']; ?>" 
+                                               class="btn btn-sm" 
+                                               style="flex: 1; text-align: center; justify-content: center;">
+                                               View
+                                            </a>
+
+                                            <?php if ($is_paid && $is_active): ?>
+                                                <a href="edit_reservation.php?id=<?php echo $res['id_reservation']; ?>" 
+                                                   class="btn btn-sm" 
+                                                   style="background: var(--brand-pink); color: white; flex: 1; text-align: center; justify-content: center;">
+                                                   Edit
+                                                </a>
+                                            
+                                            <?php elseif (!$is_paid && $res['status'] == 'pending'): ?>
+                                                <a href="delete_reservation.php?id=<?php echo $res['id_reservation']; ?>" 
+                                                   class="btn btn-sm" 
+                                                   style="background: #dc3545; color: white; flex: 1; text-align: center; justify-content: center;"
+                                                   onclick="return confirm('Apakah Anda yakin ingin membatalkan reservasi ini?');">
+                                                   Cancel
+                                                </a>
+                                            <?php endif; ?>
+                                        </div>
+
+                                        <?php if (!$is_paid && $res['status'] == 'pending'): ?>
+                                            <a href="payment.php?reservation=<?php echo $res['id_reservation']; ?>" 
+                                               class="btn btn-sm" 
+                                               style="background: #4CAF50; color: white; display: block; text-align: center; width: 100%; box-sizing: border-box;">
+                                               Pay Now
+                                            </a>
+                                        <?php endif; ?>
+
+                                    </div>
                                 </td>
                             </tr>
                             <?php endwhile; ?>

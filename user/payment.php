@@ -266,14 +266,7 @@ $days = calculateDays($reservation['check_in'], $reservation['check_out']);
                                         <div>E-Wallet</div>
                                     </label>
                                 </div>
-                                <div class="payment-method">
-                                    <input type="radio" id="cash" name="metode" value="Cash">
-                                    <label for="cash">
-                                        <div class="payment-icon">💵</div>
-                                        <div>Cash</div>
-                                    </label>
                                 </div>
-                            </div>
 
                             <button type="submit" class="btn btn-primary" style="width: 100%;">
                                 Confirm Payment

@@ -36,10 +36,93 @@ $rooms = $conn->query("SELECT * FROM kamar WHERE jumlah_tersedia > 0 ORDER BY ha
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - User</title>
     <link rel="stylesheet" href="../assets/css/dashboard.css">
+    <style>
+        /* Tambahan Style Khusus Dashboard agar gambar pas */
+        .rooms-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .room-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden; /* Agar gambar tidak keluar radius */
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05); /* Sedikit bayangan agar rapi */
+            height: 100%; /* Pastikan tinggi kartu seragam */
+        }
+        .room-image-dashboard {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+        .room-content-padding {
+            padding: 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .room-header h3 {
+            margin: 0 0 5px 0;
+            font-size: 1.1rem;
+        }
+        .room-available {
+            font-size: 0.8rem;
+            color: white;
+            background-color: #4CAF50;
+            padding: 2px 8px;
+            border-radius: 12px;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+        .room-description {
+            flex-grow: 1;
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+        
+        /* PERBAIKAN UTAMA DI SINI */
+        .room-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center; /* Menjaga harga dan tombol sejajar vertikal */
+            margin-top: auto;
+            gap: 10px; /* Jarak antara harga dan tombol */
+        }
+
+        .room-price {
+            font-size: 16px; /* Ukuran font disesuaikan agar muat */
+            font-weight: bold;
+            color: #ff4757; /* Warna merah muda sesuai desain */
+            white-space: nowrap; /* Mencegah teks turun ke baris baru */
+            display: flex;
+            flex-direction: column; /* Opsional: jika ingin /night di bawah harga, tapi nowrap di atas mencegahnya */
+            line-height: 1.2;
+        }
+        
+        /* Opsi Alternatif: Jika ingin satu baris lurus */
+        .room-price {
+            display: block; 
+        }
+
+        .room-price span {
+            font-size: 12px;
+            color: #999;
+            font-weight: normal;
+        }
+
+        /* Pastikan tombol tidak mengecil */
+        .room-footer .btn {
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+    </style>
 </head>
 <body>
     <div class="dashboard-container">
-        <!-- Sidebar -->
         <aside class="sidebar">
             <div class="sidebar-header">
                 <img src="../assets/logo.png?v=2" alt="Logo" class="sidebar-logo">
@@ -69,7 +152,6 @@ $rooms = $conn->query("SELECT * FROM kamar WHERE jumlah_tersedia > 0 ORDER BY ha
             </nav>
         </aside>
 
-        <!-- Main Content -->
         <main class="main-content">
             <div class="top-bar">
                 <h1>Welcome, <?php echo htmlspecialchars($user['nama']); ?>!</h1>
@@ -85,7 +167,6 @@ $rooms = $conn->query("SELECT * FROM kamar WHERE jumlah_tersedia > 0 ORDER BY ha
                 </div>
             </div>
 
-            <!-- Quick Stats -->
             <div class="stats-grid">
                 <div class="stat-card">
                     <div class="stat-icon" style="background: var(--brand-pink);">📅</div>
@@ -116,27 +197,46 @@ $rooms = $conn->query("SELECT * FROM kamar WHERE jumlah_tersedia > 0 ORDER BY ha
                 </div>
             </div>
 
-            <!-- Available Rooms -->
             <section class="content-section">
                 <h2>Available Rooms</h2>
                 <div class="rooms-grid">
-                    <?php while($room = $rooms->fetch_assoc()): ?>
+                    <?php while($room = $rooms->fetch_assoc()): 
+                        // Logika Penentuan Gambar
+                        $tipe = strtolower($room['tipe_kamar']);
+                        
+                        // Default nama file saja
+                        $gambar = 'standard_room.jpg';
+                        
+                        if (strpos($tipe, 'presidential') !== false) {
+                            $gambar = 'presidential_suite.png';
+                        } elseif (strpos($tipe, 'suite') !== false) {
+                            $gambar = 'suite_room.jpg';
+                        } elseif (strpos($tipe, 'deluxe') !== false) {
+                            $gambar = 'deluxe_room.jpg';
+                        }
+                    ?>
                     <div class="room-card">
-                        <div class="room-header">
-                            <h3><?php echo htmlspecialchars($room['tipe_kamar']); ?></h3>
-                            <span class="room-available"><?php echo $room['jumlah_tersedia']; ?> available</span>
-                        </div>
-                        <p class="room-description"><?php echo htmlspecialchars($room['deskripsi']); ?></p>
-                        <div class="room-footer">
-                            <div class="room-price"><?php echo formatRupiah($room['harga']); ?><span>/night</span></div>
-                            <a href="booking.php?room=<?php echo $room['id_kamar']; ?>" class="btn btn-primary">Book Now</a>
+                        <img src="../assets/room_photo/<?php echo $gambar; ?>" alt="<?php echo htmlspecialchars($room['tipe_kamar']); ?>" class="room-image-dashboard">
+                        
+                        <div class="room-content-padding">
+                            <div class="room-header">
+                                <h3><?php echo htmlspecialchars($room['tipe_kamar']); ?></h3>
+                                <span class="room-available"><?php echo $room['jumlah_tersedia']; ?> available</span>
+                            </div>
+                            <p class="room-description"><?php echo htmlspecialchars($room['deskripsi']); ?></p>
+                            
+                            <div class="room-footer">
+                                <div class="room-price">
+                                    <?php echo formatRupiah($room['harga']); ?><span>/night</span>
+                                </div>
+                                <a href="booking.php?room=<?php echo $room['id_kamar']; ?>" class="btn btn-primary" style="padding: 8px 16px;">Book Now</a>
+                            </div>
                         </div>
                     </div>
                     <?php endwhile; ?>
                 </div>
             </section>
 
-            <!-- Recent Reservations -->
             <section class="content-section">
                 <h2>Recent Reservations</h2>
                 <?php if ($reservations->num_rows > 0): ?>
