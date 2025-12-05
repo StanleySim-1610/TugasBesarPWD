@@ -12,6 +12,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $confirm_password = $_POST['confirm_password'];
     $no_telp = sanitize($_POST['no_telp']);
     $no_identitas = sanitize($_POST['no_identitas']);
+    $foto_profil = '';
+    
+    // Create upload directory if not exists
+    $upload_dir = '../assets/uploads/profile/';
+    if (!is_dir($upload_dir)) {
+        mkdir($upload_dir, 0755, true);
+    }
     
     // Validation
     if (empty($nama)) {
@@ -24,8 +31,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $errors['email'] = 'Email wajib diisi';
     }
     
-    if (!empty($no_telp) && (!preg_match('/^[0-9]{10,13}$/', $no_telp))) {
+    if (empty($no_telp)) {
         $errors['no_telp'] = 'Nomor telepon wajib diisi';
+    } elseif (!preg_match('/^[0-9]{10,13}$/', $no_telp)) {
+        $errors['no_telp'] = 'Nomor telepon harus 10-13 digit angka';
+    }
+    
+    if (empty($no_identitas)) {
+        $errors['no_identitas'] = 'Nomor identitas wajib diisi';
+    } elseif (!preg_match('/^[0-9]{16}$/', $no_identitas)) {
+        $errors['no_identitas'] = 'Nomor identitas harus 16 digit angka';
     }
     
     if (empty($password)) {
@@ -40,6 +55,38 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $errors['confirm_password'] = 'Password tidak sama';
     }
     
+    // Validasi foto profil
+    if (!empty($_FILES['foto_profil']['name'])) {
+        $file = $_FILES['foto_profil'];
+        $file_name = $file['name'];
+        $file_size = $file['size'];
+        $file_tmp = $file['tmp_name'];
+        $file_error = $file['error'];
+        
+        // Get file extension
+        $file_ext = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
+        $allowed_ext = array('jpg', 'jpeg', 'png', 'gif');
+        
+        if ($file_error === 0) {
+            if (in_array($file_ext, $allowed_ext)) {
+                if ($file_size <= 5000000) { // 5MB max
+                    $file_new_name = uniqid('profile_', true) . '.' . $file_ext;
+                    $file_destination = $upload_dir . $file_new_name;
+                    
+                    if (move_uploaded_file($file_tmp, $file_destination)) {
+                        $foto_profil = 'assets/uploads/profile/' . $file_new_name;
+                    } else {
+                        $errors['foto_profil'] = 'Gagal upload foto';
+                    }
+                } else {
+                    $errors['foto_profil'] = 'Ukuran foto terlalu besar (max 5MB)';
+                }
+            } else {
+                $errors['foto_profil'] = 'Format foto tidak didukung (jpg, jpeg, png, gif)';
+            }
+        }
+    }
+    
     if (empty($errors)) {
         // Check if email already exists
         $stmt = $conn->prepare("SELECT id_user FROM user WHERE email = ?");
@@ -52,8 +99,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         } else {
             // Insert new user
             $hashed_password = hashPassword($password);
-            $stmt = $conn->prepare("INSERT INTO user (nama, email, password, no_telp, no_identitas) VALUES (?, ?, ?, ?, ?)");
-            $stmt->bind_param("sssss", $nama, $email, $hashed_password, $no_telp, $no_identitas);
+            $stmt = $conn->prepare("INSERT INTO user (nama, email, password, no_telp, no_identitas, foto_profil) VALUES (?, ?, ?, ?, ?, ?)");
+            $stmt->bind_param("ssssss", $nama, $email, $hashed_password, $no_telp, $no_identitas, $foto_profil);
             
             if ($stmt->execute()) {
                 $_SESSION['success_message'] = 'Registrasi berhasil! Silakan login dengan akun Anda.';
@@ -85,7 +132,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <p>Buat akun untuk mulai booking kamar hotel</p>
             </div>
             
-            <form method="POST" action="" class="auth-form" onsubmit="return validateForm()" novalidate>
+            <form method="POST" action="" class="auth-form" enctype="multipart/form-data" onsubmit="return validateForm()" novalidate>
                 <?php if (isset($errors['general'])): ?>
                     <div class="alert alert-error" style="margin-bottom: 20px; padding: 10px; background: #ffe6e6; border: 1px solid #ff4444; border-radius: 5px; color: #cc0000;">
                         ⚠ <?php echo $errors['general']; ?>
@@ -113,7 +160,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 
                 <div class="form-group">
                     <label for="no_identitas">No. Identitas (KTP/SIM)</label>
-                    <input type="text" id="no_identitas" name="no_identitas" class="form-control" placeholder="No. Identitas" value="<?php echo isset($_POST['no_identitas']) ? htmlspecialchars($_POST['no_identitas']) : ''; ?>">
+                    <input type="text" id="no_identitas" name="no_identitas" class="form-control <?php echo isset($errors['no_identitas']) ? 'error' : ''; ?>" placeholder="No. Identitas" maxlength="16" value="<?php echo isset($_POST['no_identitas']) ? htmlspecialchars($_POST['no_identitas']) : ''; ?>">
+                    <div class="error-message <?php echo isset($errors['no_identitas']) ? 'show' : ''; ?>" id="error-no_identitas"><?php echo $errors['no_identitas'] ?? ''; ?></div>
+                    <small class="form-hint">Contoh: 1234567890123456 (16 digit)</small>
+                </div>
+                
+                <div class="form-group">
+                    <label for="foto_profil">Foto Profil</label>
+                    <div class="foto-upload-wrapper">
+                        <div class="foto-preview" id="fotoPreview">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                                <circle cx="12" cy="13" r="4"></circle>
+                            </svg>
+                            <p>Pilih Foto</p>
+                        </div>
+                        <input type="file" id="foto_profil" name="foto_profil" class="foto-input" accept="image/*" onchange="previewFoto(event)">
+                    </div>
+                    <div class="error-message <?php echo isset($errors['foto_profil']) ? 'show' : ''; ?>" id="error-foto_profil"><?php echo $errors['foto_profil'] ?? ''; ?></div>
+                    <small class="form-hint">Format: JPG, PNG, GIF (Max 5MB)</small>
                 </div>
                 
                 <div class="form-group">
@@ -202,6 +267,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </style>
     
     <script>
+    
+    function previewFoto(event) {
+        const file = event.target.files[0];
+        const preview = document.getElementById('fotoPreview');
+        
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                let img = preview.querySelector('img');
+                if (!img) {
+                    img = document.createElement('img');
+                    preview.appendChild(img);
+                }
+                img.src = e.target.result;
+                preview.classList.add('has-image');
+            }
+            reader.readAsDataURL(file);
+        }
+    }
+    
     function togglePassword(fieldId) {
         const passwordField = document.getElementById(fieldId);
         const eyeIcon = document.getElementById('eye-' + fieldId);
@@ -233,7 +318,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
     
     function clearAllErrors() {
-        ['nama', 'email', 'no_telp', 'password', 'confirm_password'].forEach(clearError);
+        ['nama', 'email', 'no_telp', 'no_identitas', 'password', 'confirm_password'].forEach(clearError);
     }
     
     function validateForm() {
@@ -243,6 +328,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         const nama = document.getElementById('nama').value.trim();
         const email = document.getElementById('email').value.trim();
         const noTelp = document.getElementById('no_telp').value.trim();
+        const noIdentitas = document.getElementById('no_identitas').value.trim();
         const password = document.getElementById('password').value;
         const confirmPassword = document.getElementById('confirm_password').value;
         
@@ -264,11 +350,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
         }
         
-        // Validasi nomor telepon (jika diisi)
-        if (noTelp !== '') {
+        // Validasi nomor telepon wajib diisi
+        if (noTelp === '') {
+            showError('no_telp', 'Nomor telepon wajib diisi');
+            isValid = false;
+        } else {
             const phonePattern = /^[0-9]{10,13}$/;
             if (!phonePattern.test(noTelp)) {
-                showError('no_telp', 'Nomor telepon wajib diisi');
+                showError('no_telp', 'Nomor telepon harus 10-13 digit angka');
+                isValid = false;
+            }
+        }
+        
+        // Validasi nomor identitas wajib diisi
+        if (noIdentitas === '') {
+            showError('no_identitas', 'Nomor identitas wajib diisi');
+            isValid = false;
+        } else {
+            const identityPattern = /^[0-9]{16}$/;
+            if (!identityPattern.test(noIdentitas)) {
+                showError('no_identitas', 'Nomor identitas harus 16 digit angka');
                 isValid = false;
             }
         }
@@ -304,6 +405,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         input.addEventListener('input', function() {
             clearError(this.id);
         });
+    });
+    
+    // Make foto preview clickable
+    const fotoPreview = document.getElementById('fotoPreview');
+    const fotoInput = document.getElementById('foto_profil');
+    fotoPreview.addEventListener('click', function() {
+        fotoInput.click();
     });
     </script>
 </body>

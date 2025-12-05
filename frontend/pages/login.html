@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Hotel Management</title>
+    <link rel="stylesheet" href="../css/auth.css">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-box">
+            <div class="auth-header">
+                <img src="../assets/logo.png" alt="Logo" class="auth-logo">
+                <h2>Welcome Back</h2>
+                <p>Login to your account</p>
+            </div>
+
+            <div id="alertContainer"></div>
+
+            <form class="auth-form" id="loginForm">
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Login</button>
+            </form>
+
+            <div class="auth-footer">
+                <p>Don't have an account? <a href="register.html">Register here</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/api.js"></script>
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', handleLogin);
+
+        async function handleLogin(e) {
+            e.preventDefault();
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            try {
+                const response = await fetch('http://localhost/TugasBesarPWD/backend/login.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email, password }),
+                    credentials: 'include'
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    // Redirect based on user type
+                    if (data.data.email === 'admin@gmail.com') {
+                        window.location.href = '../admin/dashboard.html';
+                    } else {
+                        window.location.href = '../user/dashboard.html';
+                    }
+                } else {
+                    showAlert(data.message || 'Login failed', 'error');
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                showAlert('An error occurred during login', 'error');
+            }
+        }
+
+        function showAlert(message, type) {
+            const alertContainer = document.getElementById('alertContainer');
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `alert alert-${type}`;
+            alertDiv.textContent = message;
+            alertContainer.innerHTML = '';
+            alertContainer.appendChild(alertDiv);
+        }
+    </script>
+</body>
+</html>

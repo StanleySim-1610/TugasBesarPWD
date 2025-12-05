@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reservation Detail</title>
+    <link rel="stylesheet" href="../css/dashboard.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <img src="../assets/logo.png?v=2" alt="Logo" class="sidebar-logo">
+                <h3>User Panel</h3>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="nav-item">
+                    <span class="nav-icon">🏠</span>
+                    Dashboard
+                </a>
+                <a href="reservations.html" class="nav-item active">
+                    <span class="nav-icon">📅</span>
+                    My Reservations
+                </a>
+                <a href="rooms.html" class="nav-item">
+                    <span class="nav-icon">🏨</span>
+                    Browse Rooms
+                </a>
+                <a href="profile.html" class="nav-item">
+                    <span class="nav-icon">👤</span>
+                    Profile
+                </a>
+                <a href="javascript:logout()" class="nav-item">
+                    <span class="nav-icon">🚪</span>
+                    Logout
+                </a>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <div class="top-bar">
+                <h1>Reservation Detail</h1>
+                <a href="reservations.html" class="btn btn-outline">Back</a>
+            </div>
+
+            <section class="content-section" id="detailContainer">
+                <!-- Will be loaded via JavaScript -->
+            </section>
+        </main>
+    </div>
+
+    <script src="../js/api.js"></script>
+    <script src="../js/reservation-detail.js"></script>
+</body>
+</html>

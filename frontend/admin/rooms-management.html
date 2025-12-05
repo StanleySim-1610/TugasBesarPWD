@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Rooms</title>
+    <link rel="stylesheet" href="../css/dashboard.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <aside class="sidebar admin-sidebar">
+            <div class="sidebar-header">
+                <img src="../assets/logo.png?v=2" alt="Logo" class="sidebar-logo">
+                <h3>Admin Panel</h3>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="nav-item">
+                    <span class="nav-icon">📊</span>
+                    Dashboard
+                </a>
+                <a href="rooms-management.html" class="nav-item active">
+                    <span class="nav-icon">🏨</span>
+                    Rooms
+                </a>
+                <a href="reservations-management.html" class="nav-item">
+                    <span class="nav-icon">📅</span>
+                    Reservations
+                </a>
+                <a href="users.html" class="nav-item">
+                    <span class="nav-icon">👥</span>
+                    Users
+                </a>
+                <a href="payments.html" class="nav-item">
+                    <span class="nav-icon">💳</span>
+                    Payments
+                </a>
+                <a href="fnb-orders.html" class="nav-item">
+                    <span class="nav-icon">🍽️</span>
+                    F&B Orders
+                </a>
+                <a href="javascript:logout()" class="nav-item">
+                    <span class="nav-icon">🚪</span>
+                    Logout
+                </a>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <div class="top-bar">
+                <h1>Rooms Management</h1>
+                <button class="btn btn-primary" onclick="openAddRoomModal()">+ Add New Room</button>
+            </div>
+
+            <section class="content-section">
+                <div id="roomsContainer">
+                    <!-- Will be loaded via JavaScript -->
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Add/Edit Room Modal -->
+    <div id="roomModal" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.5); z-index:2000; align-items:center; justify-content:center;">
+        <div style="background:white; padding:30px; border-radius:15px; max-width:500px; width:90%;">
+            <h2>Add/Edit Room</h2>
+            <form id="roomForm">
+                <div class="form-group">
+                    <label for="tipe_kamar">Room Type</label>
+                    <input type="text" id="tipe_kamar" name="tipe_kamar" required>
+                </div>
+                <div class="form-group">
+                    <label for="jumlah_tersedia">Available Rooms</label>
+                    <input type="number" id="jumlah_tersedia" name="jumlah_tersedia" required>
+                </div>
+                <div class="form-group">
+                    <label for="harga">Price</label>
+                    <input type="number" id="harga" name="harga" step="0.01" required>
+                </div>
+                <div class="form-group">
+                    <label for="deskripsi">Description</label>
+                    <textarea id="deskripsi" name="deskripsi" required></textarea>
+                </div>
+                <div style="display:flex; gap:10px;">
+                    <button type="submit" class="btn btn-primary" style="flex:1;">Save Room</button>
+                    <button type="button" class="btn btn-outline" style="flex:1;" onclick="closeRoomModal()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="../js/api.js"></script>
+    <script src="../js/admin-rooms.js"></script>
+</body>
+</html>

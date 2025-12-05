@@ -125,8 +125,8 @@ $rooms = $conn->query("SELECT * FROM kamar WHERE jumlah_tersedia > 0 ORDER BY ha
     <div class="dashboard-container">
         <aside class="sidebar">
             <div class="sidebar-header">
-                <img src="../assets/logo.png?v=2" alt="Logo" class="sidebar-logo">
-                <h3>User Panel</h3>
+                <img src="../../frontend/assets/logo.png?v=2" alt="Logo" class="sidebar-logo">
+                <!-- <h3>User Panel</h3> -->
             </div>
             <nav class="sidebar-nav">
                 <a href="dashboard.php" class="nav-item active">
@@ -157,8 +157,8 @@ $rooms = $conn->query("SELECT * FROM kamar WHERE jumlah_tersedia > 0 ORDER BY ha
                 <h1>Welcome, <?php echo htmlspecialchars($user['nama']); ?>!</h1>
                 <div class="user-info">
                     <span><?php echo htmlspecialchars($user['email']); ?></span>
-                    <?php if ($user['foto_profil']): ?>
-                        <img src="../uploads/<?php echo htmlspecialchars($user['foto_profil']); ?>" alt="Profile" class="user-avatar">
+                    <?php if ($user['foto_profil'] && file_exists('../../' . $user['foto_profil'])): ?>
+                        <img src="../../<?php echo htmlspecialchars($user['foto_profil']); ?>" alt="Profile" class="user-avatar">
                     <?php else: ?>
                         <div class="user-avatar-placeholder">
                             <?php echo strtoupper(substr($user['nama'], 0, 1)); ?>
