@@ -131,7 +131,7 @@ $rooms = $conn->query("SELECT * FROM kamar WHERE jumlah_tersedia > 0 ORDER BY ha
             <nav class="sidebar-nav">
                 <a href="dashboard.php" class="nav-item active">
                     <span class="nav-icon">🏠</span>
-                    Dashboard
+                    Home
                 </a>
                 <a href="reservations.php" class="nav-item">
                     <span class="nav-icon">📅</span>
