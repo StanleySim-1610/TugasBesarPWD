@@ -152,15 +152,15 @@ $rooms = $conn->query("SELECT * FROM kamar WHERE jumlah_tersedia > 0 ORDER BY ha
                         $tipe = strtolower($room['tipe_kamar']);
                         
                         // Default gambar (hanya nama file)
-                        $gambar = 'standard_room.jpg'; 
+                        $gambar = '../../../frontend/assets/room_photo/standard_room.jpg'; 
                         
                         if (strpos($tipe, 'presidential') !== false) {
                             // Pastikan ekstensi file sesuai dengan yang ada di folder (biasanya .jpg)
-                            $gambar = 'presidential_suite.png'; 
+                            $gambar = '../../../frontend/assets/room_photo/presidential_suite.png'; 
                         } elseif (strpos($tipe, 'suite') !== false) {
-                            $gambar = 'suite_room.jpg';
+                            $gambar = '../../../frontend/assets/room_photo/suite_room.jpg';
                         } elseif (strpos($tipe, 'deluxe') !== false) {
-                            $gambar = 'deluxe_room.jpg';
+                            $gambar = '../../../frontend/assets/room_photo/deluxe_room.jpg';
                         }
                     ?>
                     <div class="showcase-card">
