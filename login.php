@@ -58,13 +58,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Hotel Management</title>
-    <link rel="stylesheet" href="assets/css/auth.css">
+    <link rel="stylesheet" href="frontend/assets/css/auth.css">
 </head>
 <body>
     <div class="auth-container">
         <div class="auth-box">
             <div class="auth-header">
-                <img src="assets/logo.png?v=2" alt="Logo" class="auth-logo">
+                <img src="frontend/assets/logo.png?v=2" alt="Logo" class="auth-logo">
                 <h2>Selamat Datang</h2>
                 <p>Login untuk melanjutkan</p>
             </div>

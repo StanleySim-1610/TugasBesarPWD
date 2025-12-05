@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Luxury Hotel - Your Home Away From Home</title>
+      <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+        <audio id="bgMusic" autoplay loop> 
+            <source src="assets/bg_music/tianmimi.mp3" type="audio/mp3">
+        </audio>
+
+        <div class="banner">
+            <video autoplay loop muted plays-inline>
+                <source src="assets/video1.mp4" type="video/mp4">
+            </video>
+            <div class="navbar">
+                <img class="logo" src="assets/logo.png?v=2" alt="Hotel Logo" width="120" height="120" loading="lazy" decoding="async" style="border-radius: 12px; object-fit: cover; display:block;">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#rooms">Rooms</a></li>
+                    <li><a href="#facilities">Facilities</a></li>
+                    <li><a href="login.php" class="btn-login">Login</a></li>
+                    <li><a href="register.php" class="btn-register">Register</a></li>
+                </ul>
+            </div>
+            <div class="content">
+                <h1>LUXURY HOTEL EXPERIENCE</h1>
+                <p class="subtitle">Experience the finest hospitality and comfort</p>
+                <div>
+                    <button type="button" onclick="location.href='register.php'">Book Now</button>
+                    <button type="button" class="btn-secondary" onclick="location.href='#rooms'">Explore Rooms</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- About Section -->
+        <section id="about" class="about-section">
+            <div class="container">
+                <h2 class="section-title">Welcome to Our Hotel</h2>
+                <p class="section-description">
+                    Rasakan kemewahan dan kenyamanan di hotel kami yang menawarkan layanan terbaik dengan fasilitas modern. 
+                    Kami berkomitmen untuk memberikan pengalaman menginap yang tak terlupakan dengan pelayanan ramah dan profesional.
+                </p>
+                <div class="features">
+                    <div class="feature-item">
+                        <div class="feature-icon">🏨</div>
+                        <h3>Kamar Mewah</h3>
+                        <p>Kamar dengan desain modern dan fasilitas lengkap</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">🍽️</div>
+                        <h3>Restaurant & Bar</h3>
+                        <p>Nikmati hidangan lezat dari chef terbaik</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">🏊</div>
+                        <h3>Swimming Pool</h3>
+                        <p>Kolam renang dengan pemandangan menakjubkan</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">💆</div>
+                        <h3>Spa & Wellness</h3>
+                        <p>Relaksasi maksimal dengan layanan spa premium</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Rooms Preview Section -->
+        <section id="rooms" class="rooms-section">
+            <div class="container">
+                <h2 class="section-title">Our Rooms</h2>
+                <p class="section-description">Pilih kamar yang sesuai dengan kebutuhan Anda</p>
+                <div class="rooms-grid">
+                    <div class="room-card">
+                        <div class="room-image" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('assets/room_photo/deluxe_room.jpg'); background-size: cover;">
+                            <span class="room-badge">Popular</span>
+                        </div>
+                        <div class="room-info">
+                            <h3>Deluxe Room</h3>
+                            <p>Kamar deluxe dengan pemandangan kota, AC, TV LED 42", WiFi gratis</p>
+                            <div class="room-price">Rp 500.000 <span>/malam</span></div>
+                        </div>
+                    </div>
+                    <div class="room-card">
+                        <div class="room-image" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('assets/room_photo/suite_room.jpg'); background-size: cover;">
+                            <span class="room-badge luxury">Luxury</span>
+                        </div>
+                        <div class="room-info">
+                            <h3>Suite Room</h3>
+                            <p>Suite room mewah dengan ruang tamu terpisah, jacuzzi, dan balkon pribadi</p>
+                            <div class="room-price">Rp 1.000.000 <span>/malam</span></div>
+                        </div>
+                    </div>
+                    <div class="room-card">
+                        <div class="room-image" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('assets/room_photo/standard_room.jpg'); background-size: cover;">
+                        </div>
+                        <div class="room-info">
+                            <h3>Standard Room</h3>
+                            <p>Kamar standard nyaman dengan fasilitas lengkap</p>
+                            <div class="room-price">Rp 350.000 <span>/malam</span></div>
+                        </div>
+                    </div>
+                    <div class="room-card">
+                        <div class="room-image" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('assets/room_photo/presidential_suite.png'); background-size: cover;">
+                        </div>
+                        <div class="room-info">
+                            <h3>Presidential Suite</h3>
+                            <p>Suite presidential dengan 2 kamar tidur, ruang makan, dan butler service</p>
+                            <div class="room-price">Rp 2.500.000 <span>/malam</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <button class="btn-explore" onclick="location.href='register.php'">Book Your Stay</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Facilities Section -->
+        <section id="facilities" class="facilities-section">
+            <div class="container">
+                <h2 class="section-title">Hotel Facilities</h2>
+                <div class="facilities-grid">
+                    <div class="facility-item">
+                        <div class="facility-icon">📶</div>
+                        <h4>Free WiFi</h4>
+                    </div>
+                    <div class="facility-item">
+                        <div class="facility-icon">🅿️</div>
+                        <h4>Free Parking</h4>
+                    </div>
+                    <div class="facility-item">
+                        <div class="facility-icon">🏋️</div>
+                        <h4>Fitness Center</h4>
+                    </div>
+                    <div class="facility-item">
+                        <div class="facility-icon">🔒</div>
+                        <h4>24/7 Security</h4>
+                    </div>
+                    <div class="facility-item">
+                        <div class="facility-icon">🧹</div>
+                        <h4>Room Service</h4>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-section">
+                        <h3>Luxury Hotel</h3>
+                        <p>Your home away from home. Experience the best hospitality service.</p>
+                    </div>
+                    <div class="footer-section">
+                        <h3>Contact Us</h3>
+                        <p>📧 info@luxuryhotel.com</p>
+                        <p>📞 +62 123 4567 890</p>
+                        <p>📍 Jakarta, Indonesia</p>
+                    </div>
+                    <div class="footer-section">
+                        <h3>Quick Links</h3>
+                        <p><a href="login.php">Login</a></p>
+                        <p><a href="register.php">Register</a></p>
+                        <p><a href="#about">About Us</a></p>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <p>&copy; 2025 Luxury Hotel. All rights reserved.</p>
+                </div>
+            </div>
+        </footer>
+        <script>
+            const music = document.getElementById("bgMusic");
+            music.volume = 0.6;   // 60% volume
+        </script>
+  </body>
+</html>

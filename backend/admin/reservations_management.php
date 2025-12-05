@@ -41,7 +41,7 @@ $reservations = $conn->query("
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reservations Management - Admin</title>
-    <link rel="stylesheet" href="../assets/css/dashboard.css">
+    <link rel="stylesheet" href="../../frontend/assets/css/dashboard.css">
     <style>
         .status-update-form {
             display: inline-flex;

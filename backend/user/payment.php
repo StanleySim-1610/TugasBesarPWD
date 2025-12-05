@@ -76,7 +76,7 @@ $days = calculateDays($reservation['check_in'], $reservation['check_out']);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Payment - Reservation #<?php echo $reservation_id; ?></title>
-    <link rel="stylesheet" href="../assets/css/dashboard.css">
+    <link rel="stylesheet" href="../../frontend/assets/css/dashboard.css">
     <style>
         .payment-container {
             max-width: 800px;

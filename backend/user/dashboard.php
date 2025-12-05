@@ -35,7 +35,7 @@ $rooms = $conn->query("SELECT * FROM kamar WHERE jumlah_tersedia > 0 ORDER BY ha
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - User</title>
-    <link rel="stylesheet" href="../assets/css/dashboard.css">
+    <link rel="stylesheet" href="../../frontend/assets/css/dashboard.css">
     <style>
         /* Tambahan Style Khusus Dashboard agar gambar pas */
         .rooms-grid {
@@ -205,14 +205,14 @@ $rooms = $conn->query("SELECT * FROM kamar WHERE jumlah_tersedia > 0 ORDER BY ha
                         $tipe = strtolower($room['tipe_kamar']);
                         
                         // Default nama file saja
-                        $gambar = 'standard_room.jpg';
+                        $gambar = '../../../frontend/assets/room_photo/standard_room.jpg';
                         
                         if (strpos($tipe, 'presidential') !== false) {
-                            $gambar = 'presidential_suite.png';
+                            $gambar = '../../../frontend/assets/room_photo/presidential_suite.png';
                         } elseif (strpos($tipe, 'suite') !== false) {
-                            $gambar = 'suite_room.jpg';
+                            $gambar = '../../../frontend/assets/room_photo/suite_room.jpg';
                         } elseif (strpos($tipe, 'deluxe') !== false) {
-                            $gambar = 'deluxe_room.jpg';
+                            $gambar = '../../../frontend/assets/room_photo/deluxe_room.jpg';
                         }
                     ?>
                     <div class="room-card">

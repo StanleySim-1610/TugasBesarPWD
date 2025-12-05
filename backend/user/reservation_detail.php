@@ -45,7 +45,7 @@ $dashboard_link = $is_admin ? 'dashboard.php' : 'dashboard.php';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reservation Details - #<?php echo $reservation_id; ?></title>
-    <link rel="stylesheet" href="<?php echo $base_path; ?>/assets/css/dashboard.css">
+    <link rel="stylesheet" href="../../frontend/assets/css/dashboard.css">
     <style>
         .detail-container {
             max-width: 900px;
