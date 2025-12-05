@@ -1,17 +1,30 @@
 # Apache Configuration
 <IfModule mod_rewrite.c>
     RewriteEngine On
+    RewriteBase /
     
-    # Redirect index.php to index.html
-    RewriteRule ^index\.php$ index.html [L,R=301]
+    # Redirect root to frontend
+    RewriteRule ^$ frontend/index.html [L]
+    
+    # Redirect old paths to new structure
+    RewriteRule ^index\.html$ frontend/index.html [L,R=301]
+    RewriteRule ^login\.php$ backend/login.php [L,R=301]
+    RewriteRule ^register\.php$ backend/register.php [L,R=301]
 </IfModule>
+
+# Allow access to all directories
+<Directory />
+    Options Indexes FollowSymLinks
+    AllowOverride All
+    Require all granted
+</Directory>
 
 # Prevent directory browsing
 Options -Indexes
 
 # Error pages
-ErrorDocument 404 /index.html
-ErrorDocument 403 /index.html
+ErrorDocument 404 /frontend/index.html
+ErrorDocument 403 /frontend/index.html
 
 # PHP Security Settings
 <IfModule mod_php7.c>
