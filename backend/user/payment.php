@@ -159,7 +159,7 @@ $days = calculateDays($reservation['check_in'], $reservation['check_out']);
     <div class="dashboard-container">
         <aside class="sidebar">
             <div class="sidebar-header">
-                <img src="../assets/logo.png?v=2" alt="Logo" class="sidebar-logo">
+                <img src="../../frontend/assets/logo.png?v=2" alt="Logo" class="sidebar-logo">
                 <h3>User Panel</h3>
             </div>
             <nav class="sidebar-nav">

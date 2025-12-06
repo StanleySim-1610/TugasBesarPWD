@@ -205,18 +205,18 @@ $rooms = $conn->query("SELECT * FROM kamar WHERE jumlah_tersedia > 0 ORDER BY ha
                         $tipe = strtolower($room['tipe_kamar']);
                         
                         // Default nama file saja
-                        $gambar = '../../../frontend/assets/room_photo/standard_room.jpg';
+                        $gambar = 'standard_room.jpg';
                         
                         if (strpos($tipe, 'presidential') !== false) {
-                            $gambar = '../../../frontend/assets/room_photo/presidential_suite.png';
+                            $gambar = 'presidential_suite.png';
                         } elseif (strpos($tipe, 'suite') !== false) {
-                            $gambar = '../../../frontend/assets/room_photo/suite_room.jpg';
+                            $gambar = 'suite_room.jpg';
                         } elseif (strpos($tipe, 'deluxe') !== false) {
-                            $gambar = '../../../frontend/assets/room_photo/deluxe_room.jpg';
+                            $gambar = 'deluxe_room.jpg';
                         }
                     ?>
                     <div class="room-card">
-                        <img src="../assets/room_photo/<?php echo $gambar; ?>" alt="<?php echo htmlspecialchars($room['tipe_kamar']); ?>" class="room-image-dashboard">
+                        <img src="../../frontend/assets/room_photo/<?php echo $gambar; ?>" alt="<?php echo htmlspecialchars($room['tipe_kamar']); ?>" class="room-image-dashboard">
                         
                         <div class="room-content-padding">
                             <div class="room-header">
