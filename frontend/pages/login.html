@@ -37,7 +37,7 @@
         </div>
     </div>
 
-    <script src="../js/api.js"></script>
+    <script src="../js/common.js"></script>
     <script>
         document.getElementById('loginForm').addEventListener('submit', handleLogin);
 
@@ -62,9 +62,9 @@
                 if (data.success) {
                     // Redirect based on user type
                     if (data.data.email === 'admin@gmail.com') {
-                        window.location.href = '../admin/dashboard.html';
+                        window.location.href = '../../backend/admin/dashboard.php';
                     } else {
-                        window.location.href = '../user/dashboard.html';
+                        window.location.href = '../../backend/user/dashboard.php';
                     }
                 } else {
                     showAlert(data.message || 'Login failed', 'error');

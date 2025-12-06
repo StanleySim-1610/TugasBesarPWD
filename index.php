@@ -1,5 +1,6 @@
 <?php
-// Entry point - Redirect ke frontend
-header('Location: frontend/index.html');
-exit();
+// Entry point untuk aplikasi
+// Redirect ke frontend index.html
+header('Location: /TugasBesarPWD/frontend/index.html');
+exit;
 ?>
