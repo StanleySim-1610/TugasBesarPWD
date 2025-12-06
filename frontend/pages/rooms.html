@@ -1,22 +1,10 @@
-<?php
-require_once '../config/database.php';
-require_once '../config/functions.php';
-
-requireLogin();
-
-$user_id = $_SESSION['user_id'];
-
-// Get available rooms
-$rooms = $conn->query("SELECT * FROM kamar WHERE jumlah_tersedia > 0 ORDER BY harga ASC");
-?>
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Browse Rooms</title>
-    <link rel="stylesheet" href="../../frontend/assets/css/dashboard.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
     <style>
         .rooms-showcase {
             display: grid;
@@ -110,27 +98,27 @@ $rooms = $conn->query("SELECT * FROM kamar WHERE jumlah_tersedia > 0 ORDER BY ha
     <div class="dashboard-container">
         <aside class="sidebar">
             <div class="sidebar-header">
-                <img src="../../frontend/assets/logo.png?v=2" alt="Logo" class="sidebar-logo">
-                <!-- <h3>User Panel</h3> -->
+                <img src="../assets/logo.png?v=2" alt="Logo" class="sidebar-logo">
+                <h3>User Panel</h3>
             </div>
             <nav class="sidebar-nav">
-                <a href="dashboard.php" class="nav-item">
+                <a href="dashboard.html" class="nav-item">
                     <span class="nav-icon">🏠</span>
                     Dashboard
                 </a>
-                <a href="reservations.php" class="nav-item">
+                <a href="reservations.html" class="nav-item">
                     <span class="nav-icon">📅</span>
                     My Reservations
                 </a>
-                <a href="rooms.php" class="nav-item active">
+                <a href="rooms.html" class="nav-item active">
                     <span class="nav-icon">🏨</span>
                     Browse Rooms
                 </a>
-                <a href="profile.php" class="nav-item">
+                <a href="profile.html" class="nav-item">
                     <span class="nav-icon">👤</span>
                     Profile
                 </a>
-                <a href="../logout.php" class="nav-item">
+                <a href="javascript:logout()" class="nav-item">
                     <span class="nav-icon">🚪</span>
                     Logout
                 </a>
@@ -146,57 +134,14 @@ $rooms = $conn->query("SELECT * FROM kamar WHERE jumlah_tersedia > 0 ORDER BY ha
                 <h2>Our Premium Rooms</h2>
                 <p style="color: #666; margin-bottom: 30px;">Choose the perfect room for your stay</p>
                 
-                <div class="rooms-showcase">
-                    <?php while($room = $rooms->fetch_assoc()): 
-                        // Logika Penentuan Gambar
-                        $tipe = strtolower($room['tipe_kamar']);
-                        
-                        // Default gambar (hanya nama file)
-                        $gambar = '../../../frontend/assets/room_photo/standard_room.jpg'; 
-                        
-                        if (strpos($tipe, 'presidential') !== false) {
-                            // Pastikan ekstensi file sesuai dengan yang ada di folder (biasanya .jpg)
-                            $gambar = '../../../frontend/assets/room_photo/presidential_suite.png'; 
-                        } elseif (strpos($tipe, 'suite') !== false) {
-                            $gambar = '../../../frontend/assets/room_photo/suite_room.jpg';
-                        } elseif (strpos($tipe, 'deluxe') !== false) {
-                            $gambar = '../../../frontend/assets/room_photo/deluxe_room.jpg';
-                        }
-                    ?>
-                    <div class="showcase-card">
-                        <div class="showcase-image">
-                            <img src="../assets/room_photo/<?php echo $gambar; ?>" alt="<?php echo htmlspecialchars($room['tipe_kamar']); ?>">
-                        </div>
-                        <div class="showcase-content">
-                            <div class="showcase-header">
-                                <h3 class="showcase-title"><?php echo htmlspecialchars($room['tipe_kamar']); ?></h3>
-                                <span class="showcase-badge"><?php echo $room['jumlah_tersedia']; ?> Available</span>
-                            </div>
-                            
-                            <p class="showcase-description">
-                                <?php echo htmlspecialchars($room['deskripsi']); ?>
-                            </p>
-                            
-                            <div class="showcase-features">
-                                <span class="feature-tag">🛏️ King Bed</span>
-                                <span class="feature-tag">📶 Free WiFi</span>
-                                <span class="feature-tag">❄️ AC</span>
-                                <span class="feature-tag">📺 TV</span>
-                            </div>
-                            
-                            <div class="showcase-price">
-                                <?php echo formatRupiah($room['harga']); ?> <span>/night</span>
-                            </div>
-                            
-                            <a href="booking.php?room=<?php echo $room['id_kamar']; ?>" class="btn btn-primary" style="width: 100%;">
-                                Book This Room
-                            </a>
-                        </div>
-                    </div>
-                    <?php endwhile; ?>
+                <div class="rooms-showcase" id="roomsContainer">
+                    <!-- Rooms will be loaded here -->
                 </div>
             </section>
         </main>
     </div>
+
+    <script src="../js/api.js"></script>
+    <script src="../js/rooms.js"></script>
 </body>
 </html>

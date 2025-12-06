@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Users Management</title>
+    <link rel="stylesheet" href="../css/dashboard.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <aside class="sidebar admin-sidebar">
+            <div class="sidebar-header">
+                <img src="../assets/logo.png?v=2" alt="Logo" class="sidebar-logo">
+                <h3>Admin Panel</h3>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="nav-item">
+                    <span class="nav-icon">📊</span>
+                    Dashboard
+                </a>
+                <a href="rooms-management.html" class="nav-item">
+                    <span class="nav-icon">🏨</span>
+                    Rooms
+                </a>
+                <a href="reservations-management.html" class="nav-item">
+                    <span class="nav-icon">📅</span>
+                    Reservations
+                </a>
+                <a href="users.html" class="nav-item active">
+                    <span class="nav-icon">👥</span>
+                    Users
+                </a>
+                <a href="payments.html" class="nav-item">
+                    <span class="nav-icon">💳</span>
+                    Payments
+                </a>
+                <a href="fnb-orders.html" class="nav-item">
+                    <span class="nav-icon">🍽️</span>
+                    F&B Orders
+                </a>
+                <a href="javascript:logout()" class="nav-item">
+                    <span class="nav-icon">🚪</span>
+                    Logout
+                </a>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <div class="top-bar">
+                <h1>Users Management</h1>
+            </div>
+
+            <section class="content-section">
+                <div id="usersContainer">
+                    <!-- Will be loaded via JavaScript -->
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="../js/api.js"></script>
+    <script src="../js/admin-users.js"></script>
+</body>
+</html>

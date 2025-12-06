@@ -23,6 +23,50 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $current_password = $_POST['current_password'] ?? '';
     $new_password = $_POST['new_password'] ?? '';
     $confirm_password = $_POST['confirm_password'] ?? '';
+    $foto_profil = $user['foto_profil'];
+    
+    // Create upload directory if not exists
+    $upload_dir = '../../assets/uploads/profile/';
+    if (!is_dir($upload_dir)) {
+        mkdir($upload_dir, 0755, true);
+    }
+    
+    // Handle foto upload
+    if (!empty($_FILES['foto_profil']['name'])) {
+        $file = $_FILES['foto_profil'];
+        $file_name = $file['name'];
+        $file_size = $file['size'];
+        $file_tmp = $file['tmp_name'];
+        $file_error = $file['error'];
+        
+        // Get file extension
+        $file_ext = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
+        $allowed_ext = array('jpg', 'jpeg', 'png', 'gif');
+        
+        if ($file_error === 0) {
+            if (in_array($file_ext, $allowed_ext)) {
+                if ($file_size <= 5000000) { // 5MB max
+                    // Delete old foto if exists
+                    if (!empty($user['foto_profil']) && file_exists($upload_dir . basename($user['foto_profil']))) {
+                        unlink($upload_dir . basename($user['foto_profil']));
+                    }
+                    
+                    $file_new_name = uniqid('profile_', true) . '.' . $file_ext;
+                    $file_destination = $upload_dir . $file_new_name;
+                    
+                    if (move_uploaded_file($file_tmp, $file_destination)) {
+                        $foto_profil = 'assets/uploads/profile/' . $file_new_name;
+                    } else {
+                        $error = 'Gagal upload foto';
+                    }
+                } else {
+                    $error = 'Ukuran foto terlalu besar (max 5MB)';
+                }
+            } else {
+                $error = 'Format foto tidak didukung (jpg, jpeg, png, gif)';
+            }
+        }
+    }
     
     // Check if email is changed and already exists
     if ($email !== $user['email']) {
@@ -35,9 +79,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
     
     if (empty($error)) {
-        // Update basic info
-        $stmt = $conn->prepare("UPDATE user SET nama = ?, email = ?, no_telp = ?, no_identitas = ? WHERE id_user = ?");
-        $stmt->bind_param("ssssi", $nama, $email, $no_telp, $no_identitas, $user_id);
+        // Update basic info including foto
+        $stmt = $conn->prepare("UPDATE user SET nama = ?, email = ?, no_telp = ?, no_identitas = ?, foto_profil = ? WHERE id_user = ?");
+        $stmt->bind_param("sssssi", $nama, $email, $no_telp, $no_identitas, $foto_profil, $user_id);
         
         if ($stmt->execute()) {
             $_SESSION['nama'] = $nama;
@@ -126,14 +170,65 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             gap: 15px;
             margin-top: 30px;
         }
+        .foto-upload-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+        .foto-preview {
+            width: 100%;
+            height: 200px;
+            border: 2px dashed #e0e0e0;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            background: #f9f9f9;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .foto-preview:hover {
+            border-color: var(--brand-pink);
+            background: #fff5f5;
+        }
+        .foto-preview svg {
+            color: #ccc;
+            margin-bottom: 8px;
+        }
+        .foto-preview p {
+            color: #999;
+            font-size: 14px;
+            margin: 0;
+        }
+        .foto-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: none;
+        }
+        .foto-preview.has-image svg,
+        .foto-preview.has-image p {
+            display: none;
+        }
+        .foto-preview.has-image img {
+            display: block;
+        }
+        .foto-input {
+            display: none;
+        }
     </style>
 </head>
 <body>
     <div class="dashboard-container">
         <aside class="sidebar">
             <div class="sidebar-header">
-                <img src="../assets/logo.png?v=2" alt="Logo" class="sidebar-logo">
-                <h3>User Panel</h3>
+                <img src="../../frontend/assets/logo.png?v=2" alt="Logo" class="sidebar-logo">
+                <!-- <h3>User Panel</h3> -->
             </div>
             <nav class="sidebar-nav">
                 <a href="dashboard.php" class="nav-item">
@@ -175,8 +270,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                 <div class="profile-card">
                     <div class="profile-header">
-                        <?php if ($user['foto_profil']): ?>
-                            <img src="../uploads/<?php echo htmlspecialchars($user['foto_profil']); ?>" alt="Profile" class="profile-avatar-large">
+                        <?php if ($user['foto_profil'] && file_exists('../../' . $user['foto_profil'])): ?>
+                            <img src="../../<?php echo htmlspecialchars($user['foto_profil']); ?>" alt="Profile" class="profile-avatar-large">
                         <?php else: ?>
                             <div class="profile-avatar-large">
                                 <?php echo strtoupper(substr($user['nama'], 0, 1)); ?>
@@ -189,7 +284,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         </p>
                     </div>
 
-                    <form method="POST" action="">
+                    <form method="POST" action="" enctype="multipart/form-data">
                         <h3>Personal Information</h3>
                         
                         <div class="form-grid">
@@ -213,6 +308,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             <div class="form-group">
                                 <label for="no_identitas">ID Number (KTP/SIM)</label>
                                 <input type="text" id="no_identitas" name="no_identitas" value="<?php echo htmlspecialchars($user['no_identitas']); ?>">
+                            </div>
+                        </div>
+                        
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="foto_profil">Profile Photo</label>
+                                <div class="foto-upload-wrapper">
+                                    <div class="foto-preview" id="fotoPreview">
+                                        <?php if (!empty($user['foto_profil']) && file_exists('../../' . $user['foto_profil'])): ?>
+                                            <img src="../../<?php echo $user['foto_profil']; ?>" alt="Profile">
+                                        <?php else: ?>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                                                <circle cx="12" cy="13" r="4"></circle>
+                                            </svg>
+                                            <p>Choose Photo</p>
+                                        <?php endif; ?>
+                                    </div>
+                                    <input type="file" id="foto_profil" name="foto_profil" class="foto-input" accept="image/*" onchange="previewFoto(event)">
+                                </div>
+                                <small style="color: #999; font-size: 13px;">Format: JPG, PNG, GIF (Max 5MB)</small>
                             </div>
                         </div>
 
@@ -249,5 +365,33 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </div>
         </main>
     </div>
+    
+    <script>
+    function previewFoto(event) {
+        const file = event.target.files[0];
+        const preview = document.getElementById('fotoPreview');
+        
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                let img = preview.querySelector('img');
+                if (!img) {
+                    img = document.createElement('img');
+                    preview.appendChild(img);
+                }
+                img.src = e.target.result;
+                preview.classList.add('has-image');
+            }
+            reader.readAsDataURL(file);
+        }
+    }
+    
+    // Make foto preview clickable
+    const fotoPreview = document.getElementById('fotoPreview');
+    const fotoInput = document.getElementById('foto_profil');
+    fotoPreview.addEventListener('click', function() {
+        fotoInput.click();
+    });
+    </script>
 </body>
 </html>

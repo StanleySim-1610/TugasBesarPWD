@@ -24,8 +24,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $errors['email'] = 'Email wajib diisi';
     }
     
-    if (!empty($no_telp) && (!preg_match('/^[0-9]{10,13}$/', $no_telp))) {
+    if (empty($no_telp)) {
         $errors['no_telp'] = 'Nomor telepon wajib diisi';
+    } elseif (!preg_match('/^[0-9]{10,13}$/', $no_telp)) {
+        $errors['no_telp'] = 'Nomor telepon harus 10-13 digit angka';
+    }
+    
+    if (empty($no_identitas)) {
+        $errors['no_identitas'] = 'Nomor identitas wajib diisi';
+    } elseif (!preg_match('/^[0-9]{16}$/', $no_identitas)) {
+        $errors['no_identitas'] = 'Nomor identitas harus 16 digit angka';
     }
     
     if (empty($password)) {
@@ -113,7 +121,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 
                 <div class="form-group">
                     <label for="no_identitas">No. Identitas (KTP/SIM)</label>
-                    <input type="text" id="no_identitas" name="no_identitas" class="form-control" placeholder="No. Identitas" value="<?php echo isset($_POST['no_identitas']) ? htmlspecialchars($_POST['no_identitas']) : ''; ?>">
+                    <input type="text" id="no_identitas" name="no_identitas" class="form-control <?php echo isset($errors['no_identitas']) ? 'error' : ''; ?>" placeholder="No. Identitas" maxlength="16" value="<?php echo isset($_POST['no_identitas']) ? htmlspecialchars($_POST['no_identitas']) : ''; ?>">
+                    <div class="error-message <?php echo isset($errors['no_identitas']) ? 'show' : ''; ?>" id="error-no_identitas"><?php echo $errors['no_identitas'] ?? ''; ?></div>
+                    <small class="form-hint">Contoh: 1234567890123456 (16 digit)</small>
                 </div>
                 
                 <div class="form-group">
@@ -233,7 +243,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
     
     function clearAllErrors() {
-        ['nama', 'email', 'no_telp', 'password', 'confirm_password'].forEach(clearError);
+        ['nama', 'email', 'no_telp', 'no_identitas', 'password', 'confirm_password'].forEach(clearError);
     }
     
     function validateForm() {
@@ -243,6 +253,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         const nama = document.getElementById('nama').value.trim();
         const email = document.getElementById('email').value.trim();
         const noTelp = document.getElementById('no_telp').value.trim();
+        const noIdentitas = document.getElementById('no_identitas').value.trim();
         const password = document.getElementById('password').value;
         const confirmPassword = document.getElementById('confirm_password').value;
         
@@ -264,11 +275,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
         }
         
-        // Validasi nomor telepon (jika diisi)
-        if (noTelp !== '') {
+        // Validasi nomor telepon wajib diisi
+        if (noTelp === '') {
+            showError('no_telp', 'Nomor telepon wajib diisi');
+            isValid = false;
+        } else {
             const phonePattern = /^[0-9]{10,13}$/;
             if (!phonePattern.test(noTelp)) {
-                showError('no_telp', 'Nomor telepon wajib diisi');
+                showError('no_telp', 'Nomor telepon harus 10-13 digit angka');
+                isValid = false;
+            }
+        }
+        
+        // Validasi nomor identitas wajib diisi
+        if (noIdentitas === '') {
+            showError('no_identitas', 'Nomor identitas wajib diisi');
+            isValid = false;
+        } else {
+            const identityPattern = /^[0-9]{16}$/;
+            if (!identityPattern.test(noIdentitas)) {
+                showError('no_identitas', 'Nomor identitas harus 16 digit angka');
                 isValid = false;
             }
         }
