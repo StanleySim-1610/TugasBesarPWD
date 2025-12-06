@@ -34,171 +34,471 @@ $rooms = $conn->query("SELECT * FROM kamar WHERE jumlah_tersedia > 0 ORDER BY ha
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - User</title>
+    <title>Beranda - Hotel Management</title>
     <link rel="stylesheet" href="../../frontend/assets/css/dashboard.css">
     <style>
-        /* Tambahan Style Khusus Dashboard agar gambar pas */
+        :root {
+            --chinese-red: #d32f2f;
+            --chinese-gold: #f0b343;
+            --chinese-dark: #8b0000;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #fff9f0 0%, #ffe4e1 100%);
+            min-height: 100vh;
+        }
+        
+        /* Top Navbar */
+        .top-navbar {
+            background: linear-gradient(135deg, var(--chinese-red) 0%, var(--chinese-dark) 100%);
+            color: white;
+            padding: 0;
+            box-shadow: 0 4px 15px rgba(211, 47, 47, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .navbar-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 30px;
+        }
+        
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px 0;
+        }
+        
+        .navbar-logo {
+            height: 50px;
+            filter: brightness(0) invert(1);
+        }
+        
+        .navbar-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .navbar-menu {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            list-style: none;
+        }
+        
+        .navbar-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 18px 20px;
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+            font-weight: 500;
+        }
+        
+        .navbar-link:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border-bottom-color: var(--chinese-gold);
+        }
+        
+        .navbar-link.active {
+            background: rgba(255, 255, 255, 0.15);
+            border-bottom-color: var(--chinese-gold);
+            color: white;
+        }
+        
+        .navbar-icon {
+            font-size: 1.2rem;
+        }
+        
+        /* Chinese Pattern */
+        .chinese-pattern {
+            background-image: 
+                repeating-linear-gradient(45deg, transparent, transparent 20px, rgba(240, 179, 67, 0.03) 20px, rgba(240, 179, 67, 0.03) 40px),
+                repeating-linear-gradient(-45deg, transparent, transparent 20px, rgba(211, 47, 47, 0.03) 20px, rgba(211, 47, 47, 0.03) 40px);
+        }
+        
+        /* Main Content */
+        .main-wrapper {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 30px;
+        }
+        
+        .welcome-section {
+            background: linear-gradient(135deg, white 0%, #fff9f0 100%);
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 2px solid var(--chinese-gold);
+        }
+        
+        .welcome-title {
+            font-size: 2rem;
+            color: var(--chinese-red);
+            margin-bottom: 10px;
+        }
+        
+        .welcome-subtitle {
+            color: #666;
+            font-size: 1.1rem;
+        }
+        
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 2px solid var(--chinese-gold);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+        }
+        
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+        }
+        
+        .stat-info h3 {
+            font-size: 2rem;
+            color: var(--chinese-red);
+            margin-bottom: 5px;
+        }
+        
+        .stat-info p {
+            color: #666;
+            font-size: 0.95rem;
+        }
+        
+        /* Section */
+        .content-section {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 2px solid var(--chinese-gold);
+        }
+        
+        .content-section h2 {
+            color: var(--chinese-red);
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid var(--chinese-gold);
+        }
+        
+        /* Rooms Grid */
         .rooms-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
+            gap: 25px;
         }
+        
         .room-card {
-            background: white;
-            border-radius: 10px;
-            overflow: hidden; /* Agar gambar tidak keluar radius */
+            background: linear-gradient(to bottom, white, #fffbf5);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 2px solid #e0e0e0;
+            transition: all 0.3s ease;
+            height: 100%;
             display: flex;
             flex-direction: column;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05); /* Sedikit bayangan agar rapi */
-            height: 100%; /* Pastikan tinggi kartu seragam */
         }
+        
+        .room-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(211, 47, 47, 0.2);
+            border-color: var(--chinese-gold);
+        }
+        
         .room-image-dashboard {
             width: 100%;
-            height: 180px;
+            height: 200px;
             object-fit: cover;
         }
+        
         .room-content-padding {
             padding: 20px;
             flex: 1;
             display: flex;
             flex-direction: column;
         }
+        
         .room-header h3 {
-            margin: 0 0 5px 0;
-            font-size: 1.1rem;
-        }
-        .room-available {
-            font-size: 0.8rem;
-            color: white;
-            background-color: #4CAF50;
-            padding: 2px 8px;
-            border-radius: 12px;
-            display: inline-block;
-            margin-bottom: 10px;
-        }
-        .room-description {
-            flex-grow: 1;
-            font-size: 0.9rem;
-            color: #666;
-            margin-bottom: 15px;
-            line-height: 1.4;
+            color: var(--chinese-red);
+            margin-bottom: 8px;
+            font-size: 1.2rem;
         }
         
-        /* PERBAIKAN UTAMA DI SINI */
+        .room-available {
+            background: #4CAF50;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            display: inline-block;
+            margin-bottom: 12px;
+        }
+        
+        .room-description {
+            flex-grow: 1;
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+        
         .room-footer {
             display: flex;
             justify-content: space-between;
-            align-items: center; /* Menjaga harga dan tombol sejajar vertikal */
+            align-items: center;
             margin-top: auto;
-            gap: 10px; /* Jarak antara harga dan tombol */
-        }
-
-        .room-price {
-            font-size: 16px; /* Ukuran font disesuaikan agar muat */
-            font-weight: bold;
-            color: #ff4757; /* Warna merah muda sesuai desain */
-            white-space: nowrap; /* Mencegah teks turun ke baris baru */
-            display: flex;
-            flex-direction: column; /* Opsional: jika ingin /night di bawah harga, tapi nowrap di atas mencegahnya */
-            line-height: 1.2;
+            gap: 15px;
         }
         
-        /* Opsi Alternatif: Jika ingin satu baris lurus */
         .room-price {
-            display: block; 
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: var(--chinese-red);
         }
-
+        
         .room-price span {
-            font-size: 12px;
+            font-size: 0.85rem;
             color: #999;
             font-weight: normal;
         }
-
-        /* Pastikan tombol tidak mengecil */
-        .room-footer .btn {
-            white-space: nowrap;
-            flex-shrink: 0;
+        
+        .btn {
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            display: inline-block;
+            text-align: center;
+        }
+        
+        .btn-primary {
+            background: var(--chinese-red);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: var(--chinese-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(211, 47, 47, 0.3);
+        }
+        
+        /* Table */
+        .table-container {
+            overflow-x: auto;
+        }
+        
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .data-table th {
+            background: linear-gradient(135deg, var(--chinese-red), var(--chinese-dark));
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .data-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .data-table tr:hover {
+            background: #fff9f0;
+        }
+        
+        .status-badge {
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .status-confirmed {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .text-center {
+            text-align: center;
+        }
+        
+        .btn-outline {
+            background: white;
+            color: var(--chinese-red);
+            border: 2px solid var(--chinese-red);
+        }
+        
+        .btn-outline:hover {
+            background: var(--chinese-red);
+            color: white;
+        }
+        
+        .btn-sm {
+            padding: 6px 15px;
+            font-size: 0.9rem;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #999;
+        }
+        
+        @media (max-width: 768px) {
+            .navbar-menu {
+                display: none;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="dashboard-container">
-        <aside class="sidebar">
-            <div class="sidebar-header">
-                <img src="../../frontend/assets/logo.png?v=2" alt="Logo" class="sidebar-logo">
-                <!-- <h3>User Panel</h3> -->
+    <!-- Top Navbar -->
+    <nav class="top-navbar">
+        <div class="navbar-container">
+            <div class="navbar-brand">
+                <img src="../../frontend/assets/logo.png?v=2" alt="Logo" class="navbar-logo">
+                <span class="navbar-title">Hotel Management</span>
             </div>
-            <nav class="sidebar-nav">
-                <a href="dashboard.php" class="nav-item active">
-                    <span class="nav-icon">🏠</span>
-                    Dashboard
-                </a>
-                <a href="reservations.php" class="nav-item">
-                    <span class="nav-icon">📅</span>
-                    My Reservations
-                </a>
-                <a href="rooms.php" class="nav-item">
-                    <span class="nav-icon">🏨</span>
-                    Browse Rooms
-                </a>
-                <a href="profile.php" class="nav-item">
-                    <span class="nav-icon">👤</span>
-                    Profile
-                </a>
-                <a href="../logout.php" class="nav-item">
-                    <span class="nav-icon">🚪</span>
-                    Logout
-                </a>
-            </nav>
-        </aside>
+            <ul class="navbar-menu">
+                <li class="navbar-item">
+                    <a href="dashboard.php" class="navbar-link active">
+                        <span class="navbar-icon">🏠</span>
+                        <span>Beranda</span>
+                    </a>
+                </li>
+                <li class="navbar-item">
+                    <a href="reservations.php" class="navbar-link">
+                        <span class="navbar-icon">📅</span>
+                        <span>Reservasi Saya</span>
+                    </a>
+                </li>
+                <li class="navbar-item">
+                    <a href="rooms.php" class="navbar-link">
+                        <span class="navbar-icon">🏨</span>
+                        <span>Lihat Kamar</span>
+                    </a>
+                </li>
+                <li class="navbar-item">
+                    <a href="fnb_new_order.php" class="navbar-link">
+                        <span class="navbar-icon">🍽️</span>
+                        <span>Pesan F&B</span>
+                    </a>
+                </li>
+                <li class="navbar-item">
+                    <a href="fnb_orders.php" class="navbar-link">
+                        <span class="navbar-icon">📋</span>
+                        <span>Pesanan F&B</span>
+                    </a>
+                </li>
+                <li class="navbar-item">
+                    <a href="profile.php" class="navbar-link">
+                        <span class="navbar-icon">👤</span>
+                        <span>Profil</span>
+                    </a>
+                </li>
+                <li class="navbar-item">
+                    <a href="../logout.php" class="navbar-link">
+                        <span class="navbar-icon">🚪</span>
+                        <span>Keluar</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
 
-        <main class="main-content">
-            <div class="top-bar">
-                <h1>Welcome, <?php echo htmlspecialchars($user['nama']); ?>!</h1>
-                <div class="user-info">
-                    <span><?php echo htmlspecialchars($user['email']); ?></span>
-                    <?php if ($user['foto_profil'] && file_exists('../../' . $user['foto_profil'])): ?>
-                        <img src="../../<?php echo htmlspecialchars($user['foto_profil']); ?>" alt="Profile" class="user-avatar">
-                    <?php else: ?>
-                        <div class="user-avatar-placeholder">
-                            <?php echo strtoupper(substr($user['nama'], 0, 1)); ?>
-                        </div>
-                    <?php endif; ?>
-                </div>
-            </div>
+    <!-- Main Content -->
+    <div class="main-wrapper chinese-pattern">
+        <div class="welcome-section">
+            <h1 class="welcome-title">🏨 Selamat Datang, <?php echo htmlspecialchars($user['nama']); ?>!</h1>
+            <p class="welcome-subtitle">📧 <?php echo htmlspecialchars($user['email']); ?></p>
+        </div>
 
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-icon" style="background: var(--brand-pink);">📅</div>
-                    <div class="stat-info">
-                        <h3><?php echo $reservations->num_rows; ?></h3>
-                        <p>Total Reservations</p>
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon" style="background: #4CAF50;">✓</div>
-                    <div class="stat-info">
-                        <?php
-                        $active = $conn->query("SELECT COUNT(*) as count FROM reservation WHERE id_user = $user_id AND status = 'confirmed'")->fetch_assoc();
-                        ?>
-                        <h3><?php echo $active['count']; ?></h3>
-                        <p>Active Bookings</p>
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon" style="background: #ff9800;">⏳</div>
-                    <div class="stat-info">
-                        <?php
-                        $pending = $conn->query("SELECT COUNT(*) as count FROM reservation WHERE id_user = $user_id AND status = 'pending'")->fetch_assoc();
-                        ?>
-                        <h3><?php echo $pending['count']; ?></h3>
-                        <p>Pending Bookings</p>
-                    </div>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon" style="background: linear-gradient(135deg, var(--chinese-red), var(--chinese-dark));">📅</div>
+                <div class="stat-info">
+                    <h3><?php echo $reservations->num_rows; ?></h3>
+                    <p>Total Reservasi</p>
                 </div>
             </div>
+            <div class="stat-card">
+                <div class="stat-icon" style="background: linear-gradient(135deg, #4CAF50, #2e7d32);">✓</div>
+                <div class="stat-info">
+                    <?php
+                    $active = $conn->query("SELECT COUNT(*) as count FROM reservation WHERE id_user = $user_id AND status = 'confirmed'")->fetch_assoc();
+                    ?>
+                    <h3><?php echo $active['count']; ?></h3>
+                    <p>Booking Aktif</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon" style="background: linear-gradient(135deg, #ff9800, #f57c00);">⏳</div>
+                <div class="stat-info">
+                    <?php
+                    $pending = $conn->query("SELECT COUNT(*) as count FROM reservation WHERE id_user = $user_id AND status = 'pending'")->fetch_assoc();
+                    ?>
+                    <h3><?php echo $pending['count']; ?></h3>
+                    <p>Menunggu Pembayaran</p>
+                </div>
+            </div>
+        </div>
 
-            <section class="content-section">
-                <h2>Available Rooms</h2>
+            <h2>🏨 Kamar Tersedia</h2>
                 <div class="rooms-grid">
                     <?php while($room = $rooms->fetch_assoc()): 
                         // Logika Penentuan Gambar
@@ -227,70 +527,72 @@ $rooms = $conn->query("SELECT * FROM kamar WHERE jumlah_tersedia > 0 ORDER BY ha
                             
                             <div class="room-footer">
                                 <div class="room-price">
-                                    <?php echo formatRupiah($room['harga']); ?><span>/night</span>
+                                    <?php echo formatRupiah($room['harga']); ?><span>/malam</span>
                                 </div>
-                                <a href="booking.php?room=<?php echo $room['id_kamar']; ?>" class="btn btn-primary" style="padding: 8px 16px;">Book Now</a>
+                                <a href="booking.php?room=<?php echo $room['id_kamar']; ?>" class="btn btn-primary">Pesan Sekarang</a>
                             </div>
                         </div>
                     </div>
                     <?php endwhile; ?>
                 </div>
-            </section>
+        </section>
 
-            <section class="content-section">
-                <h2>Recent Reservations</h2>
-                <?php if ($reservations->num_rows > 0): ?>
-                <div class="table-container">
-                    <table class="data-table">
-                        <thead>
-                            <tr>
-                                <th>Room Type</th>
-                                <th>Check In</th>
-                                <th>Check Out</th>
-                                <th>Duration</th>
-                                <th>Total Price</th>
-                                <th>Status</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php 
-                            $reservations->data_seek(0);
-                            $count = 0;
-                            while($res = $reservations->fetch_assoc()): 
-                                if ($count >= 5) break;
-                                $count++;
-                            ?>
-                            <tr>
-                                <td><?php echo htmlspecialchars($res['tipe_kamar']); ?></td>
-                                <td><?php echo date('d M Y', strtotime($res['check_in'])); ?></td>
-                                <td><?php echo date('d M Y', strtotime($res['check_out'])); ?></td>
-                                <td><?php echo $res['jumlah_hari']; ?> days</td>
-                                <td><?php echo formatRupiah($res['total_harga']); ?></td>
-                                <td>
-                                    <span class="status-badge status-<?php echo $res['status']; ?>">
-                                        <?php echo ucfirst($res['status']); ?>
-                                    </span>
-                                </td>
-                                <td>
-                                    <a href="reservation_detail.php?id=<?php echo $res['id_reservation']; ?>" class="btn btn-sm">View</a>
-                                </td>
-                            </tr>
-                            <?php endwhile; ?>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="text-center" style="margin-top: 20px;">
-                    <a href="reservations.php" class="btn btn-outline">View All Reservations</a>
-                </div>
-                <?php else: ?>
-                <div class="empty-state">
-                    <p>You don't have any reservations yet.</p>
-                    <a href="rooms.php" class="btn btn-primary">Browse Rooms</a>
-                </div>
-                <?php endif; ?>
-            </section>
-        </main>
+        <section class="content-section">
+            <h2>📅 Reservasi Terbaru</h2>
+            <?php if ($reservations->num_rows > 0): ?>
+            <div class="table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Tipe Kamar</th>
+                            <th>Check In</th>
+                            <th>Check Out</th>
+                            <th>Durasi</th>
+                            <th>Total Harga</th>
+                            <th>Status</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php 
+                        $reservations->data_seek(0);
+                        $count = 0;
+                        while($res = $reservations->fetch_assoc()): 
+                            if ($count >= 5) break;
+                            $count++;
+                        ?>
+                        <tr>
+                            <td><?php echo htmlspecialchars($res['tipe_kamar']); ?></td>
+                            <td><?php echo date('d M Y', strtotime($res['check_in'])); ?></td>
+                            <td><?php echo date('d M Y', strtotime($res['check_out'])); ?></td>
+                            <td><?php echo $res['jumlah_hari']; ?> hari</td>
+                            <td><?php echo formatRupiah($res['total_harga']); ?></td>
+                            <td>
+                                <span class="status-badge status-<?php echo $res['status']; ?>">
+                                    <?php 
+                                    $status_indo = ['pending' => 'Menunggu', 'confirmed' => 'Dikonfirmasi', 'cancelled' => 'Dibatalkan'];
+                                    echo $status_indo[$res['status']] ?? ucfirst($res['status']);
+                                    ?>
+                                </span>
+                            </td>
+                            <td>
+                                <a href="reservation_detail.php?id=<?php echo $res['id_reservation']; ?>" class="btn btn-sm btn-primary">Lihat</a>
+                            </td>
+                        </tr>
+                        <?php endwhile; ?>
+                    </tbody>
+                </table>
+            </div>
+            <div class="text-center" style="margin-top: 20px;">
+                <a href="reservations.php" class="btn btn-outline">Lihat Semua Reservasi</a>
+            </div>
+            <?php else: ?>
+            <div class="empty-state">
+                <p>Anda belum memiliki reservasi.</p>
+                <a href="rooms.php" class="btn btn-primary">Lihat Kamar</a>
+            </div>
+            <?php endif; ?>
+        </section>
     </div>
 </body>
 </html>

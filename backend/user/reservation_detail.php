@@ -44,39 +44,167 @@ $dashboard_link = $is_admin ? 'dashboard.php' : 'dashboard.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reservation Details - #<?php echo $reservation_id; ?></title>
-    <link rel="stylesheet" href="../../frontend/assets/css/dashboard.css">
+    <title>Detail Reservasi - #<?php echo $reservation_id; ?></title>
     <style>
+        :root {
+            --chinese-red: #d32f2f;
+            --chinese-gold: #f0b343;
+            --chinese-dark: #8b0000;
+            --white: #ffffff;
+            --light-bg: #fff9f0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Microsoft YaHei', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #fff9f0 0%, #ffe4e1 100%);
+            min-height: 100vh;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(211, 47, 47, 0.03) 10px, rgba(211, 47, 47, 0.03) 20px),
+                repeating-linear-gradient(-45deg, transparent, transparent 10px, rgba(240, 179, 67, 0.03) 10px, rgba(240, 179, 67, 0.03) 20px);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .topnavbar {
+            background: linear-gradient(135deg, var(--chinese-red) 0%, var(--chinese-dark) 100%);
+            padding: 0;
+            box-shadow: 0 4px 20px rgba(211, 47, 47, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 3px solid var(--chinese-gold);
+        }
+
+        .topnavbar-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 30px;
+        }
+
+        .topnavbar-brand {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px 0;
+        }
+
+        .topnavbar-brand h2 {
+            color: var(--chinese-gold);
+            font-size: 24px;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .topnavbar-menu {
+            display: flex;
+            gap: 5px;
+            list-style: none;
+        }
+
+        .topnavbar-menu a {
+            color: white;
+            text-decoration: none;
+            padding: 20px 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            border-bottom: 3px solid transparent;
+        }
+
+        .topnavbar-menu a:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-bottom-color: var(--chinese-gold);
+        }
+
+        .topnavbar-menu a.active {
+            background: rgba(255, 255, 255, 0.15);
+            border-bottom-color: var(--chinese-gold);
+        }
+
+        .main-content {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .page-header h1 {
+            color: var(--chinese-red);
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
         .detail-container {
             max-width: 900px;
             margin: 0 auto;
         }
+
         .detail-card {
             background: white;
             padding: 30px;
             border-radius: 15px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            box-shadow: 0 4px 15px rgba(211, 47, 47, 0.1);
             margin-bottom: 25px;
+            border: 2px solid var(--chinese-gold);
         }
+
         .detail-header {
             display: flex;
             justify-content: space-between;
             align-items: start;
             padding-bottom: 20px;
-            border-bottom: 2px solid #e0e0e0;
+            border-bottom: 2px solid var(--chinese-gold);
             margin-bottom: 25px;
         }
+
+        .detail-header h2 {
+            color: var(--chinese-red);
+            font-size: 28px;
+        }
+
         .detail-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 20px;
             margin: 25px 0;
         }
+
         .detail-item {
             padding: 15px;
-            background: #f8f9fa;
+            background: linear-gradient(135deg, #fff9f0 0%, #ffe4e1 100%);
             border-radius: 10px;
+            border: 1px solid var(--chinese-gold);
         }
+
         .detail-label {
             font-size: 12px;
             color: #666;
@@ -84,205 +212,249 @@ $dashboard_link = $is_admin ? 'dashboard.php' : 'dashboard.php';
             text-transform: uppercase;
             font-weight: 600;
         }
+
         .detail-value {
             font-size: 16px;
-            color: #333;
+            color: var(--chinese-red);
             font-weight: 600;
         }
+
         .price-breakdown {
-            background: #f8f9fa;
+            background: linear-gradient(135deg, #fff9f0 0%, #ffe4e1 100%);
             padding: 20px;
             border-radius: 10px;
             margin: 25px 0;
+            border: 2px solid var(--chinese-gold);
         }
+
         .price-row {
             display: flex;
             justify-content: space-between;
             padding: 10px 0;
-            border-bottom: 1px solid #e0e0e0;
+            border-bottom: 1px solid rgba(211, 47, 47, 0.1);
+            color: #333;
         }
+
         .price-row:last-child {
             border-bottom: none;
         }
+
         .price-total {
             font-size: 24px;
             font-weight: 700;
-            color: var(--brand-pink);
-            border-top: 2px solid #333;
+            color: var(--chinese-red);
+            border-top: 2px solid var(--chinese-gold);
             padding-top: 15px;
             margin-top: 15px;
         }
+
         .action-buttons {
             display: flex;
             gap: 15px;
             margin-top: 25px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--chinese-red) 0%, var(--chinese-dark) 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(211, 47, 47, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(211, 47, 47, 0.4);
+        }
+
+        .btn-outline {
+            background: white;
+            color: var(--chinese-red);
+            border: 2px solid var(--chinese-red);
+        }
+
+        .btn-outline:hover {
+            background: var(--chinese-red);
+            color: white;
+        }
+
+        .status-badge {
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 14px;
+            display: inline-block;
+        }
+
+        .status-pending {
+            background: #fff4e5;
+            color: #ff9800;
+            border: 2px solid #ff9800;
+        }
+
+        .status-confirmed {
+            background: #e8f5e9;
+            color: #4caf50;
+            border: 2px solid #4caf50;
+        }
+
+        .status-cancelled {
+            background: #ffebee;
+            color: #f44336;
+            border: 2px solid #f44336;
+        }
+
+        .status-paid {
+            background: #e8f5e9;
+            color: #4caf50;
+            border: 2px solid #4caf50;
+        }
+
+        .status-unpaid {
+            background: #ffebee;
+            color: #f44336;
+            border: 2px solid #f44336;
         }
     </style>
 </head>
 <body>
-    <div class="dashboard-container">
-        <aside class="sidebar <?php echo $is_admin ? 'admin-sidebar' : ''; ?>">
-            <div class="sidebar-header">
-                <img src="<?php echo $base_path; ?>/assets/logo.png?v=2" alt="Logo" class="sidebar-logo">
-                <h3><?php echo $is_admin ? 'Admin Panel' : 'User Panel'; ?></h3>
+    <!-- Top Navbar -->
+    <nav class="topnavbar">
+        <div class="topnavbar-content">
+            <div class="topnavbar-brand">
+                <h2>🏨 Hotel Management</h2>
             </div>
-            <nav class="sidebar-nav">
-                <?php if ($is_admin): ?>
-                <a href="dashboard.php" class="nav-item">
-                    <span class="nav-icon">📊</span>
-                    Dashboard
-                </a>
-                <a href="users.php" class="nav-item">
-                    <span class="nav-icon">👥</span>
-                    Users Management
-                </a>
-                <a href="rooms_management.php" class="nav-item">
-                    <span class="nav-icon">🏨</span>
-                    Rooms Management
-                </a>
-                <a href="reservations_management.php" class="nav-item active">
-                    <span class="nav-icon">📅</span>
-                    Reservations
-                </a>
-                <a href="payments.php" class="nav-item">
-                    <span class="nav-icon">💳</span>
-                    Payments
-                </a>
-                <a href="fnb_orders.php" class="nav-item">
-                    <span class="nav-icon">🍽️</span>
-                    F&B Orders
-                </a>
+            <ul class="topnavbar-menu">
+                <li><a href="dashboard.php"><span>🏠</span> Beranda</a></li>
+                <li><a href="reservations.php" class="active"><span>📅</span> Reservasi Saya</a></li>
+                <li><a href="rooms.php"><span>🏨</span> Lihat Kamar</a></li>
+                <li><a href="fnb_new_order.php"><span>🍽️</span> Pesan F&B</a></li>
+                <li><a href="fnb_orders.php"><span>📋</span> Pesanan F&B</a></li>
+                <li><a href="profile.php"><span>👤</span> Profil</a></li>
+                <li><a href="../logout.php"><span>🚪</span> Keluar</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="page-header">
+            <h1>Detail Reservasi</h1>
+        </div>
+
+        <div class="detail-container">
+
+            <div class="detail-card">
+                <div class="detail-header">
+                    <div>
+                        <h2>Booking #<?php echo $reservation_id; ?></h2>
+                        <p style="color: #666; margin-top: 5px;">
+                            Dibuat pada <?php echo date('d M Y, H:i', strtotime($reservation['created_at'])); ?>
+                        </p>
+                    </div>
+                    <div>
+                        <span class="status-badge status-<?php echo $reservation['status']; ?>" style="font-size: 14px; padding: 8px 20px;">
+                            <?php echo ucfirst($reservation['status']); ?>
+                        </span>
+                    </div>
+                </div>
+
+                <h3 style="color: var(--chinese-red);">Informasi Tamu</h3>
+                <div class="detail-grid">
+                    <div class="detail-item">
+                        <div class="detail-label">Nama Tamu</div>
+                        <div class="detail-value"><?php echo htmlspecialchars($reservation['nama']); ?></div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Email</div>
+                        <div class="detail-value"><?php echo htmlspecialchars($reservation['email']); ?></div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Telepon</div>
+                        <div class="detail-value"><?php echo htmlspecialchars($reservation['no_telp'] ?? '-'); ?></div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">No. Identitas</div>
+                        <div class="detail-value"><?php echo htmlspecialchars($reservation['no_identitas'] ?? '-'); ?></div>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 30px; color: var(--chinese-red);">Informasi Kamar & Menginap</h3>
+                <div class="detail-grid">
+                    <div class="detail-item">
+                        <div class="detail-label">Tipe Kamar</div>
+                        <div class="detail-value"><?php echo htmlspecialchars($reservation['tipe_kamar']); ?></div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Tanggal Check-in</div>
+                        <div class="detail-value"><?php echo date('d M Y', strtotime($reservation['check_in'])); ?></div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Tanggal Check-out</div>
+                        <div class="detail-value"><?php echo date('d M Y', strtotime($reservation['check_out'])); ?></div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Jumlah Tamu</div>
+                        <div class="detail-value"><?php echo $reservation['jumlah_orang']; ?> orang</div>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 30px; color: var(--chinese-red);">Informasi Pembayaran</h3>
+                <div class="price-breakdown">
+                    <div class="price-row">
+                        <span>Harga Kamar (per malam):</span>
+                        <span><strong><?php echo formatRupiah($reservation['harga']); ?></strong></span>
+                    </div>
+                    <div class="price-row">
+                        <span>Jumlah Malam:</span>
+                        <span><strong><?php echo $reservation['jumlah_hari']; ?> malam</strong></span>
+                    </div>
+                    <div class="price-row price-total">
+                        <span>Total Bayar:</span>
+                        <span><?php echo formatRupiah($reservation['total_harga']); ?></span>
+                    </div>
+                </div>
+
+                <?php if ($reservation['payment_status']): ?>
+                <div style="background: #e8f5e9; padding: 20px; border-radius: 10px; border: 2px solid #4caf50; color: #2e7d32;">
+                    <strong>Status Pembayaran:</strong> <?php echo ucfirst($reservation['payment_status']); ?><br>
+                    <strong>Metode Pembayaran:</strong> <?php echo htmlspecialchars($reservation['metode']); ?><br>
+                    <strong>Dibayar Pada:</strong> <?php echo date('d M Y, H:i', strtotime($reservation['paid_at'])); ?>
+                </div>
                 <?php else: ?>
-                <a href="dashboard.php" class="nav-item">
-                    <span class="nav-icon">🏠</span>
-                    Dashboard
-                </a>
-                <a href="reservations.php" class="nav-item active">
-                    <span class="nav-icon">📅</span>
-                    My Reservations
-                </a>
-                <a href="rooms.php" class="nav-item">
-                    <span class="nav-icon">🏨</span>
-                    Browse Rooms
-                </a>
-                <a href="profile.php" class="nav-item">
-                    <span class="nav-icon">👤</span>
-                    Profile
-                </a>
-                <?php endif; ?>
-                <a href="<?php echo $base_path; ?>/logout.php" class="nav-item">
-                    <span class="nav-icon">🚪</span>
-                    Logout
-                </a>
-            </nav>
-        </aside>
-
-        <main class="main-content">
-            <div class="detail-container">
-                <div class="top-bar">
-                    <h1>Reservation Details</h1>
-                    <div style="display:flex; gap: 12px; align-items:center;">
-                        <a href="<?php echo $is_admin ? 'reservations_management.php' : 'reservations.php'; ?>" class="btn btn-outline">Back</a>
-                        <?php if (!$is_admin && strtotime($reservation['check_in']) >= strtotime(date('Y-m-d')) && in_array($reservation['status'], ['pending','confirmed'])): ?>
-                            <a href="edit_reservation.php?id=<?php echo $reservation_id; ?>" class="btn btn-sm" style="background: var(--brand-pink); color: white;">Edit</a>
-                        <?php endif; ?>
-                    </div>
+                <div style="background: #ffebee; padding: 20px; border-radius: 10px; border: 2px solid #f44336; color: #c62828;">
+                    <strong>Status Pembayaran:</strong> Belum Dibayar<br>
+                    Silakan selesaikan pembayaran untuk mengkonfirmasi reservasi Anda.
                 </div>
+                <?php endif; ?>
 
-                <div class="detail-card">
-                    <div class="detail-header">
-                        <div>
-                            <h2>Booking #<?php echo $reservation_id; ?></h2>
-                            <p style="color: #666; margin-top: 5px;">
-                                Booked on <?php echo date('d M Y, H:i', strtotime($reservation['created_at'])); ?>
-                            </p>
-                        </div>
-                        <div>
-                            <span class="status-badge status-<?php echo $reservation['status']; ?>" style="font-size: 14px; padding: 8px 20px;">
-                                <?php echo ucfirst($reservation['status']); ?>
-                            </span>
-                        </div>
-                    </div>
-
-                    <h3>Guest Information</h3>
-                    <div class="detail-grid">
-                        <div class="detail-item">
-                            <div class="detail-label">Guest Name</div>
-                            <div class="detail-value"><?php echo htmlspecialchars($reservation['nama']); ?></div>
-                        </div>
-                        <div class="detail-item">
-                            <div class="detail-label">Email</div>
-                            <div class="detail-value"><?php echo htmlspecialchars($reservation['email']); ?></div>
-                        </div>
-                        <div class="detail-item">
-                            <div class="detail-label">Phone</div>
-                            <div class="detail-value"><?php echo htmlspecialchars($reservation['no_telp'] ?? '-'); ?></div>
-                        </div>
-                        <div class="detail-item">
-                            <div class="detail-label">ID Number</div>
-                            <div class="detail-value"><?php echo htmlspecialchars($reservation['no_identitas'] ?? '-'); ?></div>
-                        </div>
-                    </div>
-
-                    <h3 style="margin-top: 30px;">Room & Stay Information</h3>
-                    <div class="detail-grid">
-                        <div class="detail-item">
-                            <div class="detail-label">Room Type</div>
-                            <div class="detail-value"><?php echo htmlspecialchars($reservation['tipe_kamar']); ?></div>
-                        </div>
-                        <div class="detail-item">
-                            <div class="detail-label">Check-in Date</div>
-                            <div class="detail-value"><?php echo date('d M Y', strtotime($reservation['check_in'])); ?></div>
-                        </div>
-                        <div class="detail-item">
-                            <div class="detail-label">Check-out Date</div>
-                            <div class="detail-value"><?php echo date('d M Y', strtotime($reservation['check_out'])); ?></div>
-                        </div>
-                        <div class="detail-item">
-                            <div class="detail-label">Number of Guests</div>
-                            <div class="detail-value"><?php echo $reservation['jumlah_orang']; ?> person(s)</div>
-                        </div>
-                    </div>
-
-                    <h3 style="margin-top: 30px;">Payment Information</h3>
-                    <div class="price-breakdown">
-                        <div class="price-row">
-                            <span>Room Rate (per night):</span>
-                            <span><strong><?php echo formatRupiah($reservation['harga']); ?></strong></span>
-                        </div>
-                        <div class="price-row">
-                            <span>Number of Nights:</span>
-                            <span><strong><?php echo $reservation['jumlah_hari']; ?> nights</strong></span>
-                        </div>
-                        <div class="price-row price-total">
-                            <span>Total Amount:</span>
-                            <span><?php echo formatRupiah($reservation['total_harga']); ?></span>
-                        </div>
-                    </div>
-
-                    <?php if ($reservation['payment_status']): ?>
-                    <div class="alert alert-success">
-                        <strong>Payment Status:</strong> <?php echo ucfirst($reservation['payment_status']); ?><br>
-                        <strong>Payment Method:</strong> <?php echo htmlspecialchars($reservation['metode']); ?><br>
-                        <strong>Paid At:</strong> <?php echo date('d M Y, H:i', strtotime($reservation['paid_at'])); ?>
-                    </div>
-                    <?php else: ?>
-                    <div class="alert alert-error">
-                        <strong>Payment Status:</strong> Not Paid<br>
-                        Please complete the payment to confirm your reservation.
-                    </div>
-                    <?php endif; ?>
-
-                    <?php if (!$is_admin && $reservation['status'] == 'pending' && !$reservation['payment_status']): ?>
-                    <div class="action-buttons">
-                        <a href="payment.php?reservation=<?php echo $reservation_id; ?>" class="btn btn-primary" style="flex: 1;">
-                            Complete Payment
+                <div class="action-buttons">
+                    <a href="reservations.php" class="btn btn-outline">
+                        Kembali ke Daftar
+                    </a>
+                    <?php if (!$is_admin && strtotime($reservation['check_in']) >= strtotime(date('Y-m-d')) && in_array($reservation['status'], ['pending','confirmed'])): ?>
+                        <a href="edit_reservation.php?id=<?php echo $reservation_id; ?>" class="btn btn-primary">
+                            Edit Reservasi
                         </a>
-                    </div>
+                    <?php endif; ?>
+                    <?php if (!$is_admin && $reservation['status'] == 'pending' && !$reservation['payment_status']): ?>
+                        <a href="payment.php?reservation=<?php echo $reservation_id; ?>" class="btn btn-primary">
+                            Selesaikan Pembayaran
+                        </a>
                     <?php endif; ?>
                 </div>
             </div>
-        </main>
-    </div>
+        </div>
+    </main>
 </body>
 </html>

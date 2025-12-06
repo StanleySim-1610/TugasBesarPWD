@@ -1,0 +1,31 @@
+# Konfigurasi VirtualHost untuk Apache port 8081
+# Salin konfigurasi ini ke file: C:\xampp\apache\conf\extra\httpd-vhosts.conf
+
+<VirtualHost *:8081>
+    DocumentRoot "c:/xampp/htdocs/TugasBesarPWD"
+    ServerName localhost
+    
+    <Directory "c:/xampp/htdocs/TugasBesarPWD">
+        Options Indexes FollowSymLinks
+        AllowOverride All
+        Require all granted
+    </Directory>
+    
+    # Allow access to backend folder
+    <Directory "c:/xampp/htdocs/TugasBesarPWD/backend">
+        Options Indexes FollowSymLinks
+        AllowOverride All
+        Require all granted
+    </Directory>
+    
+    # Allow access to frontend folder
+    <Directory "c:/xampp/htdocs/TugasBesarPWD/frontend">
+        Options Indexes FollowSymLinks
+        AllowOverride All
+        Require all granted
+    </Directory>
+    
+    # Error log (opsional)
+    ErrorLog "logs/tugasbesar-error.log"
+    CustomLog "logs/tugasbesar-access.log" common
+</VirtualHost>

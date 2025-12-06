@@ -96,69 +96,302 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reschedule Reservation</title>
-    <link rel="stylesheet" href="../../frontend/assets/css/dashboard.css">
+    <title>Reschedule Reservasi</title>
     <style>
-        .edit-container { max-width: 600px; margin: 0 auto; }
-        .edit-card { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.08); }
-        .form-group { margin-bottom: 15px; }
-        .form-group label { display: block; margin-bottom: 8px; font-weight: 600; }
-        .form-group input { padding: 10px; border: 2px solid #ddd; border-radius: 6px; width: 100%; }
-        .info-box { background: #e3f2fd; padding: 15px; border-radius: 8px; margin-bottom: 20px; font-size: 14px; color: #0d47a1; }
+        :root {
+            --chinese-red: #d32f2f;
+            --chinese-gold: #f0b343;
+            --chinese-dark: #8b0000;
+            --white: #ffffff;
+            --light-bg: #fff9f0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Microsoft YaHei', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #fff9f0 0%, #ffe4e1 100%);
+            min-height: 100vh;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(211, 47, 47, 0.03) 10px, rgba(211, 47, 47, 0.03) 20px),
+                repeating-linear-gradient(-45deg, transparent, transparent 10px, rgba(240, 179, 67, 0.03) 10px, rgba(240, 179, 67, 0.03) 20px);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .topnavbar {
+            background: linear-gradient(135deg, var(--chinese-red) 0%, var(--chinese-dark) 100%);
+            padding: 0;
+            box-shadow: 0 4px 20px rgba(211, 47, 47, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 3px solid var(--chinese-gold);
+        }
+
+        .topnavbar-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 30px;
+        }
+
+        .topnavbar-brand {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px 0;
+        }
+
+        .topnavbar-brand h2 {
+            color: var(--chinese-gold);
+            font-size: 24px;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .topnavbar-menu {
+            display: flex;
+            gap: 5px;
+            list-style: none;
+        }
+
+        .topnavbar-menu a {
+            color: white;
+            text-decoration: none;
+            padding: 20px 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            border-bottom: 3px solid transparent;
+        }
+
+        .topnavbar-menu a:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-bottom-color: var(--chinese-gold);
+        }
+
+        .topnavbar-menu a.active {
+            background: rgba(255, 255, 255, 0.15);
+            border-bottom-color: var(--chinese-gold);
+        }
+
+        .main-content {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .page-header h1 {
+            color: var(--chinese-red);
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .edit-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .alert {
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .alert-error {
+            background: #ffebee;
+            color: #c62828;
+            border: 2px solid #ef5350;
+        }
+
+        .alert-success {
+            background: #e8f5e9;
+            color: #2e7d32;
+            border: 2px solid #4caf50;
+        }
+
+        .edit-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(211, 47, 47, 0.1);
+            border: 2px solid var(--chinese-gold);
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #fff9f0 0%, #ffe4e1 100%);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            color: var(--chinese-dark);
+            border: 2px solid var(--chinese-gold);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--chinese-red);
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--chinese-gold);
+            box-shadow: 0 0 0 3px rgba(240, 179, 67, 0.1);
+        }
+
+        .form-group input:disabled {
+            background: #f5f5f5;
+            color: #666;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--chinese-red) 0%, var(--chinese-dark) 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(211, 47, 47, 0.3);
+            width: 100%;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(211, 47, 47, 0.4);
+        }
+
+        .btn-outline {
+            background: white;
+            color: var(--chinese-red);
+            border: 2px solid var(--chinese-red);
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+
+        .btn-outline:hover {
+            background: var(--chinese-red);
+            color: white;
+        }
     </style>
 </head>
 <body>
-    <div class="dashboard-container">
-        <aside class="sidebar">
-            <div class="sidebar-header"><h3>User Panel</h3></div>
-            <nav class="sidebar-nav">
-                <a href="reservations.php" class="nav-item active">📅 Back to List</a>
-            </nav>
-        </aside>
-
-        <main class="main-content">
-            <div class="top-bar">
-                <h1>Reschedule Booking #<?php echo $id; ?></h1>
+    <!-- Top Navbar -->
+    <nav class="topnavbar">
+        <div class="topnavbar-content">
+            <div class="topnavbar-brand">
+                <h2>🏨 Hotel Management</h2>
             </div>
+            <ul class="topnavbar-menu">
+                <li><a href="dashboard.php"><span>🏠</span> Beranda</a></li>
+                <li><a href="reservations.php" class="active"><span>📅</span> Reservasi Saya</a></li>
+                <li><a href="rooms.php"><span>🏨</span> Lihat Kamar</a></li>
+                <li><a href="fnb_new_order.php"><span>🍽️</span> Pesan F&B</a></li>
+                <li><a href="fnb_orders.php"><span>📋</span> Pesanan F&B</a></li>
+                <li><a href="profile.php"><span>👤</span> Profil</a></li>
+                <li><a href="../logout.php"><span>🚪</span> Keluar</a></li>
+            </ul>
+        </div>
+    </nav>
 
-            <section class="content-section">
-                <div class="edit-container">
-                    <?php if ($error): ?><div class="alert alert-error"><?php echo $error; ?></div><?php endif; ?>
-                    <?php if ($success): ?><div class="alert alert-success"><?php echo $success; ?></div><?php endif; ?>
+    <main class="main-content">
+        <div class="page-header">
+            <h1>Reschedule Booking #<?php echo $id; ?></h1>
+        </div>
 
-                    <div class="edit-card">
-                        <div class="info-box">
-                            <strong>Aturan Reschedule:</strong><br>
-                            Anda hanya dapat mengubah tanggal Check-in ke tanggal setelah <b><?php echo date('d M Y', strtotime($original_check_in)); ?></b>.<br>
-                            Durasi menginap akan tetap <b><?php echo $original_days; ?> malam</b>.
-                        </div>
+        <div class="edit-container">
+            <a href="reservations.php" class="btn btn-outline">← Kembali ke Daftar Reservasi</a>
 
-                        <form method="POST" action="">
-                            <div class="form-group">
-                                <label>Tipe Kamar</label>
-                                <input type="text" value="<?php echo htmlspecialchars($reservation['tipe_kamar']); ?>" disabled style="background: #f9f9f9;">
-                            </div>
+            <?php if ($error): ?>
+                <div class="alert alert-error"><?php echo $error; ?></div>
+            <?php endif; ?>
 
-                            <div class="form-group">
-                                <label for="check_in">Tanggal Check In Baru</label>
-                                <input type="date" id="check_in" name="check_in" 
-                                       required 
-                                       min="<?php echo date('Y-m-d', strtotime($original_check_in . ' +1 day')); ?>" 
-                                       value="<?php echo htmlspecialchars($reservation['check_in']); ?>">
-                            </div>
+            <?php if ($success): ?>
+                <div class="alert alert-success"><?php echo $success; ?></div>
+            <?php endif; ?>
 
-                            <div class="form-group">
-                                <label>Estimasi Check Out (Otomatis)</label>
-                                <input type="text" id="check_out_display" disabled value="<?php echo date('d M Y', strtotime($reservation['check_out'])); ?>">
-                            </div>
-
-                            <button type="submit" class="btn btn-primary" style="width: 100%;">Simpan Perubahan Tanggal</button>
-                        </form>
-                    </div>
+            <div class="edit-card">
+                <div class="info-box">
+                    <strong>Aturan Reschedule:</strong><br>
+                    Anda hanya dapat mengubah tanggal Check-in ke tanggal setelah <b><?php echo date('d M Y', strtotime($original_check_in)); ?></b>.<br>
+                    Durasi menginap akan tetap <b><?php echo $original_days; ?> malam</b>.
                 </div>
-            </section>
-        </main>
-    </div>
+
+                <form method="POST" action="">
+                    <div class="form-group">
+                        <label>Tipe Kamar</label>
+                        <input type="text" value="<?php echo htmlspecialchars($reservation['tipe_kamar']); ?>" disabled>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="check_in">Tanggal Check In Baru</label>
+                        <input type="date" id="check_in" name="check_in" 
+                               required 
+                               min="<?php echo date('Y-m-d', strtotime($original_check_in . ' +1 day')); ?>" 
+                               value="<?php echo htmlspecialchars($reservation['check_in']); ?>">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Estimasi Check Out (Otomatis)</label>
+                        <input type="text" id="check_out_display" disabled value="<?php echo date('d M Y', strtotime($reservation['check_out'])); ?>">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Simpan Perubahan Tanggal</button>
+                </form>
+            </div>
+        </div>
+    </main>
 
     <script>
         const checkInInput = document.getElementById('check_in');
@@ -171,7 +404,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 date.setDate(date.getDate() + originalDays);
                 
                 const options = { day: 'numeric', month: 'short', year: 'numeric' };
-                checkOutDisplay.value = date.toLocaleDateString('en-GB', options);
+                checkOutDisplay.value = date.toLocaleDateString('id-ID', options);
             }
         });
     </script>

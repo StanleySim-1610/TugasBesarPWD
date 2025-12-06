@@ -15,136 +15,341 @@ $rooms = $conn->query("SELECT * FROM kamar WHERE jumlah_tersedia > 0 ORDER BY ha
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Browse Rooms</title>
+    <title>Lihat Kamar - Hotel Management</title>
     <link rel="stylesheet" href="../../frontend/assets/css/dashboard.css">
     <style>
+        :root {
+            --chinese-red: #d32f2f;
+            --chinese-gold: #f0b343;
+            --chinese-dark: #8b0000;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #fff9f0 0%, #ffe4e1 100%);
+            min-height: 100vh;
+        }
+        
+        /* Top Navbar */
+        .top-navbar {
+            background: linear-gradient(135deg, var(--chinese-red) 0%, var(--chinese-dark) 100%);
+            color: white;
+            padding: 0;
+            box-shadow: 0 4px 15px rgba(211, 47, 47, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .navbar-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 30px;
+        }
+        
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px 0;
+        }
+        
+        .navbar-logo {
+            height: 50px;
+            filter: brightness(0) invert(1);
+        }
+        
+        .navbar-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .navbar-menu {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            list-style: none;
+        }
+        
+        .navbar-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 18px 20px;
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+            font-weight: 500;
+        }
+        
+        .navbar-link:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border-bottom-color: var(--chinese-gold);
+        }
+        
+        .navbar-link.active {
+            background: rgba(255, 255, 255, 0.15);
+            border-bottom-color: var(--chinese-gold);
+            color: white;
+        }
+        
+        .navbar-icon {
+            font-size: 1.2rem;
+        }
+        
+        /* Chinese Pattern */
+        .chinese-pattern {
+            background-image: 
+                repeating-linear-gradient(45deg, transparent, transparent 20px, rgba(240, 179, 67, 0.03) 20px, rgba(240, 179, 67, 0.03) 40px),
+                repeating-linear-gradient(-45deg, transparent, transparent 20px, rgba(211, 47, 47, 0.03) 20px, rgba(211, 47, 47, 0.03) 40px);
+        }
+        
+        /* Main Content */
+        .main-wrapper {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 30px;
+        }
+        
+        .page-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .page-title {
+            font-size: 2.5rem;
+            color: var(--chinese-red);
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(211, 47, 47, 0.1);
+        }
+        
+        .page-subtitle {
+            color: #666;
+            font-size: 1.1rem;
+        }
+        
         .rooms-showcase {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
             gap: 30px;
         }
+        
         .showcase-card {
-            background: white;
+            background: linear-gradient(to bottom, white, #fffbf5);
             border-radius: 15px;
             overflow: hidden;
             box-shadow: 0 5px 20px rgba(0,0,0,0.1);
             transition: all 0.3s ease;
             display: flex;
             flex-direction: column;
+            border: 2px solid var(--chinese-gold);
         }
+        
         .showcase-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            box-shadow: 0 15px 40px rgba(211, 47, 47, 0.3);
         }
+        
         .showcase-image {
             height: 220px;
             width: 100%;
             padding: 0;
             background: #eee;
+            position: relative;
+            overflow: hidden;
         }
+        
+        .showcase-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.1) 100%);
+        }
+        
         .showcase-image img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            transition: transform 0.5s ease;
         }
+        
+        .showcase-card:hover .showcase-image img {
+            transform: scale(1.1);
+        }
+        
         .showcase-content {
             padding: 25px;
             flex: 1;
             display: flex;
             flex-direction: column;
         }
+        
         .showcase-header {
             display: flex;
             justify-content: space-between;
             align-items: start;
             margin-bottom: 15px;
         }
+        
         .showcase-title {
-            font-size: 22px;
-            color: #333;
+            font-size: 1.5rem;
+            color: var(--chinese-red);
             font-weight: 700;
         }
+        
         .showcase-badge {
-            background: #4CAF50;
+            background: linear-gradient(135deg, #4CAF50, #2e7d32);
             color: white;
-            padding: 5px 12px;
+            padding: 6px 14px;
             border-radius: 15px;
-            font-size: 11px;
+            font-size: 0.85rem;
             font-weight: 600;
+            box-shadow: 0 2px 8px rgba(76, 175, 80, 0.3);
         }
+        
         .showcase-description {
             color: #666;
             line-height: 1.6;
             margin-bottom: 20px;
-            font-size: 14px;
+            font-size: 0.95rem;
             flex-grow: 1;
         }
+        
         .showcase-price {
-            font-size: 28px;
-            color: var(--brand-pink);
+            font-size: 1.8rem;
+            color: var(--chinese-red);
             font-weight: 700;
             margin-bottom: 20px;
         }
+        
         .showcase-price span {
-            font-size: 14px;
+            font-size: 0.9rem;
             color: #999;
             font-weight: 400;
         }
+        
         .showcase-features {
             display: flex;
-            gap: 15px;
+            gap: 10px;
             margin-bottom: 20px;
             flex-wrap: wrap;
         }
+        
         .feature-tag {
-            background: rgba(255,122,137,0.06);
-            color: var(--brand-pink);
-            padding: 5px 12px;
+            background: linear-gradient(135deg, rgba(211, 47, 47, 0.1), rgba(240, 179, 67, 0.1));
+            color: var(--chinese-red);
+            padding: 6px 12px;
             border-radius: 15px;
-            font-size: 12px;
+            font-size: 0.85rem;
             font-weight: 600;
+            border: 1px solid rgba(211, 47, 47, 0.2);
+        }
+        
+        .btn {
+            padding: 12px 25px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            display: inline-block;
+            text-align: center;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--chinese-red), var(--chinese-dark));
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(211, 47, 47, 0.4);
+        }
+        
+        @media (max-width: 768px) {
+            .navbar-menu {
+                display: none;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="dashboard-container">
-        <aside class="sidebar">
-            <div class="sidebar-header">
-                <img src="../../frontend/assets/logo.png?v=2" alt="Logo" class="sidebar-logo">
-                <!-- <h3>User Panel</h3> -->
+    <!-- Top Navbar -->
+    <nav class="top-navbar">
+        <div class="navbar-container">
+            <div class="navbar-brand">
+                <img src="../../frontend/assets/logo.png?v=2" alt="Logo" class="navbar-logo">
+                <span class="navbar-title">Hotel Management</span>
             </div>
-            <nav class="sidebar-nav">
-                <a href="dashboard.php" class="nav-item">
-                    <span class="nav-icon">🏠</span>
-                    Dashboard
-                </a>
-                <a href="reservations.php" class="nav-item">
-                    <span class="nav-icon">📅</span>
-                    My Reservations
-                </a>
-                <a href="rooms.php" class="nav-item active">
-                    <span class="nav-icon">🏨</span>
-                    Browse Rooms
-                </a>
-                <a href="profile.php" class="nav-item">
-                    <span class="nav-icon">👤</span>
-                    Profile
-                </a>
-                <a href="../logout.php" class="nav-item">
-                    <span class="nav-icon">🚪</span>
-                    Logout
-                </a>
-            </nav>
-        </aside>
+            <ul class="navbar-menu">
+                <li class="navbar-item">
+                    <a href="dashboard.php" class="navbar-link">
+                        <span class="navbar-icon">🏠</span>
+                        <span>Beranda</span>
+                    </a>
+                </li>
+                <li class="navbar-item">
+                    <a href="reservations.php" class="navbar-link">
+                        <span class="navbar-icon">📅</span>
+                        <span>Reservasi Saya</span>
+                    </a>
+                </li>
+                <li class="navbar-item">
+                    <a href="rooms.php" class="navbar-link active">
+                        <span class="navbar-icon">🏨</span>
+                        <span>Lihat Kamar</span>
+                    </a>
+                </li>
+                <li class="navbar-item">
+                    <a href="fnb_new_order.php" class="navbar-link">
+                        <span class="navbar-icon">🍽️</span>
+                        <span>Pesan F&B</span>
+                    </a>
+                </li>
+                <li class="navbar-item">
+                    <a href="fnb_orders.php" class="navbar-link">
+                        <span class="navbar-icon">📋</span>
+                        <span>Pesanan F&B</span>
+                    </a>
+                </li>
+                <li class="navbar-item">
+                    <a href="profile.php" class="navbar-link">
+                        <span class="navbar-icon">👤</span>
+                        <span>Profil</span>
+                    </a>
+                </li>
+                <li class="navbar-item">
+                    <a href="../logout.php" class="navbar-link">
+                        <span class="navbar-icon">🚪</span>
+                        <span>Keluar</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
 
-        <main class="main-content">
-            <div class="top-bar">
-                <h1>Browse Available Rooms</h1>
-            </div>
-
-            <section class="content-section">
-                <h2>Our Premium Rooms</h2>
-                <p style="color: #666; margin-bottom: 30px;">Choose the perfect room for your stay</p>
+    <!-- Main Content -->
+    <div class="main-wrapper chinese-pattern">
+        <div class="page-header">
+            <h1 class="page-title">🏨 Kamar Tersedia</h1>
+            <p class="page-subtitle">Pilih kamar terbaik untuk menginap Anda</p>
+        </div>
                 
                 <div class="rooms-showcase">
                     <?php while($room = $rooms->fetch_assoc()): 
@@ -170,7 +375,7 @@ $rooms = $conn->query("SELECT * FROM kamar WHERE jumlah_tersedia > 0 ORDER BY ha
                         <div class="showcase-content">
                             <div class="showcase-header">
                                 <h3 class="showcase-title"><?php echo htmlspecialchars($room['tipe_kamar']); ?></h3>
-                                <span class="showcase-badge"><?php echo $room['jumlah_tersedia']; ?> Available</span>
+                                <span class="showcase-badge"><?php echo $room['jumlah_tersedia']; ?> Tersedia</span>
                             </div>
                             
                             <p class="showcase-description">
@@ -179,24 +384,22 @@ $rooms = $conn->query("SELECT * FROM kamar WHERE jumlah_tersedia > 0 ORDER BY ha
                             
                             <div class="showcase-features">
                                 <span class="feature-tag">🛏️ King Bed</span>
-                                <span class="feature-tag">📶 Free WiFi</span>
+                                <span class="feature-tag">📶 WiFi Gratis</span>
                                 <span class="feature-tag">❄️ AC</span>
                                 <span class="feature-tag">📺 TV</span>
                             </div>
                             
                             <div class="showcase-price">
-                                <?php echo formatRupiah($room['harga']); ?> <span>/night</span>
+                                <?php echo formatRupiah($room['harga']); ?> <span>/malam</span>
                             </div>
                             
                             <a href="booking.php?room=<?php echo $room['id_kamar']; ?>" class="btn btn-primary" style="width: 100%;">
-                                Book This Room
+                                Pesan Kamar Ini
                             </a>
                         </div>
                     </div>
                     <?php endwhile; ?>
                 </div>
-            </section>
-        </main>
-    </div>
+        </div>
 </body>
 </html>
