@@ -4,6 +4,7 @@
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <title>Lentera Nusantara Hotel</title>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
       <link rel="stylesheet" href="../frontend/assets/css/style.css">
   </head>
   <body>
@@ -18,20 +19,20 @@
             <div class="navbar">
                 <img class="logo" src="../frontend/assets/logo.png" alt="Hotel Logo">
                 <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#rooms">Rooms</a></li>
-                    <li><a href="#facilities">Facilities</a></li>
-                    <li><a href="../backend/login.php" class="btn-login">Login</a></li>
-                    <li><a href="../backend/register.php" class="btn-register">Register</a></li>
+                    <li><a href="index.html"><i class="fas fa-home"></i> Beranda</a></li>
+                    <li><a href="#about"><i class="fas fa-info-circle"></i> Tentang</a></li>
+                    <li><a href="#rooms"><i class="fas fa-bed"></i> Kamar</a></li>
+                    <li><a href="#facilities"><i class="fas fa-concierge-bell"></i> Fasilitas</a></li>
+                    <li><a href="../backend/login.php" class="btn-login"><i class="fas fa-sign-in-alt"></i> Masuk</a></li>
+                    <li><a href="../backend/register.php" class="btn-register"><i class="fas fa-user-plus"></i> Daftar</a></li>
                 </ul>
             </div>
             <div class="content">
                 <h1>LENTERA NUSANTARA</h1>
                 <p class="subtitle">Experience the finest hospitality and comfort</p>
                 <div>
-                    <button type="button" onclick="location.href='../backend/register.php'">Book Now</button>
-                    <button type="button" class="btn-secondary" onclick="location.href='#rooms'">Explore Rooms</button>
+                    <button type="button" onclick="location.href='../backend/register.php'">Pesan Sekarang</button>
+                    <button type="button" class="btn-secondary" onclick="location.href='#rooms'">Lihat Kamar</button>
                 </div>
             </div>
         </div>
@@ -46,22 +47,22 @@
                 </p>x`
                 <div class="features">
                     <div class="feature-item">
-                        <div class="feature-icon">🏨</div>
+                        <i class="fas fa-hotel"></i>
                         <h3>Kamar Mewah</h3>
                         <p>Kamar dengan desain modern dan fasilitas lengkap</p>
                     </div>
                     <div class="feature-item">
-                        <div class="feature-icon">🍽️</div>
+                        <i class="fas fa-utensils"></i>
                         <h3>Restaurant & Bar</h3>
                         <p>Nikmati hidangan chinese lokal yang lezat dari chef terbaik</p>
                     </div>
                     <div class="feature-item">
-                        <div class="feature-icon">🏊</div>
+                        <i class="fas fa-swimming-pool"></i>
                         <h3>Swimming Pool</h3>
                         <p>Kolam renang dengan pemandangan menakjubkan</p>
                     </div>
                     <div class="feature-item">
-                        <div class="feature-icon">🍵</div>
+                        <i class="fas fa-mug-hot"></i>
                         <h3>Welcome Tea</h3>
                         <p>Nikmati chinese tea yang otentik</p>
                     </div>
@@ -72,7 +73,7 @@
         <!-- Rooms Preview Section -->
         <section id="rooms" class="rooms-section">
             <div class="container">
-                <h2 class="section-title">Our Rooms</h2>
+                <h2 class="section-title">Kamar Kami</h2>
                 <p class="section-description">Pilih kamar yang sesuai dengan kebutuhan Anda</p>
                 <div class="rooms-grid">
                     <div class="room-card">
@@ -115,7 +116,7 @@
                     </div>
                 </div>
                 <div class="text-center">
-                    <button class="btn-explore" onclick="location.href='register.php'">Book Your Stay</button>
+                    <button class="btn-explore" onclick="location.href='register.php'">Pesan Menginap</button>
                 </div>
             </div>
         </section>
@@ -123,27 +124,37 @@
         <!-- Facilities Section -->
         <section id="facilities" class="facilities-section">
             <div class="container">
-                <h2 class="section-title">Hotel Facilities</h2>
+                <h2 class="section-title">Fasilitas Hotel</h2>
                 <div class="facilities-grid">
                     <div class="facility-item">
-                        <div class="facility-icon">📶</div>
-                        <h4>Free WiFi</h4>
+                        <div class="facility-content">
+                            <i class="fas fa-wifi"></i>
+                            <h4>Free WiFi</h4>
+                        </div>
                     </div>
                     <div class="facility-item">
-                        <div class="facility-icon">🅿️</div>
-                        <h4>Free Parking</h4>
+                        <div class="facility-content">
+                            <i class="fas fa-parking"></i>
+                            <h4>Free Parking</h4>
+                        </div>
                     </div>
                     <div class="facility-item">
-                        <div class="facility-icon">🏋️</div>
-                        <h4>Fitness Center</h4>
+                        <div class="facility-content">
+                            <i class="fas fa-dumbbell"></i>
+                            <h4>Fitness Center</h4>
+                        </div>
                     </div>
                     <div class="facility-item">
-                        <div class="facility-icon">🔒</div>
-                        <h4>24/7 Security</h4>
+                        <div class="facility-content">
+                            <i class="fas fa-shield-alt"></i>
+                            <h4>24/7 Security</h4>
+                        </div>
                     </div>
                     <div class="facility-item">
-                        <div class="facility-icon">🧹</div>
-                        <h4>Room Service</h4>
+                        <div class="facility-content">
+                            <i class="fas fa-concierge-bell"></i>
+                            <h4>Room Service</h4>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -159,9 +170,9 @@
                     </div>
                     <div class="footer-section">
                         <h3>Contact Us</h3>
-                        <p>📧 lensacontact@gmail.com</p>
-                        <p>📞 +62 123 4567 890</p>
-                        <p>📍 PIK 2 Jakarta, Indonesia</p>
+                        <p><i class="fas fa-envelope"></i> lensacontact@gmail.com</p>
+                        <p><i class="fas fa-phone"></i> +62 123 4567 890</p>
+                        <p><i class="fas fa-map-marker-alt"></i> PIK 2 Jakarta, Indonesia</p>
                         <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31739.39296090024!2d106.6717301738681!3d-6.073404310472368!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e6a0500e969a6f3%3A0x103088721def0ead!2sPIK%202!5e0!3m2!1sid!2sid!4v1764639172876!5m2!1sid!2sid" width="200" height="200" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                     </div>
                     <div class="footer-section">

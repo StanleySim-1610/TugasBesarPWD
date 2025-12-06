@@ -76,13 +76,15 @@ $days = calculateDays($reservation['check_in'], $reservation['check_out']);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pembayaran - Reservasi #<?php echo $reservation_id; ?></title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         :root {
-            --chinese-red: #d32f2f;
-            --chinese-gold: #f0b343;
-            --chinese-dark: #8b0000;
+            --rose-pink: #ff6b7d;
+            --soft-yellow: #fdff94;
+            --deep-rose: #ff4f63;
             --white: #ffffff;
-            --light-bg: #fff9f0;
+            --light-bg: #fffef9;
+            --cream: #fff0f2;
         }
 
         * {
@@ -101,7 +103,7 @@ $days = calculateDays($reservation['check_in'], $reservation['check_out']);
             background: linear-gradient(180deg, #ff6b7d 0%, #ff8a94 100%);
             color: white;
             padding: 0;
-            box-shadow: 0 4px 15px rgba(211, 47, 47, 0.3);
+            box-shadow: 0 4px 15px rgba(255, 107, 125, 0.3);
             position: sticky;
             top: 0;
             z-index: 1000;
@@ -124,7 +126,7 @@ $days = calculateDays($reservation['check_in'], $reservation['check_out']);
         }
 
         .topnavbar-brand h2 {
-            color: var(--chinese-gold);
+            color: var(--soft-yellow);
             font-size: 24px;
             font-weight: 700;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
@@ -202,30 +204,30 @@ $days = calculateDays($reservation['check_in'], $reservation['check_out']);
             background: white;
             padding: 30px;
             border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(211, 47, 47, 0.1);
+            box-shadow: 0 4px 15px rgba(255, 107, 125, 0.15);
             margin-bottom: 25px;
-            border: 2px solid var(--chinese-gold);
+            border: 2px solid #ffb3c1;
         }
 
         .payment-card h2 {
-            color: var(--chinese-red);
+            color: var(--rose-pink);
             margin-bottom: 20px;
             font-size: 24px;
         }
 
         .reservation-summary {
-            background: linear-gradient(135deg, #fff9f0 0%, #ffe4e1 100%);
+            background: linear-gradient(135deg, #fff0f2 0%, #ffe4e7 100%);
             padding: 20px;
             border-radius: 10px;
             margin-bottom: 25px;
-            border: 2px solid var(--chinese-gold);
+            border: 2px solid #ffb3c1;
         }
 
         .summary-row {
             display: flex;
             justify-content: space-between;
             padding: 10px 0;
-            border-bottom: 1px solid rgba(211, 47, 47, 0.1);
+            border-bottom: 1px solid rgba(255, 107, 125, 0.1);
             color: #333;
         }
 
@@ -236,9 +238,9 @@ $days = calculateDays($reservation['check_in'], $reservation['check_out']);
         .summary-total {
             font-size: 24px;
             font-weight: 700;
-            color: var(--chinese-red);
+            color: var(--rose-pink);
             padding-top: 15px;
-            border-top: 2px solid var(--chinese-gold);
+            border-top: 2px solid #ffb3c1;
             margin-top: 15px;
         }
 
@@ -269,13 +271,13 @@ $days = calculateDays($reservation['check_in'], $reservation['check_out']);
         }
 
         .payment-method input[type="radio"]:checked + label {
-            border-color: var(--chinese-gold);
-            background: linear-gradient(135deg, #fff9f0 0%, #ffe4e1 100%);
-            box-shadow: 0 4px 15px rgba(240, 179, 67, 0.3);
+            border-color: var(--rose-pink);
+            background: linear-gradient(135deg, #fff0f2 0%, #ffe4e7 100%);
+            box-shadow: 0 4px 15px rgba(255, 107, 125, 0.3);
         }
 
         .payment-method label:hover {
-            border-color: var(--chinese-gold);
+            border-color: var(--rose-pink);
         }
 
         .payment-icon {
@@ -295,7 +297,7 @@ $days = calculateDays($reservation['check_in'], $reservation['check_out']);
         }
 
         .success-message h2 {
-            color: var(--chinese-red);
+            color: var(--rose-pink);
             margin-bottom: 15px;
         }
 
@@ -313,24 +315,24 @@ $days = calculateDays($reservation['check_in'], $reservation['check_out']);
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, var(--chinese-red) 0%, var(--chinese-dark) 100%);
+            background: linear-gradient(135deg, var(--rose-pink) 0%, #ff8a94 50%, var(--soft-yellow) 100%);
             color: white;
-            box-shadow: 0 4px 15px rgba(211, 47, 47, 0.3);
+            box-shadow: 0 4px 15px rgba(255, 107, 125, 0.3);
         }
 
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(211, 47, 47, 0.4);
+            box-shadow: 0 6px 20px rgba(255, 107, 125, 0.4);
         }
 
         .btn-outline {
             background: white;
-            color: var(--chinese-red);
-            border: 2px solid var(--chinese-red);
+            color: var(--rose-pink);
+            border: 2px solid var(--rose-pink);
         }
 
         .btn-outline:hover {
-            background: var(--chinese-red);
+            background: var(--rose-pink);
             color: white;
         }
     </style>
@@ -340,16 +342,15 @@ $days = calculateDays($reservation['check_in'], $reservation['check_out']);
     <nav class="topnavbar">
         <div class="topnavbar-content">
             <div class="topnavbar-brand">
-                <h2>🏨 Hotel Management</h2>
+                <h2>LENTERA NUSANTARA</h2>
             </div>
             <ul class="topnavbar-menu">
-                <li><a href="dashboard.php"><span>🏠</span> Beranda</a></li>
-                <li><a href="reservations.php" class="active"><span>📅</span> Reservasi Saya</a></li>
-                <li><a href="rooms.php"><span>🏨</span> Lihat Kamar</a></li>
-                <li><a href="fnb_new_order.php"><span>🍽️</span> Pesan F&B</a></li>
-                <li><a href="fnb_orders.php"><span>📋</span> Pesanan F&B</a></li>
-                <li><a href="profile.php"><span>👤</span> Profil</a></li>
-                <li><a href="../logout.php"><span>🚪</span> Keluar</a></li>
+                <li><a href="dashboard.php"><i class="fas fa-home"></i> Beranda</a></li>
+                <li><a href="reservations.php" class="active"><i class="fas fa-calendar-check"></i> Reservasi Saya</a></li>
+                <li><a href="rooms.php"><i class="fas fa-bed"></i> Lihat Kamar</a></li>
+                <li><a href="fnb_new_order.php"><i class="fas fa-concierge-bell"></i> Dining</a></li>
+                <li><a href="profile.php"><i class="fas fa-user-circle"></i> Profil</a></li>
+                <li><a href="../logout.php"><i class="fas fa-sign-out-alt"></i> Keluar</a></li>
             </ul>
         </div>
     </nav>

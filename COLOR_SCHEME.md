@@ -1,18 +1,24 @@
 # Color Scheme - Lentera Nusantara Hotel
 
-## Inspired by InterContinental Jakarta - Luxury & Sophistication
+## Modern Luxury Hotel Theme - Elegant & Vibrant
 
 ## Primary Colors
-- **Deep Navy**: #1a2332 (Main background - sophisticated, elegant)
-- **Warm Gold**: #c9a55a (Primary accent - luxury, premium)
-- **Light Gold**: #e8d7b5 (Subtle highlights)
-- **Dark Charcoal**: #2c2c2c (Text primary)
+- **Rose Pink**: #ff6b7d (Main accent - modern, elegant, inviting)
+- **Soft Yellow**: #fdff94 (Secondary accent - bright, cheerful, luxury)
+- **Deep Rose**: #ff4f63 (Hover states, emphasis)
+- **Light Pink**: #ffb3c1 (Subtle highlights, backgrounds)
 
 ## Secondary Colors
-- **Pure White**: #ffffff (Cards, sections, text on dark)
-- **Light Gray**: #f5f5f5 (Page backgrounds)
-- **Medium Gray**: #e0e0e0 (Borders, dividers)
+- **Pure White**: #ffffff (Cards, sections, clean backgrounds)
+- **Cream**: #fffef9 (Page backgrounds - warm & inviting)
+- **Light Gray**: #f5f5f5 (Alternative backgrounds)
 - **Soft Gray**: #666666 (Secondary text)
+- **Dark Charcoal**: #2c2c2c (Primary text)
+
+## Gradient
+- **Main Gradient**: `linear-gradient(135deg, #ff6b7d 0%, #fdff94 100%)`
+- **Navbar Gradient**: `linear-gradient(180deg, #ff6b7d 0%, #ff8a94 100%)`
+- **Button Gradient**: `linear-gradient(135deg, #ff6b7d 0%, #ff8a94 50%, #fdff94 100%)`
 
 ## Status Colors
 - **Success**: #2e7d32 (Green - confirmed, paid)
@@ -20,28 +26,45 @@
 - **Error**: #c62828 (Red - cancelled, errors)
 - **Info**: #0288d1 (Blue - information)
 
-## Usage
-- **Navbar**: Deep Navy (#1a2332) with Gold (#c9a55a) logo/accents
-- **Hero Section**: Full-width image with dark overlay
-- **Buttons Primary**: Gold (#c9a55a) background with dark text
-- **Buttons Secondary**: Transparent with gold border and gold text
-- **Cards**: White background with subtle shadow
-- **Borders**: Light gray (#e0e0e0)
-- **Background**: Light gray (#f5f5f5) or white
-- **Text Primary**: Dark charcoal (#2c2c2c)
-- **Text Secondary**: Soft gray (#666)
-- **Headings**: Deep Navy (#1a2332) or Gold (#c9a55a) for emphasis
+## Usage Guidelines
+
+### Frontend (Public Pages - Before Login)
+- **Navbar**: Pink gradient (#ff6b7d to #ff8a94) with white text
+- **Hero Section**: Full-width image/video with subtle overlay
+- **Background**: Cream (#fffef9) or light gradient
+- **Buttons Primary**: Pink-yellow gradient with white text
+- **Buttons Secondary**: White with pink border
+- **Cards**: White with pink/yellow accent borders
+- **Icons**: Elegant line icons or gradient-filled icons
+- **Typography**: Light, airy, welcoming
+
+### Backend (User Dashboard - After Login)
+- **Navbar**: Same pink gradient for consistency
+- **Background**: Clean white or very light cream
+- **Sidebar**: Light pink background (#ffb3c1) with rose pink active states
+- **Cards**: White with subtle shadows and pink accents
+- **Buttons Primary**: Rose pink (#ff6b7d) solid color
+- **Tables**: White with pink headers
+- **Status Badges**: Colored backgrounds with matching text
+- **Typography**: Professional, clean, organized
+
+## Visual Consistency Strategy
+- **Same navbar** on both frontend and backend for brand recognition
+- **Frontend**: More visual, image-heavy, marketing-focused
+- **Backend**: More functional, data-focused, organized layout
+- **Consistent use of pink-yellow** throughout for brand identity
 
 ## Typography
 - Font Family: 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif
-- Headings: Bold, letter-spacing: 1-2px, uppercase for emphasis
-- Body: Regular, line-height: 1.8 for readability
-- Large headings: 2.5rem - 3.5rem
-- Section titles: 2rem - 2.5rem
+- Headings: Bold (700), letter-spacing: 1-2px
+- Body: Regular (400), line-height: 1.8
+- Frontend headings: Larger, more dramatic (3-4rem)
+- Backend headings: Smaller, professional (1.5-2.5rem)
 
 ## Design Principles
-- **Minimalist**: Clean, spacious layouts with generous whitespace
-- **Elegant**: Dark navy creates sophistication
-- **Luxury**: Gold accents signal premium quality
-- **Professional**: High contrast, excellent readability
-- **Modern**: Flat design, subtle shadows, no gradients
+- **Modern**: Vibrant pink-yellow creates contemporary feel
+- **Elegant**: Smooth gradients and clean lines
+- **Luxury**: High-quality imagery and spacious layouts
+- **Professional**: Well-organized content hierarchy
+- **Consistent**: Same color palette, different implementations
+- **Accessible**: High contrast text, clear navigation

@@ -27,7 +27,7 @@ $current_page = basename($_SERVER['PHP_SELF'], '.php');
         background: linear-gradient(180deg, #ff6b7d 0%, #ff8a94 100%);
         color: white;
         padding: 0;
-        box-shadow: 0 4px 15px rgba(211, 47, 47, 0.3);
+        box-shadow: 0 4px 15px rgba(255, 107, 125, 0.3);
         position: sticky;
         top: 0;
         z-index: 1000;
@@ -119,52 +119,48 @@ $current_page = basename($_SERVER['PHP_SELF'], '.php');
     }
 </style>
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
 <nav class="top-navbar">
     <div class="navbar-container">
         <div class="navbar-brand">
             <img src="../../frontend/assets/logo.png?v=2" alt="Logo" class="navbar-logo">
-            <span class="navbar-title">Hotel Management</span>
+            <span class="navbar-title">LENTERA NUSANTARA</span>
         </div>
         <ul class="navbar-menu">
             <li class="navbar-item">
                 <a href="dashboard.php" class="navbar-link <?php echo ($current_page == 'dashboard') ? 'active' : ''; ?>">
-                    <span class="navbar-icon">🏠</span>
+                    <i class="fas fa-home navbar-icon"></i>
                     <span>Beranda</span>
                 </a>
             </li>
             <li class="navbar-item">
                 <a href="reservations.php" class="navbar-link <?php echo ($current_page == 'reservations') ? 'active' : ''; ?>">
-                    <span class="navbar-icon">📅</span>
+                    <i class="fas fa-calendar-check navbar-icon"></i>
                     <span>Reservasi Saya</span>
                 </a>
             </li>
             <li class="navbar-item">
                 <a href="rooms.php" class="navbar-link <?php echo ($current_page == 'rooms') ? 'active' : ''; ?>">
-                    <span class="navbar-icon">🏨</span>
+                    <i class="fas fa-bed navbar-icon"></i>
                     <span>Lihat Kamar</span>
                 </a>
             </li>
             <li class="navbar-item">
                 <a href="fnb_new_order.php" class="navbar-link <?php echo ($current_page == 'fnb_new_order') ? 'active' : ''; ?>">
-                    <span class="navbar-icon">🍽️</span>
-                    <span>Pesan F&B</span>
-                </a>
-            </li>
-            <li class="navbar-item">
-                <a href="fnb_orders.php" class="navbar-link <?php echo ($current_page == 'fnb_orders') ? 'active' : ''; ?>">
-                    <span class="navbar-icon">📋</span>
-                    <span>Daftar Pesanan F&B</span>
+                    <i class="fas fa-concierge-bell navbar-icon"></i>
+                    <span>Dining</span>
                 </a>
             </li>
             <li class="navbar-item">
                 <a href="profile.php" class="navbar-link <?php echo ($current_page == 'profile') ? 'active' : ''; ?>">
-                    <span class="navbar-icon">👤</span>
+                    <i class="fas fa-user-circle navbar-icon"></i>
                     <span>Profil</span>
                 </a>
             </li>
             <li class="navbar-item">
                 <a href="../logout.php" class="navbar-link">
-                    <span class="navbar-icon">🚪</span>
+                    <i class="fas fa-sign-out-alt navbar-icon"></i>
                     <span>Keluar</span>
                 </a>
             </li>

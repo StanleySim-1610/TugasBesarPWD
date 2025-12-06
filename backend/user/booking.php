@@ -70,6 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Booking Kamar - <?php echo htmlspecialchars($room['tipe_kamar']); ?></title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         :root {
             --primary-pink: #ff6b7d;
@@ -94,7 +95,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             background: linear-gradient(180deg, #ff6b7d 0%, #ff8a94 100%);
             color: white;
             padding: 0;
-            box-shadow: 0 4px 15px rgba(211, 47, 47, 0.3);
+            box-shadow: 0 4px 15px rgba(255, 107, 125, 0.3);
             position: sticky;
             top: 0;
             z-index: 1000;
@@ -279,7 +280,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         .form-group input:focus {
             outline: none;
             border-color: #fdff94;
-            box-shadow: 0 0 0 3px rgba(240, 179, 67, 0.1);
+            box-shadow: 0 0 0 3px rgba(253, 255, 148, 0.1);
         }
 
         .price-summary {
@@ -326,12 +327,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         .btn-primary {
             background: linear-gradient(135deg, #ff6b7d 0%, #ff8a94 100%);
             color: white;
-            box-shadow: 0 4px 15px rgba(211, 47, 47, 0.3);
+            box-shadow: 0 4px 15px rgba(255, 107, 125, 0.3);
         }
 
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(211, 47, 47, 0.4);
+            box-shadow: 0 6px 20px rgba(255, 107, 125, 0.4);
         }
     </style>
 </head>
@@ -340,16 +341,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <nav class="topnavbar">
         <div class="topnavbar-content">
             <div class="topnavbar-brand">
-                <h2>🏨 Hotel Management</h2>
+                <h2>LENTERA NUSANTARA</h2>
             </div>
             <ul class="topnavbar-menu">
-                <li><a href="dashboard.php"><span>🏠</span> Beranda</a></li>
-                <li><a href="reservations.php"><span>📅</span> Reservasi Saya</a></li>
-                <li><a href="rooms.php" class="active"><span>🏨</span> Lihat Kamar</a></li>
-                <li><a href="fnb_new_order.php"><span>🍽️</span> Pesan F&B</a></li>
-                <li><a href="fnb_orders.php"><span>📋</span> Pesanan F&B</a></li>
-                <li><a href="profile.php"><span>👤</span> Profil</a></li>
-                <li><a href="../logout.php"><span>🚪</span> Keluar</a></li>
+                <li><a href="dashboard.php"><i class="fas fa-home"></i> Beranda</a></li>
+                <li><a href="reservations.php"><i class="fas fa-calendar-check"></i> Reservasi Saya</a></li>
+                <li><a href="rooms.php" class="active"><i class="fas fa-bed"></i> Lihat Kamar</a></li>
+                <li><a href="fnb_new_order.php"><i class="fas fa-concierge-bell"></i> Dining</a></li>
+                <li><a href="profile.php"><i class="fas fa-user-circle"></i> Profil</a></li>
+                <li><a href="../logout.php"><i class="fas fa-sign-out-alt"></i> Keluar</a></li>
             </ul>
         </div>
     </nav>

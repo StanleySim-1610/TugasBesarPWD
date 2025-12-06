@@ -122,7 +122,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['metode'])) {
         
         .page-title {
             font-size: 2.2rem;
-            color: var(--navy-blue);
+            color: var(--rose-pink);
             text-align: center;
             margin-bottom: 35px;
         }
@@ -131,21 +131,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['metode'])) {
             background: white;
             border-radius: 15px;
             padding: 40px;
-            box-shadow: 0 4px 20px rgba(26, 58, 82, 0.1);
-            border: 2px solid var(--light-gold);
+            box-shadow: 0 4px 20px rgba(255, 107, 125, 0.15);
+            border: 2px solid #ffb3c1;
         }
         
         .reservation-section {
-            background: var(--soft-blue);
+            background: #fff0f2;
             padding: 20px;
             border-radius: 12px;
             margin-bottom: 25px;
-            border-left: 4px solid var(--navy-blue);
+            border-left: 4px solid var(--rose-pink);
         }
         
         .reservation-header {
             font-size: 1.2rem;
-            color: var(--navy-blue);
+            color: var(--rose-pink);
             margin-bottom: 12px;
             font-weight: 700;
         }
@@ -186,7 +186,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['metode'])) {
         .order-item-price .price {
             font-size: 1.2rem;
             font-weight: 700;
-            color: var(--navy-blue);
+            color: var(--rose-pink);
         }
         
         .order-item-price .qty {
@@ -198,15 +198,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['metode'])) {
             display: flex;
             justify-content: space-between;
             padding: 15px;
-            background: linear-gradient(135deg, #e8f1f5 0%, #d4e4ec 100%);
+            background: linear-gradient(135deg, #fff0f2 0%, #ffe4e7 100%);
             border-radius: 8px;
             margin-top: 10px;
             font-weight: 700;
-            color: var(--navy-blue);
+            color: var(--rose-pink);
         }
         
         .payment-summary {
-            background: linear-gradient(135deg, var(--navy-blue) 0%, #2c5f8d 100%);
+            background: linear-gradient(135deg, var(--rose-pink) 0%, #ff8a94 100%);
             padding: 30px;
             border-radius: 12px;
             margin: 30px 0;
@@ -216,7 +216,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['metode'])) {
         .summary-title {
             font-size: 1.5rem;
             margin-bottom: 20px;
-            color: var(--gold);
+            color: var(--soft-yellow);
         }
         
         .summary-total {
@@ -235,7 +235,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['metode'])) {
         .summary-total-amount {
             font-size: 2.2rem;
             font-weight: 700;
-            color: var(--gold);
+            color: var(--soft-yellow);
         }
         
         .payment-methods {
@@ -244,7 +244,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['metode'])) {
         
         .payment-methods-title {
             font-size: 1.3rem;
-            color: var(--navy-blue);
+            color: var(--rose-pink);
             margin-bottom: 20px;
             font-weight: 700;
         }
@@ -268,7 +268,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['metode'])) {
         .payment-method-label {
             display: block;
             padding: 20px;
-            background: var(--soft-blue);
+            background: #fff0f2;
             border: 2px solid transparent;
             border-radius: 12px;
             text-align: center;
@@ -279,14 +279,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['metode'])) {
         }
         
         .payment-method-option input[type="radio"]:checked + .payment-method-label {
-            background: var(--gold);
-            border-color: var(--navy-blue);
-            color: var(--navy-blue);
+            background: var(--soft-yellow);
+            border-color: var(--rose-pink);
+            color: var(--rose-pink);
             transform: scale(1.05);
         }
         
         .payment-method-label:hover {
-            border-color: var(--gold);
+            border-color: var(--rose-pink);
         }
         
         .payment-icon {
@@ -323,15 +323,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['metode'])) {
         
         .btn-submit {
             padding: 15px 40px;
-            background: linear-gradient(135deg, var(--gold) 0%, #c49b2a 100%);
-            color: var(--dark-navy);
+            background: linear-gradient(135deg, var(--rose-pink) 0%, #ff8a94 50%, var(--soft-yellow) 100%);
+            color: white;
             border: none;
             border-radius: 10px;
             font-size: 1.1rem;
             font-weight: 700;
             cursor: pointer;
             transition: all 0.3s;
-            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+            box-shadow: 0 4px 15px rgba(255, 107, 125, 0.4);
         }
         
         .btn-submit:hover {
@@ -356,7 +356,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['metode'])) {
         <?php endif; ?>
         
         <div class="payment-container">
-            <h2 style="color: var(--navy-blue); margin-bottom: 25px; font-size: 1.5rem;">📋 Rincian Pesanan</h2>
+            <h2 style="color: var(--rose-pink); margin-bottom: 25px; font-size: 1.5rem;">📋 Rincian Pesanan</h2>
             
             <?php foreach ($orders_by_reservation as $res_id => $group): ?>
                 <div class="reservation-section">

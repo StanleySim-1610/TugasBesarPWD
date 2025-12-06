@@ -48,6 +48,7 @@ $user_orders = $conn->query("
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>F&B Ordering - User</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="../../frontend/assets/css/dashboard.css">
     <style>
         .tabs {
@@ -350,28 +351,28 @@ $user_orders = $conn->query("
             </div>
             <nav class="sidebar-nav">
                 <a href="dashboard.php" class="nav-item">
-                    <span class="nav-icon">🏠</span>
-                    Dashboard
+                    <i class="fas fa-home nav-icon"></i>
+                    Beranda
                 </a>
                 <a href="reservations.php" class="nav-item">
-                    <span class="nav-icon">📅</span>
-                    My Reservations
+                    <i class="fas fa-calendar-check nav-icon"></i>
+                    Reservasi Saya
                 </a>
                 <a href="rooms.php" class="nav-item">
-                    <span class="nav-icon">🏨</span>
-                    Browse Rooms
+                    <i class="fas fa-bed nav-icon"></i>
+                    Lihat Kamar
                 </a>
                 <a href="fnb_ordering.php" class="nav-item active">
-                    <span class="nav-icon">🍽️</span>
-                    F&B Ordering
+                    <i class="fas fa-concierge-bell nav-icon"></i>
+                    Dining
                 </a>
                 <a href="profile.php" class="nav-item">
-                    <span class="nav-icon">👤</span>
-                    Profile
+                    <i class="fas fa-user-circle nav-icon"></i>
+                    Profil
                 </a>
                 <a href="../logout.php" class="nav-item">
-                    <span class="nav-icon">🚪</span>
-                    Logout
+                    <i class="fas fa-sign-out-alt nav-icon"></i>
+                    Keluar
                 </a>
             </nav>
         </aside>

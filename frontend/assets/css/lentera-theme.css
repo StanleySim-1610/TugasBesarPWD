@@ -1,21 +1,22 @@
 /**
  * Lentera Nusantara Hotel - Global Theme
- * Inspired by InterContinental Jakarta
- * Design: Luxury, Sophisticated, Elegant
+ * Modern Luxury Hotel Theme - Elegant & Vibrant
+ * Colors: Rose Pink (#ff6b7d) + Soft Yellow (#fdff94)
  */
 
 :root {
-    /* Primary Colors - InterContinental Style */
-    --deep-navy: #1a2332;
-    --warm-gold: #c9a55a;
-    --light-gold: #e8d7b5;
-    --dark-charcoal: #2c2c2c;
+    /* Primary Colors - Modern Luxury */
+    --rose-pink: #ff6b7d;
+    --soft-yellow: #fdff94;
+    --deep-rose: #ff4f63;
+    --light-pink: #ffb3c1;
     
     /* Background Colors */
     --pure-white: #ffffff;
+    --cream: #fffef9;
     --light-gray: #f5f5f5;
-    --medium-gray: #e0e0e0;
     --soft-gray: #666666;
+    --dark-charcoal: #2c2c2c;
     
     /* Status Colors */
     --success: #2e7d32;
@@ -23,10 +24,15 @@
     --error: #c62828;
     --info: #0288d1;
     
+    /* Gradients */
+    --gradient-main: linear-gradient(135deg, #ff6b7d 0%, #fdff94 100%);
+    --gradient-navbar: linear-gradient(180deg, #ff6b7d 0%, #ff8a94 100%);
+    --gradient-button: linear-gradient(135deg, #ff6b7d 0%, #ff8a94 50%, #fdff94 100%);
+    
     /* Shadows */
-    --shadow-sm: 0 2px 8px rgba(26, 35, 50, 0.08);
-    --shadow-md: 0 4px 16px rgba(26, 35, 50, 0.12);
-    --shadow-lg: 0 8px 32px rgba(26, 35, 50, 0.16);
+    --shadow-sm: 0 2px 8px rgba(255, 107, 125, 0.15);
+    --shadow-md: 0 4px 16px rgba(255, 107, 125, 0.2);
+    --shadow-lg: 0 8px 32px rgba(255, 107, 125, 0.25);
 }
 
 * {
@@ -37,7 +43,7 @@
 
 body {
     font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
-    background: var(--light-gray);
+    background: var(--cream);
     color: var(--dark-charcoal);
     line-height: 1.8;
 }
@@ -49,9 +55,11 @@ body {
     padding: 0 20px;
 }
 
-/* Topnavbar Styles - Luxury Dark Theme */
+/* ============================================
+   TOPNAVBAR - Pink Gradient (Used in Backend)
+   ============================================ */
 .topnavbar {
-    background: var(--deep-navy);
+    background: var(--gradient-navbar);
     box-shadow: var(--shadow-md);
     position: sticky;
     top: 0;
@@ -75,17 +83,17 @@ body {
 }
 
 .topnavbar-logo {
-    height: 50px;
+    height: 55px;
     width: auto;
-    filter: brightness(0) invert(1);
 }
 
 .topnavbar-brand h2 {
-    color: var(--warm-gold);
-    font-size: 1.5rem;
+    color: white;
+    font-size: 1.6rem;
     font-weight: 700;
-    letter-spacing: 1.5px;
+    letter-spacing: 2px;
     text-transform: uppercase;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
 }
 
 .topnavbar-menu {
@@ -95,7 +103,7 @@ body {
 }
 
 .topnavbar-menu a {
-    color: rgba(255, 255, 255, 0.9);
+    color: rgba(255, 255, 255, 0.95);
     text-decoration: none;
     padding: 28px 24px;
     display: flex;
@@ -108,21 +116,23 @@ body {
 }
 
 .topnavbar-menu a:hover {
-    background: rgba(201, 165, 90, 0.1);
-    color: var(--warm-gold);
+    background: rgba(255, 255, 255, 0.15);
+    color: var(--soft-yellow);
 }
 
 .topnavbar-menu a.active {
-    background: rgba(201, 165, 90, 0.15);
-    color: var(--warm-gold);
-    border-bottom: 3px solid var(--warm-gold);
+    background: rgba(255, 255, 255, 0.2);
+    color: var(--soft-yellow);
+    border-bottom: 3px solid var(--soft-yellow);
 }
 
-/* Buttons */
+/* ============================================
+   BUTTONS
+   ============================================ */
 .btn {
     padding: 14px 32px;
     border: none;
-    border-radius: 4px;
+    border-radius: 8px;
     cursor: pointer;
     font-weight: 600;
     font-size: 1rem;
@@ -136,26 +146,25 @@ body {
 }
 
 .btn-primary {
-    background: var(--warm-gold);
-    color: var(--deep-navy);
+    background: var(--gradient-button);
+    color: white;
     box-shadow: var(--shadow-sm);
 }
 
 .btn-primary:hover {
-    background: #b89448;
     transform: translateY(-2px);
     box-shadow: var(--shadow-md);
 }
 
 .btn-secondary {
-    background: transparent;
-    color: var(--warm-gold);
-    border: 2px solid var(--warm-gold);
+    background: white;
+    color: var(--rose-pink);
+    border: 2px solid var(--rose-pink);
 }
 
 .btn-secondary:hover {
-    background: var(--warm-gold);
-    color: var(--deep-navy);
+    background: var(--rose-pink);
+    color: white;
 }
 
 .btn-danger {
@@ -173,34 +182,40 @@ body {
     font-size: 0.9rem;
 }
 
-/* Cards */
+/* ============================================
+   CARDS
+   ============================================ */
 .card {
     background: var(--pure-white);
-    border-radius: 6px;
+    border-radius: 12px;
     padding: 30px;
     box-shadow: var(--shadow-sm);
     transition: all 0.3s ease;
+    border: 1px solid rgba(255, 107, 125, 0.1);
 }
 
 .card:hover {
     box-shadow: var(--shadow-md);
     transform: translateY(-3px);
+    border-color: var(--light-pink);
 }
 
 .card-header {
-    border-bottom: 1px solid var(--medium-gray);
+    border-bottom: 2px solid var(--light-pink);
     padding-bottom: 20px;
     margin-bottom: 20px;
 }
 
 .card-title {
-    color: var(--deep-navy);
+    color: var(--rose-pink);
     font-size: 1.5rem;
     font-weight: 700;
     letter-spacing: 0.5px;
 }
 
-/* Forms */
+/* ============================================
+   FORMS
+   ============================================ */
 .form-group {
     margin-bottom: 25px;
 }
@@ -208,7 +223,7 @@ body {
 .form-label {
     display: block;
     margin-bottom: 8px;
-    color: var(--deep-navy);
+    color: var(--dark-charcoal);
     font-weight: 600;
     font-size: 0.95rem;
     letter-spacing: 0.3px;
@@ -219,8 +234,8 @@ body {
 .form-textarea {
     width: 100%;
     padding: 12px 16px;
-    border: 1px solid var(--medium-gray);
-    border-radius: 4px;
+    border: 2px solid var(--light-gray);
+    border-radius: 8px;
     font-size: 1rem;
     font-family: inherit;
     transition: all 0.3s ease;
@@ -230,14 +245,16 @@ body {
 .form-select:focus,
 .form-textarea:focus {
     outline: none;
-    border-color: var(--warm-gold);
-    box-shadow: 0 0 0 3px rgba(201, 165, 90, 0.1);
+    border-color: var(--rose-pink);
+    box-shadow: 0 0 0 3px rgba(255, 107, 125, 0.1);
 }
 
-/* Alerts */
+/* ============================================
+   ALERTS
+   ============================================ */
 .alert {
     padding: 16px 20px;
-    border-radius: 4px;
+    border-radius: 8px;
     margin-bottom: 25px;
     font-weight: 500;
     display: flex;
@@ -246,42 +263,44 @@ body {
 }
 
 .alert-success {
-    background: #e8f5e9;
+    background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
     color: var(--success);
     border-left: 4px solid var(--success);
 }
 
 .alert-error {
-    background: #ffebee;
+    background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%);
     color: var(--error);
     border-left: 4px solid var(--error);
 }
 
 .alert-warning {
-    background: #fff3e0;
+    background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
     color: var(--warning);
     border-left: 4px solid var(--warning);
 }
 
 .alert-info {
-    background: #e3f2fd;
+    background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
     color: var(--info);
     border-left: 4px solid var(--info);
 }
 
-/* Tables */
+/* ============================================
+   TABLES
+   ============================================ */
 .table {
     width: 100%;
     border-collapse: collapse;
     background: var(--pure-white);
-    border-radius: 6px;
+    border-radius: 12px;
     overflow: hidden;
     box-shadow: var(--shadow-sm);
 }
 
 .table th {
-    background: var(--deep-navy);
-    color: var(--warm-gold);
+    background: var(--gradient-navbar);
+    color: white;
     padding: 16px;
     text-align: left;
     font-weight: 600;
@@ -292,7 +311,7 @@ body {
 
 .table td {
     padding: 16px;
-    border-bottom: 1px solid var(--medium-gray);
+    border-bottom: 1px solid var(--light-gray);
 }
 
 .table tr:last-child td {
@@ -300,10 +319,12 @@ body {
 }
 
 .table tr:hover {
-    background: var(--light-gray);
+    background: rgba(255, 107, 125, 0.05);
 }
 
-/* Status Badges */
+/* ============================================
+   STATUS BADGES
+   ============================================ */
 .badge {
     display: inline-block;
     padding: 6px 14px;
@@ -314,28 +335,30 @@ body {
 }
 
 .badge-success {
-    background: #e8f5e9;
+    background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
     color: var(--success);
 }
 
 .badge-warning {
-    background: #fff3e0;
+    background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
     color: var(--warning);
 }
 
 .badge-error {
-    background: #ffebee;
+    background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%);
     color: var(--error);
 }
 
 .badge-info {
-    background: #e3f2fd;
+    background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
     color: var(--info);
 }
 
-/* Section Titles */
+/* ============================================
+   SECTION TITLES
+   ============================================ */
 .section-title {
-    color: var(--deep-navy);
+    color: var(--rose-pink);
     font-size: 2.5rem;
     font-weight: 700;
     letter-spacing: 1px;
@@ -344,7 +367,7 @@ body {
 }
 
 .section-subtitle {
-    color: var(--warm-gold);
+    color: var(--soft-gray);
     font-size: 1.2rem;
     font-weight: 600;
     letter-spacing: 2px;
@@ -360,7 +383,33 @@ body {
     margin: 0 auto 40px;
 }
 
-/* Utilities */
+/* ============================================
+   PAGE-SPECIFIC STYLES
+   ============================================ */
+.main-content {
+    max-width: 1400px;
+    margin: 30px auto;
+    padding: 0 20px;
+}
+
+.page-header {
+    background: var(--gradient-main);
+    color: white;
+    padding: 40px;
+    border-radius: 12px;
+    margin-bottom: 30px;
+    box-shadow: var(--shadow-md);
+}
+
+.page-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+}
+
+/* ============================================
+   UTILITIES
+   ============================================ */
 .text-center {
     text-align: center;
 }
@@ -384,7 +433,9 @@ body {
 .p-3 { padding: 30px; }
 .p-4 { padding: 40px; }
 
-/* Responsive */
+/* ============================================
+   RESPONSIVE
+   ============================================ */
 @media (max-width: 1024px) {
     .topnavbar-content {
         padding: 0 20px;
@@ -402,7 +453,7 @@ body {
     }
     
     .topnavbar-menu {
-        display: none; /* Mobile menu would need JS implementation */
+        display: none;
     }
     
     .section-title {

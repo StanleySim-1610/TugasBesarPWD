@@ -15,8 +15,9 @@ $rooms = $conn->query("SELECT * FROM kamar WHERE jumlah_tersedia > 0 ORDER BY ha
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lihat Kamar - Hotel Management</title>
-    <link rel="stylesheet" href="../../frontend/assets/css/dashboard.css">
+    <title>Lihat Kamar - Lentera Nusantara</title>
+    <link rel="stylesheet" href="../../frontend/assets/css/lentera-theme.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         :root {
             --primary-pink: #ff6b7d;
@@ -42,7 +43,7 @@ $rooms = $conn->query("SELECT * FROM kamar WHERE jumlah_tersedia > 0 ORDER BY ha
             background: linear-gradient(180deg, #ff6b7d 0%, #ff8a94 100%);
             color: white;
             padding: 0;
-            box-shadow: 0 4px 15px rgba(211, 47, 47, 0.3);
+            box-shadow: 0 4px 15px rgba(255, 107, 125, 0.3);
             position: sticky;
             top: 0;
             z-index: 1000;
@@ -296,43 +297,37 @@ $rooms = $conn->query("SELECT * FROM kamar WHERE jumlah_tersedia > 0 ORDER BY ha
             <ul class="navbar-menu">
                 <li class="navbar-item">
                     <a href="dashboard.php" class="navbar-link">
-                        <span class="navbar-icon">🏠</span>
+                        <i class="fas fa-home"></i>
                         <span>Beranda</span>
                     </a>
                 </li>
                 <li class="navbar-item">
                     <a href="reservations.php" class="navbar-link">
-                        <span class="navbar-icon">📅</span>
+                        <i class="fas fa-calendar-check"></i>
                         <span>Reservasi Saya</span>
                     </a>
                 </li>
                 <li class="navbar-item">
                     <a href="rooms.php" class="navbar-link active">
-                        <span class="navbar-icon">🏨</span>
+                        <i class="fas fa-bed"></i>
                         <span>Lihat Kamar</span>
                     </a>
                 </li>
                 <li class="navbar-item">
                     <a href="fnb_new_order.php" class="navbar-link">
-                        <span class="navbar-icon">🍽️</span>
-                        <span>Pesan F&B</span>
-                    </a>
-                </li>
-                <li class="navbar-item">
-                    <a href="fnb_orders.php" class="navbar-link">
-                        <span class="navbar-icon">📋</span>
-                        <span>Pesanan F&B</span>
+                        <i class="fas fa-concierge-bell"></i>
+                        <span>Dining</span>
                     </a>
                 </li>
                 <li class="navbar-item">
                     <a href="profile.php" class="navbar-link">
-                        <span class="navbar-icon">👤</span>
+                        <i class="fas fa-user-circle"></i>
                         <span>Profil</span>
                     </a>
                 </li>
                 <li class="navbar-item">
                     <a href="../logout.php" class="navbar-link">
-                        <span class="navbar-icon">🚪</span>
+                        <i class="fas fa-sign-out-alt"></i>
                         <span>Keluar</span>
                     </a>
                 </li>

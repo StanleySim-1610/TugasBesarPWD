@@ -1,7 +1,7 @@
 <?php
 /**
  * Lentera Nusantara Hotel - Topnavbar Component
- * InterContinental-Inspired Luxury Design
+ * Modern Luxury Theme - Rose Pink & Soft Yellow
  */
 
 if (!isset($current_page)) {
@@ -14,8 +14,8 @@ if (!isset($current_page)) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../frontend/assets/css/lentera-theme.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        /* Additional page-specific styles can be added here */
         body {
             margin: 0;
             padding: 0;
@@ -23,8 +23,13 @@ if (!isset($current_page)) {
         
         .main-content {
             max-width: 1400px;
-            margin: 40px auto;
+            margin: 30px auto;
             padding: 0 20px;
+        }
+        
+        /* Professional Icons Styling */
+        .topnavbar-menu a i {
+            font-size: 1.1rem;
         }
     </style>
 </head>
@@ -37,22 +42,22 @@ if (!isset($current_page)) {
             </div>
             <div class="topnavbar-menu">
                 <a href="dashboard.php" class="<?php echo ($current_page == 'dashboard.php') ? 'active' : ''; ?>">
-                    <span>🏠</span> Home
+                    <i class="fas fa-home"></i> Beranda
+                </a>
+                <a href="reservations.php" class="<?php echo ($current_page == 'reservations.php' || $current_page == 'fnb_orders.php') ? 'active' : ''; ?>">
+                    <i class="fas fa-calendar-check"></i> Reservasi Saya
                 </a>
                 <a href="rooms.php" class="<?php echo ($current_page == 'rooms.php') ? 'active' : ''; ?>">
-                    <span>🏨</span> Rooms
+                    <i class="fas fa-bed"></i> Lihat Kamar
                 </a>
-                <a href="reservations.php" class="<?php echo ($current_page == 'reservations.php') ? 'active' : ''; ?>">
-                    <span>📋</span> Reservations
-                </a>
-                <a href="fnb_new_order.php" class="<?php echo (strpos($current_page, 'fnb') !== false) ? 'active' : ''; ?>">
-                    <span>🍽️</span> Dining
+                <a href="fnb_new_order.php" class="<?php echo ($current_page == 'fnb_new_order.php') ? 'active' : ''; ?>">
+                    <i class="fas fa-concierge-bell"></i> Dining
                 </a>
                 <a href="profile.php" class="<?php echo ($current_page == 'profile.php') ? 'active' : ''; ?>">
-                    <span>👤</span> Profile
+                    <i class="fas fa-user-circle"></i> Profil
                 </a>
                 <a href="../logout.php">
-                    <span>🚪</span> Logout
+                    <i class="fas fa-sign-out-alt"></i> Keluar
                 </a>
             </div>
         </div>
