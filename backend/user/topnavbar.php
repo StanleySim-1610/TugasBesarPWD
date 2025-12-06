@@ -4,9 +4,10 @@ $current_page = basename($_SERVER['PHP_SELF'], '.php');
 ?>
 <style>
     :root {
-        --chinese-red: #d32f2f;
-        --chinese-gold: #f0b343;
-        --chinese-dark: #8b0000;
+        --primary-pink: #ff6b7d;
+        --primary-yellow: #fdff94;
+        --gradient-start: #ff6b7d;
+        --gradient-end: #fdff94;
     }
     
     * {
@@ -17,13 +18,13 @@ $current_page = basename($_SERVER['PHP_SELF'], '.php');
     
     body {
         font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
-        background: linear-gradient(135deg, #fff9f0 0%, #ffe4e1 100%);
+        background: linear-gradient(180deg, #ff6b7d 0%, #fdff94 100%);
         min-height: 100vh;
     }
     
     /* Top Navbar */
     .top-navbar {
-        background: linear-gradient(135deg, var(--chinese-red) 0%, var(--chinese-dark) 100%);
+        background: linear-gradient(180deg, #ff6b7d 0%, #ff8a94 100%);
         color: white;
         padding: 0;
         box-shadow: 0 4px 15px rgba(211, 47, 47, 0.3);
@@ -79,14 +80,14 @@ $current_page = basename($_SERVER['PHP_SELF'], '.php');
     }
     
     .navbar-link:hover {
-        background: rgba(255, 255, 255, 0.1);
+        background: rgba(255, 255, 255, 0.15);
         color: white;
-        border-bottom-color: var(--chinese-gold);
+        border-bottom-color: #fdff94;
     }
     
     .navbar-link.active {
-        background: rgba(255, 255, 255, 0.15);
-        border-bottom-color: var(--chinese-gold);
+        background: rgba(255, 255, 255, 0.2);
+        border-bottom-color: #fdff94;
         color: white;
     }
     
@@ -94,11 +95,11 @@ $current_page = basename($_SERVER['PHP_SELF'], '.php');
         font-size: 1.2rem;
     }
     
-    /* Chinese Pattern */
+    /* Gradient Pattern */
     .chinese-pattern {
         background-image: 
-            repeating-linear-gradient(45deg, transparent, transparent 20px, rgba(240, 179, 67, 0.03) 20px, rgba(240, 179, 67, 0.03) 40px),
-            repeating-linear-gradient(-45deg, transparent, transparent 20px, rgba(211, 47, 47, 0.03) 20px, rgba(211, 47, 47, 0.03) 40px);
+            repeating-linear-gradient(45deg, transparent, transparent 20px, rgba(253, 255, 148, 0.05) 20px, rgba(253, 255, 148, 0.05) 40px),
+            repeating-linear-gradient(-45deg, transparent, transparent 20px, rgba(255, 107, 125, 0.05) 20px, rgba(255, 107, 125, 0.05) 40px);
     }
     
     .main-wrapper {
@@ -152,7 +153,7 @@ $current_page = basename($_SERVER['PHP_SELF'], '.php');
             <li class="navbar-item">
                 <a href="fnb_orders.php" class="navbar-link <?php echo ($current_page == 'fnb_orders') ? 'active' : ''; ?>">
                     <span class="navbar-icon">📋</span>
-                    <span>Pesanan F&B</span>
+                    <span>Daftar Pesanan F&B</span>
                 </a>
             </li>
             <li class="navbar-item">

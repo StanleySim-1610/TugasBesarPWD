@@ -2,127 +2,127 @@
 require_once '../config/database.php';
 header('Content-Type: application/json');
 
-// Menu F&B dengan harga
+// Menu F&B dengan harga - Chinese Cuisine Theme
 $menu_items = [
     [
         'id' => 1,
         'kategori' => 'Makanan',
-        'nama' => 'Nasi Goreng Spesial',
-        'harga' => 45000,
-        'deskripsi' => 'Nasi goreng dengan telur, ayam, dan sayuran',
-        'foto' => 'nasi_goreng.jpg'
+        'nama' => 'Pad Thai Udang',
+        'harga' => 55000,
+        'deskripsi' => 'Mie beras goreng dengan udang segar, kacang, dan telur',
+        'foto' => 'pad_thai.jpg'
     ],
     [
         'id' => 2,
         'kategori' => 'Makanan',
-        'nama' => 'Mie Goreng',
-        'harga' => 40000,
-        'deskripsi' => 'Mie goreng dengan sayuran segar',
-        'foto' => 'mie_goreng.jpg'
+        'nama' => 'Mie Goreng Singapore',
+        'harga' => 48000,
+        'deskripsi' => 'Mie goreng Singapore dengan udang dan sayuran segar',
+        'foto' => 'singapore_noodles.jpg'
     ],
     [
         'id' => 3,
         'kategori' => 'Makanan',
-        'nama' => 'Ayam Bakar',
-        'harga' => 55000,
-        'deskripsi' => 'Ayam bakar dengan bumbu khas dan nasi',
-        'foto' => 'ayam_bakar.jpg'
+        'nama' => 'Mie Goreng Telur',
+        'harga' => 42000,
+        'deskripsi' => 'Mie goreng dengan telur mata sapi dan bawang goreng',
+        'foto' => 'mie_goreng_telur.jpg'
     ],
     [
         'id' => 4,
         'kategori' => 'Makanan',
-        'nama' => 'Ikan Bakar',
-        'harga' => 65000,
-        'deskripsi' => 'Ikan bakar segar dengan sambal',
-        'foto' => 'ikan_bakar.jpg'
+        'nama' => 'Laksa Pedas',
+        'harga' => 52000,
+        'deskripsi' => 'Mie kuah pedas dengan santan, telur, dan sayuran',
+        'foto' => 'laksa.jpg'
     ],
     [
         'id' => 5,
         'kategori' => 'Makanan',
-        'nama' => 'Capcay',
-        'harga' => 38000,
-        'deskripsi' => 'Tumis sayuran campur ala China',
-        'foto' => 'capcay.jpg'
+        'nama' => 'Mie Bakso Daging',
+        'harga' => 45000,
+        'deskripsi' => 'Mie dengan bakso daging, pangsit, dan sayuran',
+        'foto' => 'mie_bakso.jpg'
     ],
     [
         'id' => 6,
         'kategori' => 'Makanan',
-        'nama' => 'Sate Ayam',
-        'harga' => 50000,
-        'deskripsi' => '10 tusuk sate ayam dengan bumbu kacang',
-        'foto' => 'sate_ayam.jpg'
+        'nama' => 'Kung Pao Chicken',
+        'harga' => 58000,
+        'deskripsi' => 'Ayam tumis pedas dengan kacang mete dan paprika',
+        'foto' => 'kung_pao.jpg'
     ],
     [
         'id' => 7,
-        'kategori' => 'Minuman',
-        'nama' => 'Es Teh Manis',
-        'harga' => 10000,
-        'deskripsi' => 'Teh manis dingin segar',
-        'foto' => 'es_teh.jpg'
+        'kategori' => 'Makanan',
+        'nama' => 'Sweet and Sour Chicken',
+        'harga' => 55000,
+        'deskripsi' => 'Ayam goreng saus asam manis dengan nanas',
+        'foto' => 'sweet_sour.jpg'
     ],
     [
         'id' => 8,
         'kategori' => 'Minuman',
-        'nama' => 'Es Jeruk',
-        'harga' => 12000,
-        'deskripsi' => 'Jus jeruk segar',
-        'foto' => 'es_jeruk.jpg'
+        'nama' => 'Chrysanthemum Tea',
+        'harga' => 18000,
+        'deskripsi' => 'Teh bunga krisan tradisional China yang menyegarkan',
+        'foto' => 'chrysanthemum_tea.jpg'
     ],
     [
         'id' => 9,
         'kategori' => 'Minuman',
-        'nama' => 'Kopi Hitam',
-        'harga' => 15000,
-        'deskripsi' => 'Kopi hitam murni',
-        'foto' => 'kopi.jpg'
+        'nama' => 'Monk Fruit Tea',
+        'harga' => 20000,
+        'deskripsi' => 'Teh buah monk yang manis alami dan menyehatkan',
+        'foto' => 'monk_fruit_tea.jpg'
     ],
     [
         'id' => 10,
         'kategori' => 'Minuman',
-        'nama' => 'Cappuccino',
+        'nama' => 'Pu-erh Tea',
         'harga' => 25000,
-        'deskripsi' => 'Kopi susu dengan foam',
-        'foto' => 'cappuccino.jpg'
+        'deskripsi' => 'Teh fermentasi premium khas Yunnan',
+        'foto' => 'puerh_tea.jpg'
     ],
     [
         'id' => 11,
         'kategori' => 'Minuman',
-        'nama' => 'Jus Alpukat',
-        'harga' => 20000,
-        'deskripsi' => 'Jus alpukat segar',
-        'foto' => 'jus_alpukat.jpg'
+        'nama' => 'Lemon Basil Seed Drink',
+        'harga' => 22000,
+        'deskripsi' => 'Minuman biji selasih dengan lemon segar',
+        'foto' => 'lemon_basil.jpg'
     ],
     [
         'id' => 12,
         'kategori' => 'Minuman',
-        'nama' => 'Es Campur',
-        'harga' => 18000,
-        'deskripsi' => 'Minuman es campur dengan buah',
-        'foto' => 'es_campur.jpg'
+        'nama' => 'Aloe Vera Drink',
+        'harga' => 20000,
+        'deskripsi' => 'Minuman lidah buaya dengan biji selasih',
+        'foto' => 'aloe_vera.jpg'
     ],
     [
         'id' => 13,
         'kategori' => 'Snack',
-        'nama' => 'French Fries',
-        'harga' => 25000,
-        'deskripsi' => 'Kentang goreng crispy',
-        'foto' => 'french_fries.jpg'
+        'nama' => 'Mooncake',
+        'harga' => 35000,
+        'deskripsi' => 'Kue bulan tradisional dengan isian lotus seed paste',
+        'foto' => 'mooncake.jpg'
     ],
     [
         'id' => 14,
         'kategori' => 'Snack',
-        'nama' => 'Chicken Wings',
-        'harga' => 35000,
-        'deskripsi' => 'Sayap ayam goreng pedas',
-        'foto' => 'wings.jpg'
+        'nama' => 'Baozi (Steamed Buns)',
+        'harga' => 32000,
+        'deskripsi' => 'Bakpao kukus isi daging cincang berbumbu',
+        'foto' => 'baozi.jpg'
     ],
     [
         'id' => 15,
-        'kategori' => 'Snack',
-        'nama' => 'Spring Roll',
-        'harga' => 30000,
-        'deskripsi' => 'Lumpia goreng isi sayuran',
-        'foto' => 'spring_roll.jpg'
+        'kategori' => 'Dessert',
+        'nama' => 'Chinese Herbal Soup',
+        'harga' => 38000,
+        'deskripsi' => 'Sup herbal manis dengan kurma, goji berry, dan longan',
+        'foto' => 'herbal_soup.jpg'
     ]
 ];
 

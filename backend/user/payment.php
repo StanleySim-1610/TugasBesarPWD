@@ -92,34 +92,19 @@ $days = calculateDays($reservation['check_in'], $reservation['check_out']);
         }
 
         body {
-            font-family: 'Segoe UI', 'Microsoft YaHei', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #fff9f0 0%, #ffe4e1 100%);
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            background: white;
             min-height: 100vh;
-            position: relative;
-        }
-
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: 
-                repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(211, 47, 47, 0.03) 10px, rgba(211, 47, 47, 0.03) 20px),
-                repeating-linear-gradient(-45deg, transparent, transparent 10px, rgba(240, 179, 67, 0.03) 10px, rgba(240, 179, 67, 0.03) 20px);
-            pointer-events: none;
-            z-index: 0;
         }
 
         .topnavbar {
-            background: linear-gradient(135deg, var(--chinese-red) 0%, var(--chinese-dark) 100%);
+            background: linear-gradient(180deg, #ff6b7d 0%, #ff8a94 100%);
+            color: white;
             padding: 0;
-            box-shadow: 0 4px 20px rgba(211, 47, 47, 0.3);
+            box-shadow: 0 4px 15px rgba(211, 47, 47, 0.3);
             position: sticky;
             top: 0;
             z-index: 1000;
-            border-bottom: 3px solid var(--chinese-gold);
         }
 
         .topnavbar-content {
@@ -165,20 +150,22 @@ $days = calculateDays($reservation['check_in'], $reservation['check_out']);
 
         .topnavbar-menu a:hover {
             background: rgba(255, 255, 255, 0.1);
-            border-bottom-color: var(--chinese-gold);
+            border-bottom: 3px solid;
+            border-image: linear-gradient(90deg, #ff6b7d, #fdff94) 1;
         }
 
         .topnavbar-menu a.active {
             background: rgba(255, 255, 255, 0.15);
-            border-bottom-color: var(--chinese-gold);
+            border-bottom: 3px solid;
+            border-image: linear-gradient(90deg, #ff6b7d, #fdff94) 1;
         }
 
         .main-content {
             position: relative;
             z-index: 1;
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 40px 20px;
+            padding: 40px 30px;
         }
 
         .page-header {
@@ -187,11 +174,10 @@ $days = calculateDays($reservation['check_in'], $reservation['check_out']);
         }
 
         .page-header h1 {
-            color: var(--chinese-red);
-            font-size: 36px;
+            color: #ff6b7d;
+            font-size: 2rem;
             font-weight: 700;
             margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
         }
 
         .payment-container {

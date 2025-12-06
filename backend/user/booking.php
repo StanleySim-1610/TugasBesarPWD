@@ -72,11 +72,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <title>Booking Kamar - <?php echo htmlspecialchars($room['tipe_kamar']); ?></title>
     <style>
         :root {
-            --chinese-red: #d32f2f;
-            --chinese-gold: #f0b343;
-            --chinese-dark: #8b0000;
+            --primary-pink: #ff6b7d;
+            --primary-yellow: #fdff94;
             --white: #ffffff;
-            --light-bg: #fff9f0;
+            --light-bg: #fffbf5;
         }
 
         * {
@@ -86,34 +85,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
         body {
-            font-family: 'Segoe UI', 'Microsoft YaHei', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #fff9f0 0%, #ffe4e1 100%);
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            background: white;
             min-height: 100vh;
-            position: relative;
-        }
-
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: 
-                repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(211, 47, 47, 0.03) 10px, rgba(211, 47, 47, 0.03) 20px),
-                repeating-linear-gradient(-45deg, transparent, transparent 10px, rgba(240, 179, 67, 0.03) 10px, rgba(240, 179, 67, 0.03) 20px);
-            pointer-events: none;
-            z-index: 0;
         }
 
         .topnavbar {
-            background: linear-gradient(135deg, var(--chinese-red) 0%, var(--chinese-dark) 100%);
+            background: linear-gradient(180deg, #ff6b7d 0%, #ff8a94 100%);
+            color: white;
             padding: 0;
-            box-shadow: 0 4px 20px rgba(211, 47, 47, 0.3);
+            box-shadow: 0 4px 15px rgba(211, 47, 47, 0.3);
             position: sticky;
             top: 0;
             z-index: 1000;
-            border-bottom: 3px solid var(--chinese-gold);
         }
 
         .topnavbar-content {
@@ -133,7 +117,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
         .topnavbar-brand h2 {
-            color: var(--chinese-gold);
+            color: #fdff94;
             font-size: 24px;
             font-weight: 700;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
@@ -159,33 +143,33 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         .topnavbar-menu a:hover {
             background: rgba(255, 255, 255, 0.1);
-            border-bottom-color: var(--chinese-gold);
+            border-bottom: 3px solid;
+            border-image: linear-gradient(90deg, #ff6b7d, #fdff94) 1;
         }
 
         .topnavbar-menu a.active {
             background: rgba(255, 255, 255, 0.15);
-            border-bottom-color: var(--chinese-gold);
+            border-bottom: 3px solid;
+            border-image: linear-gradient(90deg, #ff6b7d, #fdff94) 1;
         }
 
         .main-content {
             position: relative;
             z-index: 1;
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 40px 20px;
+            padding: 40px 30px;
         }
 
         .page-header {
-            text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
         }
 
         .page-header h1 {
-            color: var(--chinese-red);
-            font-size: 36px;
+            color: #ff6b7d;
+            font-size: 2rem;
             font-weight: 700;
             margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
         }
 
         .booking-container {
@@ -211,12 +195,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             padding: 30px;
             border-radius: 15px;
             margin-bottom: 30px;
-            box-shadow: 0 4px 15px rgba(211, 47, 47, 0.1);
-            border: 2px solid var(--chinese-gold);
+            box-shadow: 0 4px 15px rgba(255, 107, 125, 0.15);
         }
 
         .room-details h2 {
-            color: var(--chinese-red);
+            color: #ff6b7d;
             margin-bottom: 15px;
             font-size: 28px;
         }
@@ -237,7 +220,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             padding: 15px;
             background: linear-gradient(135deg, #fff9f0 0%, #ffe4e1 100%);
             border-radius: 10px;
-            border: 1px solid var(--chinese-gold);
+            box-shadow: 0 1px 5px rgba(255, 107, 125, 0.1);
         }
 
         .info-label {
@@ -248,7 +231,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         .info-value {
             font-size: 18px;
-            color: var(--chinese-red);
+            color: #ff6b7d;
             font-weight: 600;
         }
 
@@ -256,12 +239,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             background: white;
             padding: 30px;
             border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(211, 47, 47, 0.1);
-            border: 2px solid var(--chinese-gold);
+            box-shadow: 0 4px 15px rgba(255, 107, 125, 0.15);
+            box-shadow: 0 2px 10px rgba(255, 107, 125, 0.15);
         }
 
         .booking-form h2 {
-            color: var(--chinese-red);
+            color: #ff6b7d;
             margin-bottom: 25px;
             font-size: 24px;
         }
@@ -280,7 +263,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         .form-group label {
             display: block;
             margin-bottom: 8px;
-            color: var(--chinese-red);
+            color: #ff6b7d;
             font-weight: 600;
         }
 
@@ -295,7 +278,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         .form-group input:focus {
             outline: none;
-            border-color: var(--chinese-gold);
+            border-color: #fdff94;
             box-shadow: 0 0 0 3px rgba(240, 179, 67, 0.1);
         }
 
@@ -304,11 +287,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             padding: 20px;
             border-radius: 10px;
             margin-top: 20px;
-            border: 2px solid var(--chinese-gold);
+            box-shadow: 0 2px 10px rgba(255, 107, 125, 0.15);
         }
 
         .price-summary h3 {
-            color: var(--chinese-red);
+            color: #ff6b7d;
             margin-bottom: 15px;
         }
 
@@ -322,8 +305,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         .price-total {
             font-size: 24px;
             font-weight: 700;
-            color: var(--chinese-red);
-            border-top: 2px solid var(--chinese-gold);
+            color: #ff6b7d;
+            border-top: 2px solid #fdff94;
             padding-top: 15px;
             margin-top: 15px;
         }
@@ -341,7 +324,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, var(--chinese-red) 0%, var(--chinese-dark) 100%);
+            background: linear-gradient(135deg, #ff6b7d 0%, #ff8a94 100%);
             color: white;
             box-shadow: 0 4px 15px rgba(211, 47, 47, 0.3);
         }

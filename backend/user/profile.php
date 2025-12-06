@@ -125,16 +125,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profil Saya</title>
+    <title>Profil Saya - Lentera Nusantara</title>
     <style>
-        :root {
-            --chinese-red: #d32f2f;
-            --chinese-gold: #f0b343;
-            --chinese-dark: #8b0000;
-            --white: #ffffff;
-            --light-bg: #fff9f0;
-        }
-
         * {
             margin: 0;
             padding: 0;
@@ -142,34 +134,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
         body {
-            font-family: 'Segoe UI', 'Microsoft YaHei', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #fff9f0 0%, #ffe4e1 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: white;
             min-height: 100vh;
             position: relative;
         }
 
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: 
-                repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(211, 47, 47, 0.03) 10px, rgba(211, 47, 47, 0.03) 20px),
-                repeating-linear-gradient(-45deg, transparent, transparent 10px, rgba(240, 179, 67, 0.03) 10px, rgba(240, 179, 67, 0.03) 20px);
-            pointer-events: none;
-            z-index: 0;
-        }
-
         .topnavbar {
-            background: linear-gradient(135deg, var(--chinese-red) 0%, var(--chinese-dark) 100%);
+            background: linear-gradient(180deg, #ff6b7d 0%, #ff8a94 100%);
             padding: 0;
-            box-shadow: 0 4px 20px rgba(211, 47, 47, 0.3);
+            box-shadow: 0 4px 20px rgba(255, 107, 125, 0.3);
             position: sticky;
             top: 0;
             z-index: 1000;
-            border-bottom: 3px solid var(--chinese-gold);
+            
         }
 
         .topnavbar-content {
@@ -189,10 +167,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
         .topnavbar-brand h2 {
-            color: var(--chinese-gold);
+            color: #ffffff;
             font-size: 24px;
             font-weight: 700;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
         }
 
         .topnavbar-menu {
@@ -214,13 +192,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
         .topnavbar-menu a:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-bottom-color: var(--chinese-gold);
+            background: rgba(255, 255, 255, 0.15);
+            border-bottom: 3px solid;
+            border-image: linear-gradient(90deg, #ff6b7d, #fdff94) 1;
         }
 
         .topnavbar-menu a.active {
-            background: rgba(255, 255, 255, 0.15);
-            border-bottom-color: var(--chinese-gold);
+            background: rgba(255, 255, 255, 0.2);
+            border-bottom: 3px solid;
+            border-image: linear-gradient(90deg, #ff6b7d, #fdff94) 1;
         }
 
         .main-content {
@@ -237,11 +217,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
         .page-header h1 {
-            color: var(--chinese-red);
+            color: #ffffff;
             font-size: 36px;
             font-weight: 700;
             margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.2);
         }
 
         .profile-container {
@@ -254,16 +234,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             border-radius: 10px;
             margin-bottom: 20px;
             font-weight: 500;
+            background: white;
         }
 
         .alert-error {
-            background: #ffebee;
             color: #c62828;
             border: 2px solid #ef5350;
         }
 
         .alert-success {
-            background: #e8f5e9;
             color: #2e7d32;
             border: 2px solid #4caf50;
         }
@@ -272,15 +251,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             background: white;
             padding: 30px;
             border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(211, 47, 47, 0.1);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
             margin-bottom: 25px;
-            border: 2px solid var(--chinese-gold);
+            border: 2px solid rgba(255, 255, 255, 0.5);
         }
 
         .profile-header {
             text-align: center;
             padding-bottom: 25px;
-            border-bottom: 2px solid var(--chinese-gold);
+            border-bottom: 2px solid #fdff94;
             margin-bottom: 30px;
         }
 
@@ -288,7 +267,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             width: 120px;
             height: 120px;
             border-radius: 50%;
-            background: linear-gradient(135deg, var(--chinese-red) 0%, var(--chinese-dark) 100%);
+            background: linear-gradient(180deg, #ff6b7d 0%, #fdff94 100%);
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -297,23 +276,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             font-weight: 700;
             margin-bottom: 20px;
             overflow: hidden;
-            border: 4px solid var(--chinese-gold);
+            border: 4px solid #fdff94;
+            box-shadow: 0 4px 15px rgba(255, 107, 125, 0.3);
         }
 
         .profile-avatar-large img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            border-radius: 50%;
         }
 
         .profile-header h2 {
-            color: var(--chinese-red);
+            color: #ff6b7d;
             margin-bottom: 10px;
         }
 
         .section-divider {
-            border-top: 2px solid var(--chinese-gold);
+            border-top: 2px solid #fdff94;
             margin: 30px 0;
             padding-top: 30px;
         }
@@ -333,7 +312,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             display: block;
             margin-bottom: 8px;
             font-weight: 600;
-            color: var(--chinese-red);
+            color: #ff6b7d;
         }
 
         .form-group input,
@@ -350,8 +329,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         .form-group input:focus,
         .form-group textarea:focus {
             outline: none;
-            border-color: var(--chinese-gold);
-            box-shadow: 0 0 0 3px rgba(240, 179, 67, 0.1);
+            border-color: #ff6b7d;
+            box-shadow: 0 0 0 3px rgba(255, 107, 125, 0.1);
         }
 
         .foto-upload-wrapper {
@@ -365,26 +344,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         .foto-preview {
             width: 100%;
             height: 200px;
-            border: 2px dashed var(--chinese-gold);
+            border: 2px dashed #fdff94;
             border-radius: 8px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            background: linear-gradient(135deg, #fff9f0 0%, #ffe4e1 100%);
+            background: linear-gradient(180deg, rgba(255, 107, 125, 0.05) 0%, rgba(253, 255, 148, 0.05) 100%);
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
         }
 
         .foto-preview:hover {
-            border-color: var(--chinese-red);
-            background: #fff;
+            border-color: #ff6b7d;
+            background: rgba(255, 107, 125, 0.1);
         }
 
         .foto-preview svg {
-            color: var(--chinese-gold);
+            color: #ff6b7d;
             margin-bottom: 8px;
         }
 
@@ -433,25 +412,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, var(--chinese-red) 0%, var(--chinese-dark) 100%);
+            background: linear-gradient(180deg, #ff6b7d 0%, #ff8a94 100%);
             color: white;
-            box-shadow: 0 4px 15px rgba(211, 47, 47, 0.3);
+            box-shadow: 0 4px 15px rgba(255, 107, 125, 0.3);
             flex: 1;
         }
 
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(211, 47, 47, 0.4);
+            box-shadow: 0 6px 20px rgba(255, 107, 125, 0.4);
         }
 
         .btn-outline {
             background: white;
-            color: var(--chinese-red);
-            border: 2px solid var(--chinese-red);
+            color: #ff6b7d;
+            border: 2px solid #ff6b7d;
         }
 
         .btn-outline:hover {
-            background: var(--chinese-red);
+            background: #ff6b7d;
             color: white;
         }
     </style>
@@ -461,7 +440,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <nav class="topnavbar">
         <div class="topnavbar-content">
             <div class="topnavbar-brand">
-                <h2>🏨 Hotel Management</h2>
+                <h2>🏨 Lentera Nusantara</h2>
             </div>
             <ul class="topnavbar-menu">
                 <li><a href="dashboard.php"><span>🏠</span> Beranda</a></li>
@@ -481,57 +460,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </div>
 
         <div class="profile-container">
-            margin-bottom: 8px;
-        }
-        .foto-preview p {
-            color: #999;
-            font-size: 14px;
-            margin: 0;
-        }
-        .foto-preview img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: none;
-        }
-        .foto-preview.has-image svg,
-        .foto-preview.has-image p {
-            display: none;
-        }
-        .foto-preview.has-image img {
-            display: block;
-        }
-        .foto-input {
-            display: none;
-        }
-    </style>
-</head>
-<body>
-    <!-- Top Navbar -->
-    <nav class="topnavbar">
-        <div class="topnavbar-content">
-            <div class="topnavbar-brand">
-                <h2>🏨 Hotel Management</h2>
-            </div>
-            <ul class="topnavbar-menu">
-                <li><a href="dashboard.php"><span>🏠</span> Beranda</a></li>
-                <li><a href="reservations.php"><span>📅</span> Reservasi Saya</a></li>
-                <li><a href="rooms.php"><span>🏨</span> Lihat Kamar</a></li>
-                <li><a href="fnb_new_order.php"><span>🍽️</span> Pesan F&B</a></li>
-                <li><a href="fnb_orders.php"><span>📋</span> Pesanan F&B</a></li>
-                <li><a href="profile.php" class="active"><span>👤</span> Profil</a></li>
-                <li><a href="../logout.php"><span>🚪</span> Keluar</a></li>
-            </ul>
-        </div>
-    </nav>
-
-    <main class="main-content">
-        <div class="page-header">
-            <h1>Profil Saya</h1>
-        </div>
-
-        <div class="profile-container">
-
             <?php if ($error): ?>
                 <div class="alert alert-error"><?php echo $error; ?></div>
             <?php endif; ?>
@@ -542,13 +470,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             <div class="profile-card">
                 <div class="profile-header">
-                    <?php if ($user['foto_profil'] && file_exists('../../' . $user['foto_profil'])): ?>
-                        <img src="../../<?php echo htmlspecialchars($user['foto_profil']); ?>" alt="Profile" class="profile-avatar-large">
-                    <?php else: ?>
-                        <div class="profile-avatar-large">
+                    <div class="profile-avatar-large">
+                        <?php if ($user['foto_profil'] && file_exists('../../' . $user['foto_profil'])): ?>
+                            <img src="../../<?php echo htmlspecialchars($user['foto_profil']); ?>" alt="Profile">
+                        <?php else: ?>
                             <?php echo strtoupper(substr($user['nama'], 0, 1)); ?>
-                        </div>
-                    <?php endif; ?>
+                        <?php endif; ?>
+                    </div>
                     <h2><?php echo htmlspecialchars($user['nama']); ?></h2>
                     <p style="color: #666;"><?php echo htmlspecialchars($user['email']); ?></p>
                     <p style="color: #999; font-size: 14px; margin-top: 10px;">
@@ -557,7 +485,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </div>
 
                 <form method="POST" action="" enctype="multipart/form-data">
-                    <h3 style="color: var(--chinese-red);">Informasi Personal</h3>
+                    <h3 style="color: #ff6b7d;">Informasi Personal</h3>
                     
                     <div class="form-grid">
                         <div class="form-group">
@@ -602,7 +530,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     </div>
 
                     <div class="section-divider">
-                        <h3 style="color: var(--chinese-red);">Ubah Password</h3>
+                        <h3 style="color: #ff6b7d;">Ubah Password</h3>
                         <p style="color: #666; font-size: 14px; margin-bottom: 20px;">
                             Kosongkan jika tidak ingin mengubah password
                         </p>

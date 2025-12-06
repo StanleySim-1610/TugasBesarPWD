@@ -19,9 +19,10 @@ $rooms = $conn->query("SELECT * FROM kamar WHERE jumlah_tersedia > 0 ORDER BY ha
     <link rel="stylesheet" href="../../frontend/assets/css/dashboard.css">
     <style>
         :root {
-            --chinese-red: #d32f2f;
-            --chinese-gold: #f0b343;
-            --chinese-dark: #8b0000;
+            --primary-pink: #ff6b7d;
+            --primary-yellow: #fdff94;
+            --gradient-start: #ff6b7d;
+            --gradient-end: #fdff94;
         }
         
         * {
@@ -32,13 +33,13 @@ $rooms = $conn->query("SELECT * FROM kamar WHERE jumlah_tersedia > 0 ORDER BY ha
         
         body {
             font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
-            background: linear-gradient(135deg, #fff9f0 0%, #ffe4e1 100%);
+            background: white;
             min-height: 100vh;
         }
         
         /* Top Navbar */
         .top-navbar {
-            background: linear-gradient(135deg, var(--chinese-red) 0%, var(--chinese-dark) 100%);
+            background: linear-gradient(180deg, #ff6b7d 0%, #ff8a94 100%);
             color: white;
             padding: 0;
             box-shadow: 0 4px 15px rgba(211, 47, 47, 0.3);
@@ -94,26 +95,21 @@ $rooms = $conn->query("SELECT * FROM kamar WHERE jumlah_tersedia > 0 ORDER BY ha
         }
         
         .navbar-link:hover {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.15);
             color: white;
-            border-bottom-color: var(--chinese-gold);
+            border-bottom: 3px solid;
+            border-image: linear-gradient(90deg, #ff6b7d, #fdff94) 1;
         }
         
         .navbar-link.active {
-            background: rgba(255, 255, 255, 0.15);
-            border-bottom-color: var(--chinese-gold);
+            background: rgba(255, 255, 255, 0.2);
+            border-bottom: 3px solid;
+            border-image: linear-gradient(90deg, #ff6b7d, #fdff94) 1;
             color: white;
         }
         
         .navbar-icon {
             font-size: 1.2rem;
-        }
-        
-        /* Chinese Pattern */
-        .chinese-pattern {
-            background-image: 
-                repeating-linear-gradient(45deg, transparent, transparent 20px, rgba(240, 179, 67, 0.03) 20px, rgba(240, 179, 67, 0.03) 40px),
-                repeating-linear-gradient(-45deg, transparent, transparent 20px, rgba(211, 47, 47, 0.03) 20px, rgba(211, 47, 47, 0.03) 40px);
         }
         
         /* Main Content */
@@ -130,9 +126,9 @@ $rooms = $conn->query("SELECT * FROM kamar WHERE jumlah_tersedia > 0 ORDER BY ha
         
         .page-title {
             font-size: 2.5rem;
-            color: var(--chinese-red);
+            color: #ff6b7d;
             margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(211, 47, 47, 0.1);
+            text-shadow: 2px 2px 4px rgba(255, 107, 125, 0.1);
         }
         
         .page-subtitle {
@@ -154,12 +150,12 @@ $rooms = $conn->query("SELECT * FROM kamar WHERE jumlah_tersedia > 0 ORDER BY ha
             transition: all 0.3s ease;
             display: flex;
             flex-direction: column;
-            border: 2px solid var(--chinese-gold);
+            box-shadow: 0 2px 10px rgba(255, 107, 125, 0.15);
         }
         
         .showcase-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 15px 40px rgba(211, 47, 47, 0.3);
+            box-shadow: 0 15px 40px rgba(255, 107, 125, 0.3);
         }
         
         .showcase-image {
@@ -208,12 +204,12 @@ $rooms = $conn->query("SELECT * FROM kamar WHERE jumlah_tersedia > 0 ORDER BY ha
         
         .showcase-title {
             font-size: 1.5rem;
-            color: var(--chinese-red);
+            color: #ff6b7d;
             font-weight: 700;
         }
         
         .showcase-badge {
-            background: linear-gradient(135deg, #4CAF50, #2e7d32);
+            background: linear-gradient(180deg, #4CAF50, #2e7d32);
             color: white;
             padding: 6px 14px;
             border-radius: 15px;
@@ -232,7 +228,7 @@ $rooms = $conn->query("SELECT * FROM kamar WHERE jumlah_tersedia > 0 ORDER BY ha
         
         .showcase-price {
             font-size: 1.8rem;
-            color: var(--chinese-red);
+            color: #ff6b7d;
             font-weight: 700;
             margin-bottom: 20px;
         }
@@ -251,13 +247,13 @@ $rooms = $conn->query("SELECT * FROM kamar WHERE jumlah_tersedia > 0 ORDER BY ha
         }
         
         .feature-tag {
-            background: linear-gradient(135deg, rgba(211, 47, 47, 0.1), rgba(240, 179, 67, 0.1));
-            color: var(--chinese-red);
+            background: linear-gradient(180deg, rgba(255, 107, 125, 0.1), rgba(253, 255, 148, 0.1));
+            color: #ff6b7d;
             padding: 6px 12px;
             border-radius: 15px;
             font-size: 0.85rem;
             font-weight: 600;
-            border: 1px solid rgba(211, 47, 47, 0.2);
+            border: 1px solid rgba(255, 107, 125, 0.2);
         }
         
         .btn {
@@ -273,13 +269,13 @@ $rooms = $conn->query("SELECT * FROM kamar WHERE jumlah_tersedia > 0 ORDER BY ha
         }
         
         .btn-primary {
-            background: linear-gradient(135deg, var(--chinese-red), var(--chinese-dark));
+            background: linear-gradient(180deg, #ff6b7d 0%, #ff8a94 100%);
             color: white;
         }
         
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(211, 47, 47, 0.4);
+            box-shadow: 0 5px 20px rgba(255, 107, 125, 0.4);
         }
         
         @media (max-width: 768px) {
@@ -295,7 +291,7 @@ $rooms = $conn->query("SELECT * FROM kamar WHERE jumlah_tersedia > 0 ORDER BY ha
         <div class="navbar-container">
             <div class="navbar-brand">
                 <img src="../../frontend/assets/logo.png?v=2" alt="Logo" class="navbar-logo">
-                <span class="navbar-title">Hotel Management</span>
+                <span class="navbar-title">Lentera Nusantara Hotel</span>
             </div>
             <ul class="navbar-menu">
                 <li class="navbar-item">
@@ -345,7 +341,7 @@ $rooms = $conn->query("SELECT * FROM kamar WHERE jumlah_tersedia > 0 ORDER BY ha
     </nav>
 
     <!-- Main Content -->
-    <div class="main-wrapper chinese-pattern">
+    <div class="main-wrapper">
         <div class="page-header">
             <h1 class="page-title">🏨 Kamar Tersedia</h1>
             <p class="page-subtitle">Pilih kamar terbaik untuk menginap Anda</p>

@@ -29,9 +29,10 @@ $reservations = $conn->query("
     <link rel="stylesheet" href="../../frontend/assets/css/dashboard.css">
     <style>
         :root {
-            --chinese-red: #d32f2f;
-            --chinese-gold: #f0b343;
-            --chinese-dark: #8b0000;
+            --primary-pink: #ff6b7d;
+            --primary-yellow: #fdff94;
+            --gradient-start: #ff6b7d;
+            --gradient-end: #fdff94;
         }
         
         * {
@@ -42,12 +43,12 @@ $reservations = $conn->query("
         
         body {
             font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
-            background: linear-gradient(135deg, #fff9f0 0%, #ffe4e1 100%);
+            background: white;
             min-height: 100vh;
         }
         
         .top-navbar {
-            background: linear-gradient(135deg, var(--chinese-red) 0%, var(--chinese-dark) 100%);
+            background: linear-gradient(180deg, #ff6b7d 0%, #ff8a94 100%);
             color: white;
             padding: 0;
             box-shadow: 0 4px 15px rgba(211, 47, 47, 0.3);
@@ -103,25 +104,21 @@ $reservations = $conn->query("
         }
         
         .navbar-link:hover {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.15);
             color: white;
-            border-bottom-color: var(--chinese-gold);
+            border-bottom: 3px solid;
+            border-image: linear-gradient(90deg, #ff6b7d, #fdff94) 1;
         }
         
         .navbar-link.active {
-            background: rgba(255, 255, 255, 0.15);
-            border-bottom-color: var(--chinese-gold);
+            background: rgba(255, 255, 255, 0.2);
+            border-bottom: 3px solid;
+            border-image: linear-gradient(90deg, #ff6b7d, #fdff94) 1;
             color: white;
         }
         
         .navbar-icon {
             font-size: 1.2rem;
-        }
-        
-        .chinese-pattern {
-            background-image: 
-                repeating-linear-gradient(45deg, transparent, transparent 20px, rgba(240, 179, 67, 0.03) 20px, rgba(240, 179, 67, 0.03) 40px),
-                repeating-linear-gradient(-45deg, transparent, transparent 20px, rgba(211, 47, 47, 0.03) 20px, rgba(211, 47, 47, 0.03) 40px);
         }
         
         .main-wrapper {
@@ -141,8 +138,8 @@ $reservations = $conn->query("
         
         .page-title {
             font-size: 2.5rem;
-            color: var(--chinese-red);
-            text-shadow: 2px 2px 4px rgba(211, 47, 47, 0.1);
+            color: #ff6b7d;
+            text-shadow: 2px 2px 4px rgba(255, 107, 125, 0.1);
         }
         
         .btn {
@@ -157,13 +154,13 @@ $reservations = $conn->query("
         }
         
         .btn-primary {
-            background: linear-gradient(135deg, var(--chinese-red), var(--chinese-dark));
+            background: linear-gradient(180deg, #ff6b7d 0%, #ff8a94 100%);
             color: white;
         }
         
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(211, 47, 47, 0.4);
+            box-shadow: 0 5px 20px rgba(255, 107, 125, 0.4);
         }
         
         .content-section {
@@ -171,7 +168,7 @@ $reservations = $conn->query("
             padding: 30px;
             border-radius: 15px;
             box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            border: 2px solid var(--chinese-gold);
+            box-shadow: 0 2px 10px rgba(255, 107, 125, 0.15);
         }
         
         .table-container {
@@ -184,7 +181,7 @@ $reservations = $conn->query("
         }
         
         .data-table th {
-            background: linear-gradient(135deg, var(--chinese-red), var(--chinese-dark));
+            background: linear-gradient(180deg, #ff6b7d 0%, #ff8a94 100%);
             color: white;
             padding: 15px;
             text-align: left;
@@ -246,7 +243,7 @@ $reservations = $conn->query("
         <div class="navbar-container">
             <div class="navbar-brand">
                 <img src="../../frontend/assets/logo.png?v=2" alt="Logo" class="navbar-logo">
-                <span class="navbar-title">Hotel Management</span>
+                <span class="navbar-title">Lentera Nusantara Hotel</span>
             </div>
             <ul class="navbar-menu">
                 <li class="navbar-item">
@@ -295,7 +292,7 @@ $reservations = $conn->query("
         </div>
     </nav>
 
-    <div class="main-wrapper chinese-pattern">
+    <div class="main-wrapper">
         <div class="page-header">
             <h1 class="page-title">📅 Reservasi Saya</h1>
             <a href="rooms.php" class="btn btn-primary">➕ Booking Baru</a>
@@ -354,14 +351,14 @@ $reservations = $conn->query("
                                         <div style="display: flex; gap: 5px; width: 100%;">
                                             <a href="reservation_detail.php?id=<?php echo $res['id_reservation']; ?>" 
                                                class="btn btn-sm" 
-                                               style="flex: 1; text-align: center; justify-content: center; background: var(--chinese-gold); color: white;">
+                                               style="flex: 1; text-align: center; justify-content: center; background: #fdff94; color: #333;">
                                                Lihat
                                             </a>
 
                                             <?php if ($is_paid && $is_active): ?>
                                                 <a href="edit_reservation.php?id=<?php echo $res['id_reservation']; ?>" 
                                                    class="btn btn-sm" 
-                                                   style="background: var(--chinese-red); color: white; flex: 1; text-align: center; justify-content: center;">
+                                                   style="background: #ff6b7d; color: white; flex: 1; text-align: center; justify-content: center;">
                                                    Edit
                                                 </a>
                                             

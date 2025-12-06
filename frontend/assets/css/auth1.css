@@ -4,10 +4,10 @@
     --card: #ffffff;
     --text: #22222a;
     --muted: #7b6a6a;
-    --brand-pink: #ff7a89;
+    --brand-pink: #ff6b7d;
     --brand-pink-700: #ff4f58;
-    --brand-gold: #f0b343;
-    --accent: linear-gradient(135deg, var(--brand-gold) 0%, var(--brand-pink) 100%);
+    --brand-gold: #fdff94;
+    --accent: linear-gradient(180deg, #ff6b7d 0%, #fdff94 100%);
     --radius: 12px;
 }
 

@@ -77,27 +77,27 @@ if (isset($_GET['delete']) && isset($_GET['id'])) {
     <style>
         body {
             font-family: 'Segoe UI', 'Roboto', sans-serif;
-            background: var(--cream);
+            background: white;
             min-height: 100vh;
-            padding: 20px;
         }
         
         .container {
             max-width: 1400px;
             margin: 0 auto;
+            padding: 40px 30px;
         }
         
         .reservation-group {
             background: white;
             border-radius: 15px;
-            box-shadow: 0 2px 15px rgba(26, 58, 82, 0.1);
+            box-shadow: 0 2px 15px rgba(255, 107, 125, 0.15);
             margin-bottom: 30px;
             overflow: hidden;
-            border: 2px solid var(--light-gold);
+            border: 2px solid #fdff94;
         }
         
         .reservation-header {
-            background: linear-gradient(135deg, var(--navy-blue) 0%, #2c5f8d 100%);
+            background: linear-gradient(180deg, #ff6b7d 0%, #ff8a94 100%);
             color: white;
             padding: 20px 30px;
             display: flex;
@@ -108,7 +108,7 @@ if (isset($_GET['delete']) && isset($_GET['id'])) {
         .reservation-info h3 {
             font-size: 1.3rem;
             margin-bottom: 8px;
-            color: var(--gold);
+            color: #fdff94;
         }
         
         .reservation-meta {
@@ -132,7 +132,7 @@ if (isset($_GET['delete']) && isset($_GET['id'])) {
         .reservation-total-amount {
             font-size: 1.8rem;
             font-weight: 700;
-            color: var(--gold);
+            color: #fdff94;
         }
         
         .orders-list {
@@ -152,7 +152,7 @@ if (isset($_GET['delete']) && isset($_GET['id'])) {
         }
         
         .order-item-info h4 {
-            color: var(--navy-blue);
+            color: #ff6b7d;
             font-size: 1.15rem;
             margin-bottom: 8px;
         }
@@ -180,22 +180,22 @@ if (isset($_GET['delete']) && isset($_GET['id'])) {
         }
         
         .status-pending {
-            background: linear-gradient(135deg, #fff3cd 0%, #ffe5a1 100%);
+            background: linear-gradient(180deg, #fff3cd 0%, #ffe5a1 100%);
             color: #856404;
         }
         
         .status-confirmed {
-            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+            background: linear-gradient(180deg, #d4edda 0%, #c3e6cb 100%);
             color: #155724;
         }
         
         .status-delivered {
-            background: linear-gradient(135deg, #d1ecf1 0%, #bee5eb 100%);
+            background: linear-gradient(180deg, #d1ecf1 0%, #bee5eb 100%);
             color: #0c5460;
         }
         
         .status-cancelled {
-            background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+            background: linear-gradient(180deg, #f8d7da 0%, #f5c6cb 100%);
             color: #721c24;
         }
         
@@ -204,7 +204,7 @@ if (isset($_GET['delete']) && isset($_GET['id'])) {
         }
         
         .order-item-price .price {
-            color: var(--navy-blue);
+            color: #ff6b7d;
             font-size: 1.3rem;
             font-weight: 700;
         }
@@ -221,7 +221,7 @@ if (isset($_GET['delete']) && isset($_GET['id'])) {
         
         .reservation-footer {
             padding: 20px 30px;
-            background: var(--soft-blue);
+            background: rgba(253, 255, 148, 0.1);
             display: flex;
             justify-content: flex-end;
         }
@@ -234,11 +234,11 @@ if (isset($_GET['delete']) && isset($_GET['id'])) {
             padding: 25px 30px;
             background: white;
             border-radius: 15px;
-            box-shadow: 0 2px 15px rgba(26, 58, 82, 0.1);
+            box-shadow: 0 2px 15px rgba(255, 107, 125, 0.15);
         }
         
         .action-bar h2 {
-            color: var(--navy-blue);
+            color: #ff6b7d;
             font-size: 1.8rem;
             margin: 0;
         }
@@ -248,7 +248,7 @@ if (isset($_GET['delete']) && isset($_GET['id'])) {
             padding: 80px 20px;
             background: white;
             border-radius: 15px;
-            box-shadow: 0 4px 20px rgba(26, 58, 82, 0.1);
+            box-shadow: 0 4px 20px rgba(255, 107, 125, 0.15);
         }
         
         .empty-state-icon {
@@ -258,7 +258,7 @@ if (isset($_GET['delete']) && isset($_GET['id'])) {
         }
         
         .empty-state h3 {
-            color: var(--navy-blue);
+            color: #ff6b7d;
             font-size: 1.8rem;
             margin-bottom: 15px;
         }

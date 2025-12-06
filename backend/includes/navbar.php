@@ -40,12 +40,12 @@ $current_page = basename($_SERVER['PHP_SELF']);
         }
 
         .topnavbar {
-            background: linear-gradient(135deg, var(--navy-blue) 0%, var(--dark-navy) 100%);
-            box-shadow: 0 4px 20px rgba(26, 58, 82, 0.3);
+            background: linear-gradient(180deg, #ff6b7d 0%, #fdff94 100%);
+            box-shadow: 0 4px 20px rgba(255, 107, 125, 0.3);
             position: sticky;
             top: 0;
             z-index: 1000;
-            border-bottom: 3px solid var(--gold);
+            border-bottom: 3px solid #ff8a94;
         }
 
         .topnavbar-content {
@@ -70,7 +70,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
         }
 
         .topnavbar-brand h2 {
-            color: var(--gold);
+            color: white;
             font-size: 1.8rem;
             font-weight: 700;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
@@ -97,14 +97,16 @@ $current_page = basename($_SERVER['PHP_SELF']);
         }
 
         .topnavbar-menu a:hover {
-            background: rgba(212, 175, 55, 0.1);
-            border-bottom-color: var(--gold);
+            background: rgba(255, 255, 255, 0.2);
+            border-bottom: 3px solid;
+            border-image: linear-gradient(90deg, #ff6b7d, #fdff94) 1;
         }
 
         .topnavbar-menu a.active {
-            background: rgba(212, 175, 55, 0.15);
-            border-bottom-color: var(--gold);
-            color: var(--gold);
+            background: rgba(255, 255, 255, 0.3);
+            border-bottom: 3px solid;
+            border-image: linear-gradient(90deg, #ff6b7d, #fdff94) 1;
+            color: white;
         }
 
         .main-content {

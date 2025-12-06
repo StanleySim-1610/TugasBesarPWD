@@ -81,9 +81,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_order'])) {
     <link rel="stylesheet" href="../../frontend/assets/css/dashboard.css">
     <style>
         :root {
-            --chinese-red: #d32f2f;
-            --chinese-gold: #f0b343;
-            --chinese-dark: #8b0000;
+            --primary-pink: #ff6b7d;
+            --primary-yellow: #fdff94;
+            --gradient-mid: #ff8a94;
             --bg-light: #fff9f0;
         }
         
@@ -95,13 +95,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_order'])) {
         
         body {
             font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
-            background: linear-gradient(135deg, #fff9f0 0%, #ffe4e1 100%);
+            background: white;
             min-height: 100vh;
         }
         
         /* Top Navbar */
         .top-navbar {
-            background: linear-gradient(135deg, var(--chinese-red) 0%, var(--chinese-dark) 100%);
+            background: linear-gradient(180deg, #ff6b7d 0%, #ff8a94 100%);
             color: white;
             padding: 0;
             box-shadow: 0 4px 15px rgba(211, 47, 47, 0.3);
@@ -161,26 +161,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_order'])) {
         }
         
         .navbar-link:hover {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.15);
             color: white;
-            border-bottom-color: var(--chinese-gold);
+            border-bottom: 3px solid;
+            border-image: linear-gradient(90deg, #ff6b7d, #fdff94) 1;
         }
         
         .navbar-link.active {
-            background: rgba(255, 255, 255, 0.15);
-            border-bottom-color: var(--chinese-gold);
+            background: rgba(255, 255, 255, 0.2);
+            border-bottom: 3px solid;
+            border-image: linear-gradient(90deg, #ff6b7d, #fdff94) 1;
             color: white;
         }
         
         .navbar-icon {
             font-size: 1.2rem;
-        }
-        
-        /* Chinese Decorative Pattern */
-        .chinese-pattern {
-            background-image: 
-                repeating-linear-gradient(45deg, transparent, transparent 20px, rgba(240, 179, 67, 0.03) 20px, rgba(240, 179, 67, 0.03) 40px),
-                repeating-linear-gradient(-45deg, transparent, transparent 20px, rgba(211, 47, 47, 0.03) 20px, rgba(211, 47, 47, 0.03) 40px);
         }
         
         /* Main Content */
@@ -197,7 +192,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_order'])) {
         
         .page-title {
             font-size: 2.5rem;
-            color: var(--chinese-red);
+            color: #ff6b7d;
             margin-bottom: 10px;
             text-shadow: 2px 2px 4px rgba(211, 47, 47, 0.1);
         }
@@ -238,11 +233,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_order'])) {
             border-radius: 15px;
             margin-bottom: 35px;
             box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            border: 2px solid var(--chinese-gold);
+            box-shadow: 0 2px 10px rgba(255, 107, 125, 0.15);
         }
         
         .section-title {
-            color: var(--chinese-red);
+            color: #ff6b7d;
             font-size: 1.5rem;
             margin-bottom: 20px;
             display: flex;
@@ -266,19 +261,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_order'])) {
         }
         
         .reservation-card:hover {
-            border-color: var(--chinese-gold);
+            border-color: #fdff94;
             transform: translateY(-3px);
             box-shadow: 0 8px 25px rgba(240, 179, 67, 0.3);
         }
         
         .reservation-card.selected {
-            border-color: var(--chinese-red);
+            border-color: #ff6b7d;
             background: #fff3f3;
             box-shadow: 0 8px 25px rgba(211, 47, 47, 0.3);
         }
         
         .reservation-card h4 {
-            color: var(--chinese-red);
+            color: #ff6b7d;
             margin-bottom: 12px;
             font-size: 1.2rem;
         }
@@ -308,7 +303,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_order'])) {
             padding: 30px;
             border-radius: 15px;
             box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            border: 2px solid var(--chinese-gold);
+            box-shadow: 0 2px 10px rgba(255, 107, 125, 0.15);
             display: none;
         }
         
@@ -325,12 +320,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_order'])) {
             align-items: center;
             gap: 12px;
             padding-bottom: 15px;
-            border-bottom: 3px solid var(--chinese-gold);
+            
             margin-bottom: 25px;
         }
         
         .category-title {
-            color: var(--chinese-red);
+            color: #ff6b7d;
             font-size: 1.5rem;
             font-weight: 700;
         }
@@ -365,7 +360,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_order'])) {
         .menu-item:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 30px rgba(211, 47, 47, 0.2);
-            border-color: var(--chinese-gold);
+            border-color: #fdff94;
         }
         
         .menu-item:hover::before {
@@ -391,7 +386,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_order'])) {
         }
         
         .menu-price {
-            color: var(--chinese-red);
+            color: #ff6b7d;
             font-size: 1.3rem;
             font-weight: bold;
             margin-bottom: 15px;
@@ -411,9 +406,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_order'])) {
         .quantity-control button {
             width: 40px;
             height: 40px;
-            border: 2px solid var(--chinese-gold);
+            box-shadow: 0 2px 10px rgba(255, 107, 125, 0.15);
             background: white;
-            color: var(--chinese-red);
+            color: #ff6b7d;
             border-radius: 8px;
             font-size: 1.3rem;
             cursor: pointer;
@@ -422,7 +417,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_order'])) {
         }
         
         .quantity-control button:hover {
-            background: var(--chinese-gold);
+            background: #fdff94;
             color: white;
             transform: scale(1.1);
         }
@@ -430,12 +425,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_order'])) {
         .quantity-control input {
             width: 70px;
             text-align: center;
-            border: 2px solid var(--chinese-gold);
+            box-shadow: 0 2px 10px rgba(255, 107, 125, 0.15);
             border-radius: 8px;
             padding: 10px;
             font-size: 1.1rem;
             font-weight: 600;
-            color: var(--chinese-red);
+            color: #ff6b7d;
         }
         
         /* Cart Summary */
@@ -444,7 +439,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_order'])) {
             bottom: 0;
             left: 0;
             right: 0;
-            background: linear-gradient(135deg, var(--chinese-red) 0%, var(--chinese-dark) 100%);
+            background: linear-gradient(180deg, #ff6b7d 0%, #ff8a94 100%);
             color: white;
             padding: 25px 30px;
             box-shadow: 0 -5px 20px rgba(0,0,0,0.3);
@@ -484,7 +479,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_order'])) {
         }
         
         .cart-count {
-            background: var(--chinese-gold);
+            background: #fdff94;
             padding: 8px 16px;
             border-radius: 20px;
             font-weight: bold;
@@ -498,7 +493,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_order'])) {
         
         .btn-submit-order {
             background: white;
-            color: var(--chinese-red);
+            color: #ff6b7d;
             border: none;
             padding: 15px 45px;
             border-radius: 30px;
@@ -512,7 +507,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_order'])) {
         .btn-submit-order:hover {
             transform: translateY(-3px);
             box-shadow: 0 8px 25px rgba(0,0,0,0.3);
-            background: var(--chinese-gold);
+            background: #fdff94;
             color: white;
         }
         
@@ -539,7 +534,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_order'])) {
         
         .btn-primary {
             display: inline-block;
-            background: var(--chinese-red);
+            background: #ff6b7d;
             color: white;
             padding: 15px 35px;
             border-radius: 25px;
@@ -549,7 +544,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_order'])) {
         }
         
         .btn-primary:hover {
-            background: var(--chinese-dark);
+            background: #ff8a94;
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(211, 47, 47, 0.3);
         }
@@ -572,7 +567,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_order'])) {
         <div class="navbar-container">
             <div class="navbar-brand">
                 <img src="../../frontend/assets/logo.png?v=2" alt="Logo" class="navbar-logo">
-                <span class="navbar-title">Hotel Management</span>
+                <span class="navbar-title">Lentera Nusantara Hotel</span>
             </div>
             <ul class="navbar-menu">
                 <li class="navbar-item">
@@ -622,7 +617,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_order'])) {
     </nav>
 
     <!-- Main Content -->
-    <div class="main-wrapper chinese-pattern">
+    <div class="main-wrapper">
         <div class="page-header">
             <h1 class="page-title">🍽️ Pemesanan Makanan & Minuman</h1>
             <p class="page-subtitle">Pesan makanan dan minuman untuk reservasi kamar Anda</p>

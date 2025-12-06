@@ -1,21 +1,21 @@
 /**
  * Lentera Nusantara Hotel - Global Styles
- * Color Scheme: Navy Blue & Gold - Elegant & Professional
+ * Color Scheme: Pink to Yellow Gradient - Modern & Vibrant
  */
 
 :root {
     /* Primary Colors */
-    --navy-blue: #1a3a52;
-    --gold: #d4af37;
-    --light-gold: #f4e4c1;
+    --primary-pink: #ff6b7d;
+    --primary-yellow: #fdff94;
+    --gradient-start: #ff6b7d;
+    --gradient-end: #fdff94;
     
     /* Background Colors */
-    --cream: #faf7f2;
-    --soft-blue: #e8f1f5;
+    --light-pink: #ffb3c1;
+    --soft-yellow: #fffacd;
     --white: #ffffff;
     
     /* Text Colors */
-    --dark-navy: #0f2537;
     --text-primary: #333333;
     --text-secondary: #666666;
     --text-light: #999999;
@@ -27,9 +27,9 @@
     --info: #0288d1;
     
     /* Shadows */
-    --shadow-sm: 0 2px 8px rgba(26, 58, 82, 0.1);
-    --shadow-md: 0 4px 16px rgba(26, 58, 82, 0.15);
-    --shadow-lg: 0 8px 24px rgba(26, 58, 82, 0.2);
+    --shadow-sm: 0 2px 8px rgba(255, 107, 125, 0.1);
+    --shadow-md: 0 4px 16px rgba(255, 107, 125, 0.15);
+    --shadow-lg: 0 8px 24px rgba(255, 107, 125, 0.2);
 }
 
 * {
@@ -40,14 +40,14 @@
 
 body {
     font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
-    background: var(--cream);
+    background: linear-gradient(180deg, #ff6b7d 0%, #fdff94 100%);
     color: var(--text-primary);
     line-height: 1.6;
 }
 
 /* Topnavbar Styles */
 .topnavbar {
-    background: linear-gradient(135deg, var(--navy-blue) 0%, var(--dark-navy) 100%);
+    background: linear-gradient(180deg, #ff6b7d 0%, #ff8a94 100%);
     box-shadow: 0 4px 20px rgba(26, 58, 82, 0.3);
     position: sticky;
     top: 0;

@@ -1,14 +1,14 @@
 # Color Scheme - Lentera Nusantara Hotel
 
 ## Primary Colors
-- **Navy Blue**: #1a3a52 (Main brand color - sophisticated, trustworthy)
-- **Gold**: #d4af37 (Luxury accent - elegance, premium)
-- **Light Gold**: #f4e4c1 (Backgrounds, hover states)
+- **Primary Pink**: #ff6b7d (Main gradient start - modern, vibrant)
+- **Primary Yellow**: #fdff94 (Gradient end - bright, cheerful)
+- **Light Pink**: #ffb3c1 (Accents, hover states)
 
 ## Secondary Colors
-- **Cream**: #faf7f2 (Page backgrounds)
-- **Soft Blue**: #e8f1f5 (Cards, sections)
-- **Dark Navy**: #0f2537 (Text, headers)
+- **Soft Yellow**: #fffacd (Backgrounds, highlights)
+- **White**: #ffffff (Cards, sections)
+- **Text Primary**: #333333 (Main text)
 
 ## Status Colors
 - **Success**: #2e7d32 (Green - confirmed, paid)
@@ -17,10 +17,16 @@
 - **Info**: #0288d1 (Blue - information)
 
 ## Usage
-- Navbar: Navy Blue gradient with gold accents
-- Buttons Primary: Gold with navy text
-- Buttons Secondary: Navy with white text
-- Cards: White with soft blue background
-- Borders: Light gold
-- Text Primary: Dark navy
+- Navbar: Pink to Yellow gradient (180deg) with white accents
+- Buttons Primary: Pink gradient with white text
+- Buttons Secondary: White with pink border
+- Cards: White with subtle shadow
+- Borders: Light yellow or pink
+- Background: Full page gradient from pink to yellow (180deg)
+- Text Primary: Dark gray (#333)
 - Text Secondary: #666
+
+## Gradient
+- **Main Gradient**: `linear-gradient(180deg, #ff6b7d 0%, #fdff94 100%)`
+- Direction: Top to bottom (180 degrees)
+- Use for: Backgrounds, navbars, buttons, accents
