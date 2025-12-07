@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $foto_profil = '';
     
     // Create upload directory if not exists
-    $upload_dir = '../../assets/uploads/profile/';
+    $upload_dir = '../assets/uploads/profile/';
     if (!is_dir($upload_dir)) {
         mkdir($upload_dir, 0755, true);
     }

@@ -411,14 +411,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['metode'])) {
                     <h3 class="payment-methods-title">Pilih Metode Pembayaran</h3>
                     <div class="payment-method-grid">
                         <div class="payment-method-option">
-                            <input type="radio" id="tunai" name="metode" value="Tunai" required>
-                            <label for="tunai" class="payment-method-label">
-                                <span class="payment-icon">💵</span>
-                                Tunai
-                            </label>
-                        </div>
-                        <div class="payment-method-option">
-                            <input type="radio" id="transfer" name="metode" value="Transfer Bank">
+                            <input type="radio" id="transfer" name="metode" value="Transfer Bank" required>
                             <label for="transfer" class="payment-method-label">
                                 <span class="payment-icon">🏦</span>
                                 Transfer Bank

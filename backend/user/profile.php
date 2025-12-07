@@ -170,7 +170,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         
         .navbar-logo {
             height: 50px;
-            filter: brightness(0) invert(1);
         }
         
         .navbar-title {
@@ -230,11 +229,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
         .page-header h1 {
-            color: #ffffff;
+            color: #ff6b7d;
             font-size: 36px;
             font-weight: 700;
             margin-bottom: 10px;
-            text-shadow: 2px 2px 8px rgba(0,0,0,0.2);
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.1);
         }
 
         .profile-container {

@@ -86,7 +86,6 @@ $rooms = $conn->query("SELECT * FROM kamar WHERE jumlah_tersedia > 0 ORDER BY ha
         
         .navbar-logo {
             height: 50px;
-            filter: brightness(0) invert(1);
         }
         
         .navbar-title {

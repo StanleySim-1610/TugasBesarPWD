@@ -67,7 +67,6 @@ $rooms = $conn->query("SELECT * FROM kamar WHERE jumlah_tersedia > 0 ORDER BY ha
         
         .navbar-logo {
             height: 50px;
-            filter: brightness(0) invert(1);
         }
         
         .navbar-title {
@@ -121,8 +120,12 @@ $rooms = $conn->query("SELECT * FROM kamar WHERE jumlah_tersedia > 0 ORDER BY ha
         }
         
         .page-header {
-            text-align: center;
+            background: linear-gradient(180deg, white 0%, #fffbf5 100%);
+            padding: 30px;
+            border-radius: 15px;
             margin-bottom: 40px;
+            box-shadow: 0 2px 10px rgba(255, 107, 125, 0.15);
+            text-align: center;
         }
         
         .page-title {

@@ -31,13 +31,15 @@ while ($order = $fnb_orders->fetch_assoc()) {
             ],
             'orders' => [],
             'total' => 0,
-            'all_pending' => true
+            'pending_total' => 0,
+            'has_pending' => false
         ];
     }
     $orders_by_reservation[$res_id]['orders'][] = $order;
     $orders_by_reservation[$res_id]['total'] += $order['subtotal'];
-    if ($order['status'] != 'pending') {
-        $orders_by_reservation[$res_id]['all_pending'] = false;
+    if ($order['status'] == 'pending') {
+        $orders_by_reservation[$res_id]['has_pending'] = true;
+        $orders_by_reservation[$res_id]['pending_total'] += $order['subtotal'];
     }
 }
 
@@ -354,14 +356,16 @@ if (isset($_GET['delete']) && isset($_GET['id'])) {
                         <?php endforeach; ?>
                     </div>
                     
-                    <?php if ($group['all_pending']): ?>
+                    <?php if ($group['has_pending']): ?>
                         <div class="reservation-footer">
                             <form method="POST" action="fnb_payment.php" style="display: inline;">
                                 <?php foreach ($group['orders'] as $order): ?>
-                                    <input type="hidden" name="order_ids[]" value="<?php echo $order['id_fnb']; ?>">
+                                    <?php if ($order['status'] == 'pending'): ?>
+                                        <input type="hidden" name="order_ids[]" value="<?php echo $order['id_fnb']; ?>">
+                                    <?php endif; ?>
                                 <?php endforeach; ?>
                                 <button type="submit" class="btn btn-primary" style="padding: 15px 40px; font-size: 1.1rem;">
-                                    💳 Bayar Semua Pesanan (Rp <?php echo number_format($group['total'], 0, ',', '.'); ?>)
+                                    💳 Bayar Pesanan Pending (Rp <?php echo number_format($group['pending_total'], 0, ',', '.'); ?>)
                                 </button>
                             </form>
                         </div>

@@ -49,8 +49,134 @@ $user_orders = $conn->query("
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>F&B Ordering - User</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="../../frontend/assets/css/dashboard.css">
     <style>
+        :root {
+            --primary-pink: #ff6b7d;
+            --primary-yellow: #fdff94;
+            --brand-pink: #ff6b7d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            background: white;
+            min-height: 100vh;
+        }
+        
+        /* Top Navbar */
+        .top-navbar {
+            background: linear-gradient(180deg, #ff6b7d 0%, #ff8a94 100%);
+            color: white;
+            padding: 0;
+            box-shadow: 0 4px 15px rgba(255, 107, 125, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .navbar-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 30px;
+        }
+        
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px 0;
+        }
+        
+        .navbar-logo {
+            height: 50px;
+        }
+        
+        .navbar-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .navbar-menu {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            list-style: none;
+        }
+        
+        .navbar-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 18px 20px;
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+            font-weight: 500;
+        }
+        
+        .navbar-link:hover {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border-bottom: 3px solid;
+            border-image: linear-gradient(90deg, #ff6b7d, #fdff94) 1;
+        }
+        
+        .navbar-link.active {
+            background: rgba(255, 255, 255, 0.2);
+            border-bottom: 3px solid;
+            border-image: linear-gradient(90deg, #ff6b7d, #fdff94) 1;
+            color: white;
+        }
+        
+        .navbar-icon {
+            font-size: 1.2rem;
+        }
+        
+        .main-wrapper {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 30px;
+        }
+        
+        .page-header {
+            margin-bottom: 30px;
+        }
+        
+        .page-header h1 {
+            color: #ff6b7d;
+            font-size: 2rem;
+            font-weight: 700;
+        }
+        
+        .alert {
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+        
+        .alert-success {
+            background: #e8f5e9;
+            color: #2e7d32;
+            border: 2px solid #4caf50;
+        }
+        
+        .alert-error {
+            background: #ffebee;
+            color: #c62828;
+            border: 2px solid #ef5350;
+        }
+        
         .tabs {
             display: flex;
             gap: 10px;
@@ -343,44 +469,58 @@ $user_orders = $conn->query("
     </style>
 </head>
 <body>
-    <div class="dashboard-container">
-        <aside class="sidebar">
-            <div class="sidebar-header">
-                <img src="../../frontend/assets/logo.png?v=2" alt="Logo" class="sidebar-logo">
-                <h3>User Panel</h3>
+    <!-- Top Navbar -->
+    <nav class="top-navbar">
+        <div class="navbar-container">
+            <div class="navbar-brand">
+                <img src="../../frontend/assets/logo.png?v=2" alt="Logo" class="navbar-logo">
+                <span class="navbar-title">Lentera Nusantara Hotel</span>
             </div>
-            <nav class="sidebar-nav">
-                <a href="dashboard.php" class="nav-item">
-                    <i class="fas fa-home nav-icon"></i>
-                    Beranda
-                </a>
-                <a href="reservations.php" class="nav-item">
-                    <i class="fas fa-calendar-check nav-icon"></i>
-                    Reservasi Saya
-                </a>
-                <a href="rooms.php" class="nav-item">
-                    <i class="fas fa-bed nav-icon"></i>
-                    Lihat Kamar
-                </a>
-                <a href="fnb_ordering.php" class="nav-item active">
-                    <i class="fas fa-concierge-bell nav-icon"></i>
-                    Dining
-                </a>
-                <a href="profile.php" class="nav-item">
-                    <i class="fas fa-user-circle nav-icon"></i>
-                    Profil
-                </a>
-                <a href="../logout.php" class="nav-item">
-                    <i class="fas fa-sign-out-alt nav-icon"></i>
-                    Keluar
-                </a>
-            </nav>
-        </aside>
+            <ul class="navbar-menu">
+                <li class="navbar-item">
+                    <a href="dashboard.php" class="navbar-link">
+                        <i class="fas fa-home navbar-icon"></i>
+                        <span>Beranda</span>
+                    </a>
+                </li>
+                <li class="navbar-item">
+                    <a href="reservations.php" class="navbar-link">
+                        <i class="fas fa-calendar-check navbar-icon"></i>
+                        <span>Reservasi Saya</span>
+                    </a>
+                </li>
+                <li class="navbar-item">
+                    <a href="rooms.php" class="navbar-link">
+                        <i class="fas fa-bed navbar-icon"></i>
+                        <span>Lihat Kamar</span>
+                    </a>
+                </li>
+                <li class="navbar-item">
+                    <a href="fnb_new_order.php" class="navbar-link active">
+                        <i class="fas fa-concierge-bell navbar-icon"></i>
+                        <span>Dining</span>
+                    </a>
+                </li>
+                <li class="navbar-item">
+                    <a href="profile.php" class="navbar-link">
+                        <i class="fas fa-user-circle navbar-icon"></i>
+                        <span>Profil</span>
+                    </a>
+                </li>
+                <li class="navbar-item">
+                    <a href="../logout.php" class="navbar-link">
+                        <i class="fas fa-sign-out-alt navbar-icon"></i>
+                        <span>Keluar</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
 
-        <main class="main-content">
-            <div class="top-bar">
-                <h1>F&B Ordering</h1>
-            </div>
+    <div class="main-wrapper">
+        <div class="page-header">
+            <h1>F&B Ordering</h1>
+        </div>
 
             <?php if (isset($_SESSION['success'])): ?>
                 <div class="alert alert-success">✓ <?php echo $_SESSION['success']; unset($_SESSION['success']); ?></div>
@@ -477,8 +617,7 @@ $user_orders = $conn->query("
                     <?php endif; ?>
                 </section>
             </div>
-        </main>
-    </div>
+        </div>
 
     <!-- Order Modal -->
     <div class="modal" id="orderModal">

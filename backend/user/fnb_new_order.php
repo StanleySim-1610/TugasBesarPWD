@@ -49,13 +49,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_order'])) {
         
         try {
             foreach ($orders as $order) {
-                $item = $conn->real_escape_string($order['item']);
+                $item = $order['item'];
                 $qty = intval($order['qty']);
                 $harga = floatval($order['harga']);
                 
                 $stmt = $conn->prepare("INSERT INTO fnb_order (id_reservation, item, qty, harga, status) VALUES (?, ?, ?, ?, 'pending')");
                 $stmt->bind_param("isid", $reservation_id, $item, $qty, $harga);
-                $stmt->execute();
+                
+                if (!$stmt->execute()) {
+                    throw new Exception("Database error: " . $stmt->error);
+                }
             }
             
             $conn->commit();
@@ -67,7 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_order'])) {
             
         } catch (Exception $e) {
             $conn->rollback();
-            $_SESSION['error'] = 'Terjadi kesalahan saat memproses pesanan.';
+            $_SESSION['error'] = 'Terjadi kesalahan saat memproses pesanan: ' . $e->getMessage();
         }
     }
 }
@@ -129,7 +132,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_order'])) {
         
         .navbar-logo {
             height: 50px;
-            filter: brightness(0) invert(1);
         }
         
         .navbar-title {
@@ -187,8 +189,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_order'])) {
         }
         
         .page-header {
-            text-align: center;
+            background: linear-gradient(180deg, white 0%, #fffbf5 100%);
+            padding: 30px;
+            border-radius: 15px;
             margin-bottom: 40px;
+            box-shadow: 0 2px 10px rgba(255, 107, 125, 0.15);
+            text-align: center;
         }
         
         .page-title {
@@ -259,6 +265,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_order'])) {
             cursor: pointer;
             transition: all 0.3s ease;
             background: linear-gradient(to bottom, white, #fffbf5);
+            position: relative;
+        }
+        
+        .reservation-id-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: linear-gradient(135deg, #ff6b7d, #fdff94);
+            color: white;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            box-shadow: 0 2px 8px rgba(255, 107, 125, 0.3);
         }
         
         .reservation-card:hover {
@@ -340,41 +360,40 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_order'])) {
         .menu-item {
             border: 2px solid #e0e0e0;
             border-radius: 12px;
-            padding: 20px;
+            padding: 0;
             transition: all 0.3s ease;
             background: linear-gradient(to bottom, #ffffff, #fef9f0);
             position: relative;
             overflow: hidden;
         }
         
-        .menu-item::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -50%;
+        .menu-image {
             width: 100%;
-            height: 100%;
-            background: radial-gradient(circle, rgba(253, 255, 148, 0.1) 0%, transparent 70%);
-            transition: all 0.5s ease;
+            height: 180px;
+            background-size: cover;
+            background-position: center;
+            border-radius: 12px 12px 0 0;
+        }
+        
+        .menu-item > h4,
+        .menu-item > .menu-description,
+        .menu-item > .menu-price,
+        .menu-item > .quantity-control {
+            padding: 0 20px;
+        }
+        
+        .menu-item h4 {
+            color: #333;
+            margin: 15px 0 10px;
+            font-size: 1.2rem;
+            position: relative;
+            z-index: 1;
         }
         
         .menu-item:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 30px rgba(255, 107, 125, 0.2);
             border-color: #fdff94;
-        }
-        
-        .menu-item:hover::before {
-            top: -20%;
-            right: -20%;
-        }
-        
-        .menu-item h4 {
-            color: #333;
-            margin-bottom: 10px;
-            font-size: 1.2rem;
-            position: relative;
-            z-index: 1;
         }
         
         .menu-description {
@@ -384,6 +403,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_order'])) {
             line-height: 1.5;
             position: relative;
             z-index: 1;
+            min-height: 40px;
+        }
         }
         
         .menu-price {
@@ -480,7 +501,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_order'])) {
         }
         
         .cart-count {
-            background: #fdff94;
+            background: white;
+            color: #ff6b7d;
             padding: 8px 16px;
             border-radius: 20px;
             font-weight: bold;
@@ -640,6 +662,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_order'])) {
                 <div class="reservation-grid">
                     <?php while ($res = $paid_reservations->fetch_assoc()): ?>
                         <div class="reservation-card" data-reservation-id="<?php echo $res['id_reservation']; ?>">
+                            <div class="reservation-id-badge">ID #<?php echo $res['id_reservation']; ?></div>
                             <h4><?php echo htmlspecialchars($res['tipe_kamar']); ?></h4>
                             <div class="reservation-info">
                                 <span>📅</span>
@@ -750,6 +773,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_order'])) {
                     const menuItem = document.createElement('div');
                     menuItem.className = 'menu-item';
                     menuItem.innerHTML = `
+                        <div class="menu-image" style="background-image: url('../../frontend/assets/fnb_menu/${item.foto}');"></div>
                         <h4>${item.nama}</h4>
                         <p class="menu-description">${item.deskripsi}</p>
                         <div class="menu-price">Rp ${item.harga.toLocaleString('id-ID')}</div>

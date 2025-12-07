@@ -103,11 +103,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <p>Belum punya akun? <a href="register.php">Daftar di sini</a></p>
                 <p><a href="../frontend/index.html">Kembali ke Beranda</a></p>
             </div>
-            
-            <div class="auth-info">
-                <p><strong>Demo Account:</strong></p>
-                <p>Admin: admin@gmail.com / admin123</p>
-            </div>
         </div>
     </div>
     

@@ -7,122 +7,122 @@ $menu_items = [
     [
         'id' => 1,
         'kategori' => 'Makanan',
-        'nama' => 'Pad Thai Udang',
+        'nama' => 'Asam Manis',
         'harga' => 55000,
-        'deskripsi' => 'Mie beras goreng dengan udang segar, kacang, dan telur',
-        'foto' => 'pad_thai.jpg'
+        'deskripsi' => 'Ayam goreng dengan saus asam manis khas Chinese',
+        'foto' => 'asam_manis.jpg'
     ],
     [
         'id' => 2,
         'kategori' => 'Makanan',
-        'nama' => 'Mie Goreng Singapore',
-        'harga' => 48000,
-        'deskripsi' => 'Mie goreng Singapore dengan udang dan sayuran segar',
-        'foto' => 'singapore_noodles.jpg'
+        'nama' => 'Bakpao Nonhalal',
+        'harga' => 32000,
+        'deskripsi' => 'Bakpao kukus isi daging babi cincang berbumbu',
+        'foto' => 'bakpao_nonhalal.jpg'
     ],
     [
         'id' => 3,
         'kategori' => 'Makanan',
-        'nama' => 'Mie Goreng Telur',
-        'harga' => 42000,
-        'deskripsi' => 'Mie goreng dengan telur mata sapi dan bawang goreng',
-        'foto' => 'mie_goreng_telur.jpg'
+        'nama' => 'Bihun Goreng Seafood',
+        'harga' => 48000,
+        'deskripsi' => 'Bihun goreng dengan udang, cumi, dan sayuran segar',
+        'foto' => 'bihun_goreng_seafood.jpeg'
     ],
     [
         'id' => 4,
         'kategori' => 'Makanan',
-        'nama' => 'Laksa Pedas',
+        'nama' => 'Kwetiau Seafood',
         'harga' => 52000,
-        'deskripsi' => 'Mie kuah pedas dengan santan, telur, dan sayuran',
-        'foto' => 'laksa.jpg'
+        'deskripsi' => 'Kwetiau goreng seafood dengan udang, cumi, dan sayuran',
+        'foto' => 'kwetiau_seafood.jpg'
     ],
     [
         'id' => 5,
         'kategori' => 'Makanan',
-        'nama' => 'Mie Bakso Daging',
+        'nama' => 'Mie Pangsit Ayam',
         'harga' => 45000,
-        'deskripsi' => 'Mie dengan bakso daging, pangsit, dan sayuran',
-        'foto' => 'mie_bakso.jpg'
+        'deskripsi' => 'Mie dengan pangsit ayam, sayuran dalam kuah gurih',
+        'foto' => 'mie_pangsit_ayam.jpeg'
     ],
     [
         'id' => 6,
         'kategori' => 'Makanan',
-        'nama' => 'Kung Pao Chicken',
-        'harga' => 58000,
-        'deskripsi' => 'Ayam tumis pedas dengan kacang mete dan paprika',
-        'foto' => 'kung_pao.jpg'
+        'nama' => 'Mie Sagu Goreng Teri',
+        'harga' => 42000,
+        'deskripsi' => 'Mie sagu goreng dengan teri crispy dan sayuran',
+        'foto' => 'mie_sagu_goreng_teri.png'
     ],
     [
         'id' => 7,
         'kategori' => 'Makanan',
-        'nama' => 'Sweet and Sour Chicken',
-        'harga' => 55000,
-        'deskripsi' => 'Ayam goreng saus asam manis dengan nanas',
-        'foto' => 'sweet_sour.jpg'
+        'nama' => 'Misoa Ayam',
+        'harga' => 40000,
+        'deskripsi' => 'Misoa kuah dengan ayam dan sayuran segar',
+        'foto' => 'misoa_ayam.jpg'
     ],
     [
         'id' => 8,
-        'kategori' => 'Minuman',
-        'nama' => 'Chrysanthemum Tea',
-        'harga' => 18000,
-        'deskripsi' => 'Teh bunga krisan tradisional China yang menyegarkan',
-        'foto' => 'chrysanthemum_tea.jpg'
+        'kategori' => 'Makanan',
+        'nama' => 'Moon Cake',
+        'harga' => 35000,
+        'deskripsi' => 'Kue bulan tradisional dengan isian lotus seed paste',
+        'foto' => 'moon_cake.jpg'
     ],
     [
         'id' => 9,
-        'kategori' => 'Minuman',
-        'nama' => 'Monk Fruit Tea',
-        'harga' => 20000,
-        'deskripsi' => 'Teh buah monk yang manis alami dan menyehatkan',
-        'foto' => 'monk_fruit_tea.jpg'
+        'kategori' => 'Makanan',
+        'nama' => 'Nasi Kungpao',
+        'harga' => 58000,
+        'deskripsi' => 'Nasi dengan ayam kungpao pedas dan kacang mete',
+        'foto' => 'nasi_kungpao.jpg'
     ],
     [
         'id' => 10,
         'kategori' => 'Minuman',
-        'nama' => 'Pu-erh Tea',
-        'harga' => 25000,
-        'deskripsi' => 'Teh fermentasi premium khas Yunnan',
-        'foto' => 'puerh_tea.jpg'
+        'nama' => 'Ai Yu Jelly',
+        'harga' => 22000,
+        'deskripsi' => 'Minuman jelly ai yu dengan lemon segar',
+        'foto' => 'ai_yu_jelly.jpg'
     ],
     [
         'id' => 11,
         'kategori' => 'Minuman',
-        'nama' => 'Lemon Basil Seed Drink',
-        'harga' => 22000,
-        'deskripsi' => 'Minuman biji selasih dengan lemon segar',
-        'foto' => 'lemon_basil.jpg'
+        'nama' => 'Ba Bao Cha',
+        'harga' => 25000,
+        'deskripsi' => 'Teh delapan harta karun dengan buah kering',
+        'foto' => 'ba_bao_cha.jpg'
     ],
     [
         'id' => 12,
         'kategori' => 'Minuman',
-        'nama' => 'Aloe Vera Drink',
+        'nama' => 'Chinese Tea',
         'harga' => 20000,
-        'deskripsi' => 'Minuman lidah buaya dengan biji selasih',
-        'foto' => 'aloe_vera.jpg'
+        'deskripsi' => 'Teh tradisional China pilihan',
+        'foto' => 'chinese_tea.jpg'
     ],
     [
         'id' => 13,
-        'kategori' => 'Snack',
-        'nama' => 'Mooncake',
-        'harga' => 35000,
-        'deskripsi' => 'Kue bulan tradisional dengan isian lotus seed paste',
-        'foto' => 'mooncake.jpg'
+        'kategori' => 'Minuman',
+        'nama' => 'Es Lidah Buaya',
+        'harga' => 20000,
+        'deskripsi' => 'Minuman lidah buaya dengan es yang menyegarkan',
+        'foto' => 'es_lidah_buaya.png'
     ],
     [
         'id' => 14,
-        'kategori' => 'Snack',
-        'nama' => 'Baozi (Steamed Buns)',
-        'harga' => 32000,
-        'deskripsi' => 'Bakpao kukus isi daging cincang berbumbu',
-        'foto' => 'baozi.jpg'
+        'kategori' => 'Minuman',
+        'nama' => 'Kha Hue Teh',
+        'harga' => 18000,
+        'deskripsi' => 'Teh bunga krisan yang menyegarkan',
+        'foto' => 'kha_hue_teh.jpg'
     ],
     [
         'id' => 15,
-        'kategori' => 'Dessert',
-        'nama' => 'Chinese Herbal Soup',
-        'harga' => 38000,
-        'deskripsi' => 'Sup herbal manis dengan kurma, goji berry, dan longan',
-        'foto' => 'herbal_soup.jpg'
+        'kategori' => 'Minuman',
+        'nama' => 'Lo Han Guo',
+        'harga' => 20000,
+        'deskripsi' => 'Teh buah monk yang manis alami dan menyehatkan',
+        'foto' => 'lo_han_guo.jpg'
     ]
 ];
 

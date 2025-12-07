@@ -76,7 +76,6 @@ $reservations = $conn->query("
         
         .navbar-logo {
             height: 50px;
-            filter: brightness(0) invert(1);
         }
         
         .navbar-title {
@@ -129,10 +128,14 @@ $reservations = $conn->query("
         }
         
         .page-header {
+            background: linear-gradient(180deg, white 0%, #fffbf5 100%);
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(255, 107, 125, 0.15);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 30px;
             flex-wrap: wrap;
             gap: 20px;
         }

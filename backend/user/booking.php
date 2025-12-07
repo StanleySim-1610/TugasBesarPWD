@@ -91,7 +91,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             min-height: 100vh;
         }
 
-        .topnavbar {
+        /* Top Navbar */
+        .top-navbar {
             background: linear-gradient(180deg, #ff6b7d 0%, #ff8a94 100%);
             color: white;
             padding: 0;
@@ -100,58 +101,68 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             top: 0;
             z-index: 1000;
         }
-
-        .topnavbar-content {
+        
+        .navbar-container {
             max-width: 1400px;
             margin: 0 auto;
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            justify-content: space-between;
             padding: 0 30px;
         }
-
-        .topnavbar-brand {
+        
+        .navbar-brand {
             display: flex;
             align-items: center;
             gap: 15px;
             padding: 15px 0;
         }
-
-        .topnavbar-brand h2 {
-            color: #fdff94;
-            font-size: 24px;
+        
+        .navbar-logo {
+            height: 50px;
+        }
+        
+        .navbar-title {
+            font-size: 1.5rem;
             font-weight: 700;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
-
-        .topnavbar-menu {
+        
+        .navbar-menu {
             display: flex;
+            align-items: center;
             gap: 5px;
             list-style: none;
         }
-
-        .topnavbar-menu a {
-            color: white;
-            text-decoration: none;
-            padding: 20px 20px;
+        
+        .navbar-link {
             display: flex;
             align-items: center;
             gap: 8px;
+            padding: 18px 20px;
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
             transition: all 0.3s ease;
-            font-weight: 500;
             border-bottom: 3px solid transparent;
+            font-weight: 500;
         }
-
-        .topnavbar-menu a:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-bottom: 3px solid;
-            border-image: linear-gradient(90deg, #ff6b7d, #fdff94) 1;
-        }
-
-        .topnavbar-menu a.active {
+        
+        .navbar-link:hover {
             background: rgba(255, 255, 255, 0.15);
+            color: white;
             border-bottom: 3px solid;
             border-image: linear-gradient(90deg, #ff6b7d, #fdff94) 1;
+        }
+        
+        .navbar-link.active {
+            background: rgba(255, 255, 255, 0.2);
+            border-bottom: 3px solid;
+            border-image: linear-gradient(90deg, #ff6b7d, #fdff94) 1;
+            color: white;
+        }
+        
+        .navbar-icon {
+            font-size: 1.2rem;
         }
 
         .main-content {
@@ -338,18 +349,49 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </head>
 <body>
     <!-- Top Navbar -->
-    <nav class="topnavbar">
-        <div class="topnavbar-content">
-            <div class="topnavbar-brand">
-                <h2>LENTERA NUSANTARA</h2>
+    <nav class="top-navbar">
+        <div class="navbar-container">
+            <div class="navbar-brand">
+                <img src="../../frontend/assets/logo.png?v=2" alt="Logo" class="navbar-logo">
+                <span class="navbar-title">Lentera Nusantara Hotel</span>
             </div>
-            <ul class="topnavbar-menu">
-                <li><a href="dashboard.php"><i class="fas fa-home"></i> Beranda</a></li>
-                <li><a href="reservations.php"><i class="fas fa-calendar-check"></i> Reservasi Saya</a></li>
-                <li><a href="rooms.php" class="active"><i class="fas fa-bed"></i> Lihat Kamar</a></li>
-                <li><a href="fnb_new_order.php"><i class="fas fa-concierge-bell"></i> Dining</a></li>
-                <li><a href="profile.php"><i class="fas fa-user-circle"></i> Profil</a></li>
-                <li><a href="../logout.php"><i class="fas fa-sign-out-alt"></i> Keluar</a></li>
+            <ul class="navbar-menu">
+                <li class="navbar-item">
+                    <a href="dashboard.php" class="navbar-link">
+                        <i class="fas fa-home navbar-icon"></i>
+                        <span>Beranda</span>
+                    </a>
+                </li>
+                <li class="navbar-item">
+                    <a href="reservations.php" class="navbar-link">
+                        <i class="fas fa-calendar-check navbar-icon"></i>
+                        <span>Reservasi Saya</span>
+                    </a>
+                </li>
+                <li class="navbar-item">
+                    <a href="rooms.php" class="navbar-link active">
+                        <i class="fas fa-bed navbar-icon"></i>
+                        <span>Lihat Kamar</span>
+                    </a>
+                </li>
+                <li class="navbar-item">
+                    <a href="fnb_new_order.php" class="navbar-link">
+                        <i class="fas fa-concierge-bell navbar-icon"></i>
+                        <span>Dining</span>
+                    </a>
+                </li>
+                <li class="navbar-item">
+                    <a href="profile.php" class="navbar-link">
+                        <i class="fas fa-user-circle navbar-icon"></i>
+                        <span>Profil</span>
+                    </a>
+                </li>
+                <li class="navbar-item">
+                    <a href="../logout.php" class="navbar-link">
+                        <i class="fas fa-sign-out-alt navbar-icon"></i>
+                        <span>Keluar</span>
+                    </a>
+                </li>
             </ul>
         </div>
     </nav>

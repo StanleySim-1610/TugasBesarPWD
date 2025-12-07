@@ -85,9 +85,9 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: var(--gradient-navbar);
+    background: transparent;
     z-index: 1000;
-    box-shadow: var(--shadow-md);
+    box-shadow: none;
 }
 
 .logo {
@@ -103,59 +103,32 @@ body {
 }
 
 .navbar ul li a {
-    color: rgba(255, 255, 255, 0.95);
+    color: var(--rose-pink) !important;
+    background: white;
     text-decoration: none;
-    padding: 12px 24px;
+    padding: 10px 28px;
     display: inline-flex;
     align-items: center;
     gap: 8px;
     transition: all 0.3s ease;
-    font-weight: 500;
-    letter-spacing: 0.5px;
+    font-weight: 600;
+    letter-spacing: 1px;
     font-size: 0.95rem;
-    border-radius: 6px;
+    border-radius: 8px;
+    border: 2px solid white;
+    text-transform: uppercase;
+    margin-left: 10px;
 }
 
 .navbar ul li a:hover {
-    background: rgba(255, 255, 255, 0.15);
-    color: var(--soft-yellow);
-}
-
-.navbar ul li a i {
-    font-size: 1.1rem;
-}
-
-.btn-login, .btn-register {
-    padding: 10px 28px !important;
-    border-radius: 8px;
-    font-weight: 600 !important;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-}
-
-.btn-login {
-    background: transparent;
-    border: 2px solid white;
-    color: white !important;
-}
-
-.btn-login:hover {
-    background: white;
-    color: var(--rose-pink) !important;
-}
-
-.btn-register {
-    background: white;
-    color: var(--rose-pink) !important;
-    margin-left: 10px;
-    border: 2px solid white;
-}
-
-.btn-register:hover {
     background: var(--soft-yellow);
     border-color: var(--soft-yellow);
     color: var(--dark-charcoal) !important;
     transform: translateY(-2px);
+}
+
+.navbar ul li a i {
+    font-size: 1.1rem;
 }
 
 /* ============================================
@@ -525,25 +498,25 @@ body {
     font-weight: 700;
 }
 
-/* Placeholder facility images (you can replace with real images) */
+/* Facility images from local assets */
 .facility-item:nth-child(1) {
-    background: url('https://images.unsplash.com/photo-1556912172-45b7abe8b7e1?w=800') center/cover;
+    background: url('../facility/wifi.jpg') center/cover;
 }
 
 .facility-item:nth-child(2) {
-    background: url('https://images.unsplash.com/photo-1590490360182-c33d57733427?w=800') center/cover;
+    background: url('../facility/parking.jpg') center/cover;
 }
 
 .facility-item:nth-child(3) {
-    background: url('https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=800') center/cover;
+    background: url('../facility/fitness.jpg') center/cover;
 }
 
 .facility-item:nth-child(4) {
-    background: url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800') center/cover;
+    background: url('../facility/security.jpg') center/cover;
 }
 
 .facility-item:nth-child(5) {
-    background: url('https://images.unsplash.com/photo-1582719471384-894fbb16e074?w=800') center/cover;
+    background: url('../facility/service.jpg') center/cover;
 }
 
 /* ============================================
