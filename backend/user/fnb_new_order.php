@@ -6,6 +6,9 @@ requireLogin();
 
 $user_id = $_SESSION['user_id'];
 
+// Get pre-selected reservation from URL parameter
+$preselected_reservation = isset($_GET['reservation']) ? intval($_GET['reservation']) : 0;
+
 // Get paid reservations for this user
 $paid_reservations = $conn->query("
     SELECT r.*, k.tipe_kamar, p.status as payment_status
@@ -720,6 +723,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_order'])) {
         let menuData = [];
         let cart = {};
         
+        // Pre-select reservation if provided in URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const preselectedReservation = urlParams.get('reservation');
+        
         // Load menu data
         fetch('../../backend/api/fnb_menu.php')
             .then(response => response.json())
@@ -740,6 +747,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_order'])) {
                 document.getElementById('menuSection').classList.add('active');
                 document.getElementById('menuSection').scrollIntoView({ behavior: 'smooth' });
             });
+            
+            // Auto-select if matches preselected reservation
+            if (preselectedReservation && card.dataset.reservationId === preselectedReservation) {
+                setTimeout(() => {
+                    card.click();
+                }, 500);
+            }
         });
         
         function renderMenu() {

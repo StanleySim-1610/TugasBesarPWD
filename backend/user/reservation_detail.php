@@ -35,6 +35,38 @@ if (!$is_admin && $reservation['id_user'] != $user_id) {
     exit();
 }
 
+// Get F&B orders history for this reservation (including paid orders)
+$stmt_fnb = $conn->prepare("
+    SELECT fo.*, 
+           (fo.qty * fo.harga) as subtotal,
+           pf.status as payment_status,
+           pf.paid_at,
+           pf.metode as payment_method
+    FROM fnb_order fo
+    LEFT JOIN payment_fnb pf ON fo.id_fnb = pf.id_fnb
+    WHERE fo.id_reservation = ?
+    ORDER BY fo.created_at DESC
+");
+$stmt_fnb->bind_param("i", $reservation_id);
+$stmt_fnb->execute();
+$fnb_orders = $stmt_fnb->get_result();
+
+// Calculate F&B totals
+$fnb_total = 0;
+$fnb_paid_total = 0;
+$fnb_pending_total = 0;
+$fnb_items = [];
+
+while ($fnb = $fnb_orders->fetch_assoc()) {
+    $fnb_items[] = $fnb;
+    $fnb_total += $fnb['subtotal'];
+    if ($fnb['payment_status'] == 'paid') {
+        $fnb_paid_total += $fnb['subtotal'];
+    } else {
+        $fnb_pending_total += $fnb['subtotal'];
+    }
+}
+
 $base_path = $is_admin ? '..' : '..';
 $dashboard_link = $is_admin ? 'dashboard.php' : 'dashboard.php';
 ?>
@@ -325,6 +357,185 @@ $dashboard_link = $is_admin ? 'dashboard.php' : 'dashboard.php';
             color: #f44336;
             border: 2px solid #f44336;
         }
+
+        /* F&B History Section */
+        .fnb-history-section {
+            margin-top: 40px;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 2px solid #ffe4e7;
+        }
+
+        .fnb-history-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #ffe4e7;
+        }
+
+        .fnb-history-header h3 {
+            color: var(--rose-pink);
+            font-size: 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .fnb-stats {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .fnb-stat-item {
+            text-align: right;
+        }
+
+        .fnb-stat-label {
+            font-size: 12px;
+            color: #666;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .fnb-stat-value {
+            font-size: 18px;
+            font-weight: 700;
+            margin-top: 5px;
+        }
+
+        .fnb-orders-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .fnb-order-item {
+            background: linear-gradient(135deg, #fffef9 0%, #fff0f2 100%);
+            padding: 20px;
+            border-radius: 12px;
+            border: 2px solid #ffe4e7;
+            transition: all 0.3s ease;
+        }
+
+        .fnb-order-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 107, 125, 0.15);
+        }
+
+        .fnb-order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .fnb-order-info {
+            flex: 1;
+        }
+
+        .fnb-item-name {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--rose-pink);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .fnb-order-meta {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .fnb-order-price {
+            text-align: right;
+        }
+
+        .fnb-price-detail {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .fnb-subtotal {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--rose-pink);
+        }
+
+        .fnb-payment-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        .fnb-status-paid {
+            background: #e8f5e9;
+            color: #4caf50;
+            border: 2px solid #4caf50;
+        }
+
+        .fnb-status-pending {
+            background: #fff4e5;
+            color: #ff9800;
+            border: 2px solid #ff9800;
+        }
+
+        .empty-fnb {
+            text-align: center;
+            padding: 60px 20px;
+            color: #999;
+        }
+
+        .empty-fnb i {
+            font-size: 64px;
+            color: #ddd;
+            margin-bottom: 20px;
+        }
+
+        .empty-fnb p {
+            font-size: 16px;
+            margin-top: 15px;
+        }
+
+        .fnb-summary-box {
+            background: linear-gradient(135deg, #fff0f2 0%, #ffe4e7 100%);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 25px;
+            border: 2px solid #ffb3c1;
+        }
+
+        .fnb-summary-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 107, 125, 0.1);
+        }
+
+        .fnb-summary-row:last-child {
+            border-bottom: none;
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--rose-pink);
+            padding-top: 15px;
+            margin-top: 10px;
+            border-top: 2px solid #ffb3c1;
+        }
     </style>
 </head>
 <body>
@@ -466,6 +677,133 @@ $dashboard_link = $is_admin ? 'dashboard.php' : 'dashboard.php';
                     Silakan selesaikan pembayaran untuk mengkonfirmasi reservasi Anda.
                 </div>
                 <?php endif; ?>
+
+                <!-- F&B Order History Section -->
+                <div class="fnb-history-section">
+                    <div class="fnb-history-header">
+                        <h3>
+                            <i class="fas fa-concierge-bell"></i>
+                            Riwayat Pemesanan F&B
+                        </h3>
+                        <?php if (count($fnb_items) > 0): ?>
+                        <div class="fnb-stats">
+                            <div class="fnb-stat-item">
+                                <div class="fnb-stat-label">Total Pesanan</div>
+                                <div class="fnb-stat-value" style="color: var(--rose-pink);">
+                                    <?php echo count($fnb_items); ?> item
+                                </div>
+                            </div>
+                            <div class="fnb-stat-item">
+                                <div class="fnb-stat-label">Total Dibayar</div>
+                                <div class="fnb-stat-value" style="color: #4caf50;">
+                                    <?php echo formatRupiah($fnb_paid_total); ?>
+                                </div>
+                            </div>
+                            <?php if ($fnb_pending_total > 0): ?>
+                            <div class="fnb-stat-item">
+                                <div class="fnb-stat-label">Belum Dibayar</div>
+                                <div class="fnb-stat-value" style="color: #ff9800;">
+                                    <?php echo formatRupiah($fnb_pending_total); ?>
+                                </div>
+                            </div>
+                            <?php endif; ?>
+                        </div>
+                        <?php endif; ?>
+                    </div>
+
+                    <?php if (count($fnb_items) > 0): ?>
+                    <div class="fnb-orders-list">
+                        <?php foreach ($fnb_items as $fnb): ?>
+                        <div class="fnb-order-item">
+                            <div class="fnb-order-header">
+                                <div class="fnb-order-info">
+                                    <div class="fnb-item-name">
+                                        <i class="fas fa-utensils"></i>
+                                        <?php echo htmlspecialchars($fnb['item']); ?>
+                                    </div>
+                                    <div class="fnb-order-meta">
+                                        <i class="fas fa-clock"></i>
+                                        Dipesan: <?php echo date('d M Y, H:i', strtotime($fnb['created_at'])); ?>
+                                    </div>
+                                    <?php if (isset($fnb['catatan']) && !empty($fnb['catatan'])): ?>
+                                    <div class="fnb-order-meta">
+                                        <i class="fas fa-sticky-note"></i>
+                                        Catatan: <?php echo htmlspecialchars($fnb['catatan']); ?>
+                                    </div>
+                                    <?php endif; ?>
+                                    
+                                    <?php if ($fnb['payment_status'] == 'paid'): ?>
+                                    <div class="fnb-payment-status fnb-status-paid">
+                                        <i class="fas fa-check-circle"></i>
+                                        Sudah Dibayar
+                                        <?php if ($fnb['paid_at']): ?>
+                                        <span style="margin-left: 8px; font-weight: normal;">
+                                            (<?php echo date('d M Y', strtotime($fnb['paid_at'])); ?>)
+                                        </span>
+                                        <?php endif; ?>
+                                    </div>
+                                    <?php else: ?>
+                                    <div class="fnb-payment-status fnb-status-pending">
+                                        <i class="fas fa-clock"></i>
+                                        Menunggu Pembayaran
+                                    </div>
+                                    <?php endif; ?>
+                                </div>
+                                <div class="fnb-order-price">
+                                    <div class="fnb-price-detail">
+                                        <?php echo formatRupiah($fnb['harga']); ?> × <?php echo $fnb['qty']; ?>
+                                    </div>
+                                    <div class="fnb-subtotal">
+                                        <?php echo formatRupiah($fnb['subtotal']); ?>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <?php endforeach; ?>
+
+                        <!-- F&B Summary -->
+                        <div class="fnb-summary-box">
+                            <div class="fnb-summary-row">
+                                <span>Total Pesanan F&B:</span>
+                                <span><strong><?php echo formatRupiah($fnb_total); ?></strong></span>
+                            </div>
+                            <div class="fnb-summary-row">
+                                <span style="color: #4caf50;">Sudah Dibayar:</span>
+                                <span style="color: #4caf50;"><strong><?php echo formatRupiah($fnb_paid_total); ?></strong></span>
+                            </div>
+                            <?php if ($fnb_pending_total > 0): ?>
+                            <div class="fnb-summary-row">
+                                <span style="color: #ff9800;">Belum Dibayar:</span>
+                                <span style="color: #ff9800;"><strong><?php echo formatRupiah($fnb_pending_total); ?></strong></span>
+                            </div>
+                            <?php endif; ?>
+                        </div>
+
+                        <?php if ($fnb_pending_total > 0): ?>
+                        <div style="margin-top: 20px; text-align: center;">
+                            <a href="fnb_orders.php" class="btn btn-primary">
+                                <i class="fas fa-credit-card"></i>
+                                Bayar Pesanan F&B
+                            </a>
+                        </div>
+                        <?php endif; ?>
+                    </div>
+                    <?php else: ?>
+                    <div class="empty-fnb">
+                        <i class="fas fa-concierge-bell"></i>
+                        <h3>Belum Ada Pesanan F&B</h3>
+                        <p>Anda belum melakukan pemesanan makanan atau minuman untuk booking ini.</p>
+                        <?php if (in_array($reservation['status'], ['confirmed', 'pending'])): ?>
+                        <div style="margin-top: 20px;">
+                            <a href="fnb_new_order.php?reservation=<?php echo $reservation_id; ?>" class="btn btn-primary">
+                                <i class="fas fa-plus"></i>
+                                Pesan Makanan & Minuman
+                            </a>
+                        </div>
+                        <?php endif; ?>
+                    </div>
+                    <?php endif; ?>
+                </div>
 
                 <div class="action-buttons">
                     <a href="reservations.php" class="btn btn-outline">
