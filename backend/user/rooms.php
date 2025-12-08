@@ -6,7 +6,6 @@ requireLogin();
 
 $user_id = $_SESSION['user_id'];
 
-// Get available rooms
 $rooms = $conn->query("SELECT * FROM kamar WHERE jumlah_tersedia > 0 ORDER BY harga ASC");
 ?>
 
@@ -38,7 +37,6 @@ $rooms = $conn->query("SELECT * FROM kamar WHERE jumlah_tersedia > 0 ORDER BY ha
             min-height: 100vh;
         }
         
-        /* Top Navbar */
         .top-navbar {
             background: linear-gradient(180deg, #ff6b7d 0%, #ff8a94 100%);
             color: white;
@@ -112,7 +110,6 @@ $rooms = $conn->query("SELECT * FROM kamar WHERE jumlah_tersedia > 0 ORDER BY ha
             font-size: 1.2rem;
         }
         
-        /* Main Content */
         .main-wrapper {
             max-width: 1400px;
             margin: 0 auto;
@@ -290,7 +287,6 @@ $rooms = $conn->query("SELECT * FROM kamar WHERE jumlah_tersedia > 0 ORDER BY ha
     </style>
 </head>
 <body>
-    <!-- Top Navbar -->
     <nav class="top-navbar">
         <div class="navbar-container">
             <div class="navbar-brand">
@@ -338,7 +334,6 @@ $rooms = $conn->query("SELECT * FROM kamar WHERE jumlah_tersedia > 0 ORDER BY ha
         </div>
     </nav>
 
-    <!-- Main Content -->
     <div class="main-wrapper">
         <div class="page-header">
             <h1 class="page-title">🛕 Kamar Tersedia</h1>
@@ -347,14 +342,11 @@ $rooms = $conn->query("SELECT * FROM kamar WHERE jumlah_tersedia > 0 ORDER BY ha
                 
                 <div class="rooms-showcase">
                     <?php while($room = $rooms->fetch_assoc()): 
-                        // Logika Penentuan Gambar
                         $tipe = strtolower($room['tipe_kamar']);
                         
-                        // Default gambar (hanya nama file)
                         $gambar = 'standard_room.jpg'; 
                         
                         if (strpos($tipe, 'presidential') !== false) {
-                            // Pastikan ekstensi file sesuai dengan yang ada di folder (biasanya .jpg)
                             $gambar = 'presidential_suite.png'; 
                         } elseif (strpos($tipe, 'suite') !== false) {
                             $gambar = 'suite_room.jpg';

@@ -1,10 +1,8 @@
-// Profile Page - Handle user profile form and interactions
 document.addEventListener('DOMContentLoaded', function() {
     initializeProfile();
 });
 
 function initializeProfile() {
-    // Handle profile form submission
     const profileForm = document.getElementById('profileForm');
     if (profileForm) {
         profileForm.addEventListener('submit', function(e) {
@@ -14,7 +12,6 @@ function initializeProfile() {
         });
     }
 
-    // Handle password form submission
     const passwordForm = document.getElementById('passwordForm');
     if (passwordForm) {
         passwordForm.addEventListener('submit', function(e) {
@@ -24,7 +21,6 @@ function initializeProfile() {
         });
     }
 
-    // Handle photo preview
     const photoInput = document.getElementById('foto_profil');
     if (photoInput) {
         photoInput.addEventListener('change', function(e) {
@@ -40,16 +36,13 @@ function validateProfileForm() {
 
     let isValid = true;
 
-    // Clear previous errors
     document.querySelectorAll('.error-message').forEach(el => el.remove());
 
-    // Validate nama
     if (!namaInput.value.trim()) {
         showFieldError(namaInput, 'Nama tidak boleh kosong');
         isValid = false;
     }
 
-    // Validate telepon
     if (!teleponInput.value.trim()) {
         showFieldError(teleponInput, 'Nomor telepon harus diisi');
         isValid = false;
@@ -58,7 +51,6 @@ function validateProfileForm() {
         isValid = false;
     }
 
-    // Validate identitas
     if (!identitasInput.value.trim()) {
         showFieldError(identitasInput, 'Nomor identitas harus diisi');
         isValid = false;
@@ -77,16 +69,13 @@ function validatePasswordForm() {
 
     let isValid = true;
 
-    // Clear previous errors
     document.querySelectorAll('.error-message').forEach(el => el.remove());
 
-    // Validate old password
     if (!oldPasswordInput.value) {
         showFieldError(oldPasswordInput, 'Password lama harus diisi');
         isValid = false;
     }
 
-    // Validate new password
     if (!newPasswordInput.value) {
         showFieldError(newPasswordInput, 'Password baru harus diisi');
         isValid = false;
@@ -95,7 +84,6 @@ function validatePasswordForm() {
         isValid = false;
     }
 
-    // Validate confirm password
     if (!confirmPasswordInput.value) {
         showFieldError(confirmPasswordInput, 'Konfirmasi password harus diisi');
         isValid = false;

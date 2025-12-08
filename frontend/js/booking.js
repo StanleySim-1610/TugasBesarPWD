@@ -1,10 +1,8 @@
-// Booking Page - Handle room booking form and calculations
 document.addEventListener('DOMContentLoaded', function() {
     initializeBooking();
 });
 
 function initializeBooking() {
-    // Handle check-in and check-out date change for price calculation
     const checkInInput = document.getElementById('checkIn');
     const checkOutInput = document.getElementById('checkOut');
     
@@ -13,7 +11,6 @@ function initializeBooking() {
         checkOutInput.addEventListener('change', updateBookingPrice);
     }
 
-    // Handle form submission
     const bookingForm = document.getElementById('bookingForm');
     if (bookingForm) {
         bookingForm.addEventListener('submit', function(e) {
@@ -23,7 +20,6 @@ function initializeBooking() {
         });
     }
 
-    // Format prices display
     const priceElements = document.querySelectorAll('[data-price]');
     priceElements.forEach(el => {
         const price = parseFloat(el.dataset.price);
@@ -48,7 +44,6 @@ function updateBookingPrice() {
             daysElement.textContent = days + ' malam';
             totalPriceElement.textContent = formatRupiah(totalPrice);
             
-            // Update hidden input dengan total price
             const totalPriceInput = document.getElementById('totalPrice_input');
             if (totalPriceInput) {
                 totalPriceInput.value = totalPrice;
@@ -64,10 +59,8 @@ function validateBookingForm() {
 
     let isValid = true;
 
-    // Reset error messages
     document.querySelectorAll('.error-message').forEach(el => el.remove());
 
-    // Validate dates
     if (!checkInInput.value) {
         showFieldError(checkInInput, 'Tanggal check-in harus diisi');
         isValid = false;
@@ -84,8 +77,7 @@ function validateBookingForm() {
             isValid = false;
         }
     }
-
-    // Validate jumlah orang
+    
     if (!jumlahOrangInput.value || jumlahOrangInput.value < 1) {
         showFieldError(jumlahOrangInput, 'Jumlah orang minimal 1');
         isValid = false;

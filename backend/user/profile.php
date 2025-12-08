@@ -8,7 +8,6 @@ $user_id = $_SESSION['user_id'];
 $error = '';
 $success = '';
 
-// Get user data
 $stmt = $conn->prepare("SELECT * FROM user WHERE id_user = ?");
 $stmt->bind_param("i", $user_id);
 $stmt->execute();
@@ -31,55 +30,114 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         mkdir($upload_dir, 0755, true);
     }
     
-    // Handle foto upload
+    // ============================================================================
+    // BONUS 4: FITUR UPDATE FOTO PROFIL
+    // ============================================================================
+    // Handle upload foto profil baru (jika user ingin mengubah foto)
+    // Proses ini mirip dengan upload saat registrasi, tapi dengan tambahan:
+    // - Hapus foto lama jika ada
+    // - Update database dengan path foto baru
     if (!empty($_FILES['foto_profil']['name'])) {
+        // Ambil informasi file yang diupload
         $file = $_FILES['foto_profil'];
-        $file_name = $file['name'];
-        $file_size = $file['size'];
-        $file_tmp = $file['tmp_name'];
-        $file_error = $file['error'];
+        $file_name = $file['name'];           // Nama file asli dari user
+        $file_size = $file['size'];           // Ukuran file dalam bytes
+        $file_tmp = $file['tmp_name'];        // Lokasi sementara file di server
+        $file_error = $file['error'];         // Error code upload
         
-        // Get file extension
+        // Extract ekstensi file dan ubah ke lowercase untuk konsistensi
         $file_ext = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
+        
+        // Whitelist ekstensi file yang diperbolehkan
+        // Hanya gambar: jpg, jpeg, png, gif
         $allowed_ext = array('jpg', 'jpeg', 'png', 'gif');
         
+        // Validasi file upload
         if ($file_error === 0) {
+            // Validasi 1: Cek apakah ekstensi file diizinkan
             if (in_array($file_ext, $allowed_ext)) {
-                if ($file_size <= 5000000) { // 5MB max
-                    // Delete old foto if exists
+                // Validasi 2: Cek ukuran file (max 5MB)
+                if ($file_size <= 5000000) {
+                    // ========================================================
+                    // PENTING: Hapus foto lama sebelum upload foto baru
+                    // ========================================================
+                    // Tujuan: Menghemat storage server dengan menghapus file lama
+                    // Cek apakah user sudah punya foto profil sebelumnya
                     if (!empty($user['foto_profil']) && file_exists($upload_dir . basename($user['foto_profil']))) {
+                        // unlink() = fungsi PHP untuk menghapus file
+                        // basename() = ambil nama file saja dari full path
                         unlink($upload_dir . basename($user['foto_profil']));
                     }
                     
+                    // Generate nama file unik untuk foto baru
+                    // Format: profile_[unique_id_with_timestamp].[extension]
+                    // Contoh: profile_6756abc123def456789.jpg
+                    // Parameter true pada uniqid = tambahkan entropy (lebih unik)
                     $file_new_name = uniqid('profile_', true) . '.' . $file_ext;
+                    
+                    // Path lengkap lokasi file tujuan
                     $file_destination = $upload_dir . $file_new_name;
                     
+                    // Pindahkan file dari temporary ke folder uploads
                     if (move_uploaded_file($file_tmp, $file_destination)) {
+                        // Simpan path relative untuk database
+                        // Path ini akan digunakan di HTML untuk menampilkan gambar
+                        // Contoh: <img src="../../assets/uploads/profile/profile_xxx.jpg">
                         $foto_profil = 'assets/uploads/profile/' . $file_new_name;
                     } else {
+                        // Gagal memindahkan file (permission issue, disk full, dll)
                         $error = 'Gagal upload foto';
                     }
                 } else {
+                    // File terlalu besar (> 5MB)
                     $error = 'Ukuran foto terlalu besar (max 5MB)';
                 }
             } else {
+                // Ekstensi tidak diizinkan (security: cegah upload .php, .exe, dll)
                 $error = 'Format foto tidak didukung (jpg, jpeg, png, gif)';
             }
         }
     }
+    // ============================================================================
     
-    // Check if email is changed and already exists
+    // ============================================================================
+    // BONUS 3: DETEKSI EMAIL DUPLIKAT SAAT UPDATE PROFILE
+    // ============================================================================
+    // Cek apakah email yang diinput sudah dipakai user lain
+    // Hanya cek jika user mengubah email (email baru != email lama)
     if ($email !== $user['email']) {
+        // Prepare query untuk cek email duplikat
+        // Query ini cari email yang sama TAPI id_user berbeda (user lain)
+        // AND id_user != ? → Exclude user yang sedang login (boleh pakai email sendiri)
         $check = $conn->prepare("SELECT id_user FROM user WHERE email = ? AND id_user != ?");
+    if (empty($error)) {
+        // ============================================================================
+        // UPDATE DATABASE: Simpan perubahan profile termasuk foto profil
+        // ============================================================================
+        // Query UPDATE dengan prepared statement
+        // Update semua field: nama, email, no_telp, no_identitas, dan foto_profil
+        $stmt = $conn->prepare("UPDATE user SET nama = ?, email = ?, no_telp = ?, no_identitas = ?, foto_profil = ? WHERE id_user = ?");
+        
+        // Bind 6 parameter:
+        // "s" = string (nama, email, no_telp, no_identitas, foto_profil)
+        // "i" = integer (id_user)
+        // Urutan parameter harus sesuai dengan urutan placeholder (?)
+        $stmt->bind_param("sssssi", $nama, $email, $no_telp, $no_identitas, $foto_profil, $user_id);
+        // "i" = integer untuk id_user
         $check->bind_param("si", $email, $user_id);
+        
+        // Eksekusi query
         $check->execute();
+        
+        // Jika ditemukan (num_rows > 0) = email sudah dipakai user lain
         if ($check->get_result()->num_rows > 0) {
+            // Tampilkan error, cegah update profile
             $error = 'Email sudah digunakan!';
         }
     }
+    // ============================================================================
     
     if (empty($error)) {
-        // Update basic info including foto
         $stmt = $conn->prepare("UPDATE user SET nama = ?, email = ?, no_telp = ?, no_identitas = ?, foto_profil = ? WHERE id_user = ?");
         $stmt->bind_param("sssssi", $nama, $email, $no_telp, $no_identitas, $foto_profil, $user_id);
         
@@ -87,7 +145,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_SESSION['nama'] = $nama;
             $_SESSION['email'] = $email;
             
-            // Update password if provided
             if (!empty($new_password)) {
                 if (empty($current_password)) {
                     $error = 'Masukkan password lama!';
@@ -107,7 +164,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             
             if (empty($error)) {
                 $success = 'Profil berhasil diperbarui!';
-                // Refresh user data
                 $stmt = $conn->prepare("SELECT * FROM user WHERE id_user = ?");
                 $stmt->bind_param("i", $user_id);
                 $stmt->execute();
@@ -141,7 +197,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             position: relative;
         }
 
-        /* Top Navbar */
         .top-navbar {
             background: linear-gradient(180deg, #ff6b7d 0%, #ff8a94 100%);
             color: white;
@@ -624,7 +679,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
     
-    // Make foto preview clickable
     const fotoPreview = document.getElementById('fotoPreview');
     const fotoInput = document.getElementById('foto_profil');
     fotoPreview.addEventListener('click', function() {

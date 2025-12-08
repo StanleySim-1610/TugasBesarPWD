@@ -6,13 +6,11 @@ requireLogin();
 
 $user_id = $_SESSION['user_id'];
 
-// Get user data
 $stmt = $conn->prepare("SELECT * FROM user WHERE id_user = ?");
 $stmt->bind_param("i", $user_id);
 $stmt->execute();
 $user = $stmt->get_result()->fetch_assoc();
 
-// Get user's reservations
 $stmt = $conn->prepare("
     SELECT r.*, k.tipe_kamar, k.harga as harga_kamar, 
            DATEDIFF(r.check_out, r.check_in) as jumlah_hari
@@ -25,7 +23,6 @@ $stmt->bind_param("i", $user_id);
 $stmt->execute();
 $reservations = $stmt->get_result();
 
-// Get available rooms
 $rooms = $conn->query("SELECT * FROM kamar WHERE jumlah_tersedia > 0 ORDER BY harga ASC");
 ?>
 
@@ -158,7 +155,6 @@ $rooms = $conn->query("SELECT * FROM kamar WHERE jumlah_tersedia > 0 ORDER BY ha
             font-size: 1.1rem;
         }
         
-        /* Stats Grid */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -204,7 +200,6 @@ $rooms = $conn->query("SELECT * FROM kamar WHERE jumlah_tersedia > 0 ORDER BY ha
             font-size: 0.95rem;
         }
         
-        /* Section */
         .content-section {
             background: white;
             padding: 30px;
@@ -222,7 +217,6 @@ $rooms = $conn->query("SELECT * FROM kamar WHERE jumlah_tersedia > 0 ORDER BY ha
             
         }
         
-        /* Rooms Grid */
         .rooms-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -331,7 +325,6 @@ $rooms = $conn->query("SELECT * FROM kamar WHERE jumlah_tersedia > 0 ORDER BY ha
             box-shadow: 0 5px 15px rgba(255, 107, 125, 0.3);
         }
         
-        /* Table */
         .table-container {
             overflow-x: auto;
         }
@@ -412,7 +405,6 @@ $rooms = $conn->query("SELECT * FROM kamar WHERE jumlah_tersedia > 0 ORDER BY ha
     </style>
 </head>
 <body>
-    <!-- Top Navbar -->
     <nav class="top-navbar">
         <div class="navbar-container">
             <div class="navbar-brand">
@@ -460,7 +452,6 @@ $rooms = $conn->query("SELECT * FROM kamar WHERE jumlah_tersedia > 0 ORDER BY ha
         </div>
     </nav>
 
-    <!-- Main Content -->
     <div class="main-wrapper">
         <div class="welcome-section">
             <h1 class="welcome-title">🛕 Selamat Datang, <?php echo htmlspecialchars($user['nama']); ?>!</h1>

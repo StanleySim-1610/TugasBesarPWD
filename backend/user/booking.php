@@ -8,7 +8,6 @@ $user_id = $_SESSION['user_id'];
 $error = '';
 $success = '';
 
-// Get room details
 if (!isset($_GET['room']) || empty($_GET['room'])) {
     header('Location: dashboard.php');
     exit();
@@ -25,13 +24,11 @@ if (!$room) {
     exit();
 }
 
-// Process booking
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $check_in = sanitize($_POST['check_in']);
     $check_out = sanitize($_POST['check_out']);
     $jumlah_orang = intval($_POST['jumlah_orang']);
     
-    // Validation
     if (empty($check_in) || empty($check_out) || $jumlah_orang < 1) {
         $error = 'Semua field wajib diisi!';
     } elseif (strtotime($check_in) < strtotime(date('Y-m-d'))) {
@@ -39,11 +36,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } elseif (strtotime($check_out) <= strtotime($check_in)) {
         $error = 'Tanggal check-out harus lebih dari check-in!';
     } else {
-        // Calculate total price
         $days = calculateDays($check_in, $check_out);
         $total_harga = $room['harga'] * $days;
         
-        // Insert reservation
         $status = 'pending';
         $stmt = $conn->prepare("INSERT INTO reservation (id_user, id_kamar, check_in, check_out, jumlah_orang, status, total_harga) VALUES (?, ?, ?, ?, ?, ?, ?)");
         $stmt->bind_param("iississ", $user_id, $room_id, $check_in, $check_out, $jumlah_orang, $status, $total_harga);
@@ -51,10 +46,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if ($stmt->execute()) {
             $reservation_id = $conn->insert_id;
             
-            // Update room availability
             $conn->query("UPDATE kamar SET jumlah_tersedia = jumlah_tersedia - 1 WHERE id_kamar = $room_id");
             
-            // Redirect to payment
             header("Location: payment.php?reservation=$reservation_id");
             exit();
         } else {
@@ -91,7 +84,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             min-height: 100vh;
         }
 
-        /* Top Navbar */
         .top-navbar {
             background: linear-gradient(180deg, #ff6b7d 0%, #ff8a94 100%);
             color: white;
@@ -348,7 +340,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </style>
 </head>
 <body>
-    <!-- Top Navbar -->
     <nav class="top-navbar">
         <div class="navbar-container">
             <div class="navbar-brand">
@@ -487,8 +478,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         
         checkInInput.addEventListener('change', calculatePrice);
         checkOutInput.addEventListener('change', calculatePrice);
-        
-        // Update min checkout date when checkin changes
         checkInInput.addEventListener('change', function() {
             const checkInDate = new Date(this.value);
             checkInDate.setDate(checkInDate.getDate() + 1);

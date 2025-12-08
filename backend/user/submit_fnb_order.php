@@ -14,7 +14,6 @@ $id_reservation = (int)$_POST['id_reservation'];
 $qty = (int)$_POST['qty'];
 $catatan = sanitize($_POST['catatan'] ?? '');
 
-// Validate reservation belongs to user
 $stmt = $conn->prepare("SELECT id_reservation FROM reservation WHERE id_reservation = ? AND id_user = ?");
 $stmt->bind_param("ii", $id_reservation, $user_id);
 $stmt->execute();
@@ -24,7 +23,6 @@ if ($stmt->get_result()->num_rows === 0) {
     exit();
 }
 
-// Get menu item details
 $stmt = $conn->prepare("SELECT * FROM fnb_menu WHERE id_fnb_menu = ?");
 $stmt->bind_param("i", $id_fnb_menu);
 $stmt->execute();
@@ -36,7 +34,6 @@ if (!$menu) {
     exit();
 }
 
-// Insert F&B order
 $item_name = $menu['nama_item'];
 $price = $menu['harga'];
 

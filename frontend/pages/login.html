@@ -60,7 +60,6 @@
                 const data = await response.json();
 
                 if (data.success) {
-                    // Redirect based on user type
                     if (data.data.email === 'admin@gmail.com') {
                         window.location.href = '../../backend/admin/dashboard.php';
                     } else {

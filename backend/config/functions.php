@@ -1,12 +1,10 @@
 <?php
 session_start();
 
-// Check if user is logged in
 function isLoggedIn() {
     return isset($_SESSION['user_id']);
 }
 
-// Check if user is admin
 function isAdmin() {
     return isset($_SESSION['email']) && $_SESSION['email'] === 'admin@gmail.com';
 }
@@ -19,7 +17,6 @@ function requireLogin() {
     }
 }
 
-// Redirect if not admin
 function requireAdmin() {
     requireLogin();
     if (!isAdmin()) {
@@ -28,7 +25,6 @@ function requireAdmin() {
     }
 }
 
-// Sanitize input
 function sanitize($data) {
     return htmlspecialchars(strip_tags(trim($data)));
 }
@@ -58,7 +54,6 @@ function formatRupiah($amount) {
     return 'Rp ' . number_format($amount, 0, ',', '.');
 }
 
-// Calculate days between dates
 function calculateDays($checkIn, $checkOut) {
     $date1 = new DateTime($checkIn);
     $date2 = new DateTime($checkOut);

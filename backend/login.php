@@ -5,7 +5,6 @@ require_once 'config/functions.php';
 $error = '';
 $success = '';
 
-// Cek jika ada pesan sukses dari registrasi
 if (isset($_SESSION['success_message'])) {
     $success = $_SESSION['success_message'];
     unset($_SESSION['success_message']);
@@ -18,7 +17,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (empty($email) || empty($password)) {
         $error = 'Email dan password harus diisi!';
     } else {
-        // Get user from database
         $stmt = $conn->prepare("SELECT id_user, nama, email, password FROM user WHERE email = ?");
         $stmt->bind_param("s", $email);
         $stmt->execute();
@@ -29,12 +27,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             
             // Verify password
             if (verifyPassword($password, $user['password'])) {
-                // Set session
                 $_SESSION['user_id'] = $user['id_user'];
                 $_SESSION['nama'] = $user['nama'];
                 $_SESSION['email'] = $user['email'];
                 
-                // Redirect based on user type
                 if ($email === 'admin@gmail.com') {
                     header('Location: admin/dashboard.php');
                 } else {

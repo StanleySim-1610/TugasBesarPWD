@@ -6,10 +6,8 @@ requireLogin();
 
 $user_id = $_SESSION['user_id'];
 
-// Get pre-selected reservation from URL parameter
 $preselected_reservation = isset($_GET['reservation']) ? intval($_GET['reservation']) : 0;
 
-// Get paid reservations for this user
 $paid_reservations = $conn->query("
     SELECT r.*, k.tipe_kamar, p.status as payment_status
     FROM reservation r
@@ -24,12 +22,10 @@ $paid_reservations = $conn->query("
 $error = '';
 $success = '';
 
-// Process F&B order submission
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_order'])) {
     $reservation_id = intval($_POST['reservation_id']);
     $orders = json_decode($_POST['orders'], true);
     
-    // Validate reservation belongs to user and is paid
     $stmt = $conn->prepare("
         SELECT r.id_reservation 
         FROM reservation r
@@ -47,7 +43,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_order'])) {
     } elseif (empty($orders)) {
         $_SESSION['error'] = 'Pilih minimal 1 item untuk dipesan!';
     } else {
-        // Insert orders
         $conn->begin_transaction();
         
         try {
@@ -67,7 +62,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_order'])) {
             $conn->commit();
             $_SESSION['success'] = 'Pesanan F&B berhasil dibuat! Silakan lakukan pembayaran.';
             
-            // Redirect to F&B orders list
             header("Location: fnb_orders.php");
             exit();
             
@@ -106,7 +100,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_order'])) {
             min-height: 100vh;
         }
         
-        /* Top Navbar */
         .top-navbar {
             background: linear-gradient(180deg, #ff6b7d 0%, #ff8a94 100%);
             color: white;
@@ -184,7 +177,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_order'])) {
             font-size: 1.2rem;
         }
         
-        /* Main Content */
         .main-wrapper {
             max-width: 1400px;
             margin: 0 auto;
@@ -212,7 +204,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_order'])) {
             font-size: 1.1rem;
         }
         
-        /* Alert Messages */
         .alert {
             padding: 15px 20px;
             border-radius: 12px;
@@ -236,7 +227,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_order'])) {
             border-left: 5px solid #2e7d32;
         }
         
-        /* Reservation Selector */
         .reservation-selector {
             background: white;
             padding: 30px;
@@ -321,7 +311,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_order'])) {
             margin-top: 10px;
         }
         
-        /* Menu Section */
         .menu-section {
             background: white;
             padding: 30px;
@@ -458,7 +447,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_order'])) {
             color: #ff6b7d;
         }
         
-        /* Cart Summary */
         .cart-summary {
             position: fixed;
             bottom: 0;
@@ -588,7 +576,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_order'])) {
     </style>
 </head>
 <body>
-    <!-- Top Navbar -->
     <nav class="top-navbar">
         <div class="navbar-container">
             <div class="navbar-brand">
@@ -636,7 +623,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_order'])) {
         </div>
     </nav>
 
-    <!-- Main Content -->
     <div class="main-wrapper">
         <div class="page-header">
             <h1 class="page-title">🍽️ Pemesanan Makanan & Minuman</h1>
@@ -655,7 +641,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_order'])) {
             </div>
         <?php endif; ?>
         
-        <!-- Step 1: Select Reservation -->
         <div class="reservation-selector">
             <h2 class="section-title">
                 <span>1️⃣</span>
@@ -693,7 +678,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_order'])) {
             <?php endif; ?>
         </div>
         
-        <!-- Step 2: Select Menu -->
         <?php if ($paid_reservations->num_rows > 0): ?>
         <div class="menu-section" id="menuSection">
             <h2 class="section-title">
@@ -705,7 +689,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_order'])) {
         <?php endif; ?>
     </div>
     
-    <!-- Cart Summary -->
     <div class="cart-summary" id="cartSummary">
         <div class="cart-summary-content">
             <div class="cart-info">
@@ -723,11 +706,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_order'])) {
         let menuData = [];
         let cart = {};
         
-        // Pre-select reservation if provided in URL
         const urlParams = new URLSearchParams(window.location.search);
         const preselectedReservation = urlParams.get('reservation');
-        
-        // Load menu data
+
         fetch('../../backend/api/fnb_menu.php')
             .then(response => response.json())
             .then(data => {
@@ -738,7 +719,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_order'])) {
             })
             .catch(error => console.error('Error loading menu:', error));
         
-        // Reservation selection
         document.querySelectorAll('.reservation-card').forEach(card => {
             card.addEventListener('click', function() {
                 document.querySelectorAll('.reservation-card').forEach(c => c.classList.remove('selected'));
@@ -748,7 +728,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_order'])) {
                 document.getElementById('menuSection').scrollIntoView({ behavior: 'smooth' });
             });
             
-            // Auto-select if matches preselected reservation
             if (preselectedReservation && card.dataset.reservationId === preselectedReservation) {
                 setTimeout(() => {
                     card.click();

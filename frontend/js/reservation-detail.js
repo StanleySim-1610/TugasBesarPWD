@@ -1,24 +1,20 @@
-// Reservation Detail Page - Handle reservation details and actions
 document.addEventListener('DOMContentLoaded', function() {
     initializeReservationDetail();
 });
 
 function initializeReservationDetail() {
-    // Format prices display
     const priceElements = document.querySelectorAll('[data-price]');
     priceElements.forEach(el => {
         const price = parseFloat(el.dataset.price);
         el.textContent = formatRupiah(price);
     });
 
-    // Format dates display
     const dateElements = document.querySelectorAll('[data-date]');
     dateElements.forEach(el => {
         const dateString = el.dataset.date;
         el.textContent = formatDate(dateString);
     });
 
-    // Handle edit button
     const editButton = document.getElementById('editReservationBtn');
     if (editButton) {
         editButton.addEventListener('click', function() {
@@ -27,7 +23,6 @@ function initializeReservationDetail() {
         });
     }
 
-    // Handle delete button
     const deleteButton = document.getElementById('deleteReservationBtn');
     if (deleteButton) {
         deleteButton.addEventListener('click', function() {
@@ -36,7 +31,6 @@ function initializeReservationDetail() {
         });
     }
 
-    // Handle payment button
     const paymentButton = document.getElementById('paymentBtn');
     if (paymentButton) {
         paymentButton.addEventListener('click', function() {

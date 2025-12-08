@@ -8,7 +8,6 @@ $user_id = $_SESSION['user_id'];
 $error = '';
 $success = '';
 
-// Get reservation details
 if (!isset($_GET['reservation']) || empty($_GET['reservation'])) {
     header('Location: dashboard.php');
     exit();
@@ -31,7 +30,6 @@ if (!$reservation) {
     exit();
 }
 
-// Check if payment already exists
 $payment_check = $conn->query("SELECT * FROM payment_reservation WHERE id_reservation = $reservation_id");
 if ($payment_check->num_rows > 0) {
     $existing_payment = $payment_check->fetch_assoc();
@@ -41,14 +39,12 @@ if ($payment_check->num_rows > 0) {
     }
 }
 
-// Process payment
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $metode = sanitize($_POST['metode']);
     
     if (empty($metode)) {
         $error = 'Pilih metode pembayaran!';
     } else {
-        // Insert payment
         $total_bayar = $reservation['total_harga'];
         $status = 'paid';
         $paid_at = date('Y-m-d H:i:s');
@@ -57,7 +53,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stmt->bind_param("idsss", $reservation_id, $total_bayar, $metode, $status, $paid_at);
         
         if ($stmt->execute()) {
-            // Update reservation status
             $conn->query("UPDATE reservation SET status = 'confirmed' WHERE id_reservation = $reservation_id");
             
             $success = 'Pembayaran berhasil! Reservasi Anda telah dikonfirmasi.';
@@ -99,7 +94,6 @@ $days = calculateDays($reservation['check_in'], $reservation['check_out']);
             min-height: 100vh;
         }
 
-        /* Top Navbar */
         .top-navbar {
             background: linear-gradient(180deg, #ff6b7d 0%, #ff8a94 100%);
             color: white;
@@ -349,7 +343,6 @@ $days = calculateDays($reservation['check_in'], $reservation['check_out']);
     </style>
 </head>
 <body>
-    <!-- Top Navbar -->
     <nav class="top-navbar">
         <div class="navbar-container">
             <div class="navbar-brand">

@@ -2,7 +2,6 @@
 require_once '../config/database.php';
 header('Content-Type: application/json');
 
-// Menu F&B dengan harga - Chinese Cuisine Theme
 $menu_items = [
     [
         'id' => 1,

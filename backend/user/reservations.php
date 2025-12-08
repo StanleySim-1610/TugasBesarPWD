@@ -6,8 +6,6 @@ requireLogin();
 
 $user_id = $_SESSION['user_id'];
 
-// Get user's reservations
-// Mengambil data reservasi beserta status pembayarannya
 $reservations = $conn->query("
     SELECT r.*, k.tipe_kamar, k.harga,
            DATEDIFF(r.check_out, r.check_in) as jumlah_hari,
@@ -340,7 +338,6 @@ $reservations = $conn->query("
                                 <td>
                                     <?php 
                                     $is_paid = ($res['payment_status'] == 'paid');
-                                    // Cek apakah status masih aktif (bukan cancelled/completed)
                                     $is_active = in_array($res['status'], ['pending', 'confirmed']);
                                     ?>
                                     

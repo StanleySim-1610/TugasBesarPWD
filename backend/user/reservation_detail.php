@@ -51,7 +51,6 @@ $stmt_fnb->bind_param("i", $reservation_id);
 $stmt_fnb->execute();
 $fnb_orders = $stmt_fnb->get_result();
 
-// Calculate F&B totals
 $fnb_total = 0;
 $fnb_paid_total = 0;
 $fnb_pending_total = 0;
@@ -100,7 +99,6 @@ $dashboard_link = $is_admin ? 'dashboard.php' : 'dashboard.php';
             min-height: 100vh;
         }
 
-        /* Top Navbar */
         .top-navbar {
             background: linear-gradient(180deg, #ff6b7d 0%, #ff8a94 100%);
             color: white;
@@ -358,7 +356,6 @@ $dashboard_link = $is_admin ? 'dashboard.php' : 'dashboard.php';
             border: 2px solid #f44336;
         }
 
-        /* F&B History Section */
         .fnb-history-section {
             margin-top: 40px;
             background: white;
@@ -539,7 +536,6 @@ $dashboard_link = $is_admin ? 'dashboard.php' : 'dashboard.php';
     </style>
 </head>
 <body>
-    <!-- Top Navbar -->
     <nav class="top-navbar">
         <div class="navbar-container">
             <div class="navbar-brand">
@@ -678,7 +674,6 @@ $dashboard_link = $is_admin ? 'dashboard.php' : 'dashboard.php';
                 </div>
                 <?php endif; ?>
 
-                <!-- F&B Order History Section -->
                 <div class="fnb-history-section">
                     <div class="fnb-history-header">
                         <h3>
@@ -761,7 +756,6 @@ $dashboard_link = $is_admin ? 'dashboard.php' : 'dashboard.php';
                         </div>
                         <?php endforeach; ?>
 
-                        <!-- F&B Summary -->
                         <div class="fnb-summary-box">
                             <div class="fnb-summary-row">
                                 <span>Total Pesanan F&B:</span>

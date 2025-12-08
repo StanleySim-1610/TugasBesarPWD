@@ -7,7 +7,6 @@ requireLogin();
 $user_id = $_SESSION['user_id'];
 $id = intval($_GET['id'] ?? 0);
 
-// Fetch reservation dengan status pembayaran
 $stmt = $conn->prepare("
     SELECT r.*, k.tipe_kamar, k.harga, k.jumlah_tersedia, p.status as payment_status,
            DATEDIFF(r.check_out, r.check_in) as jumlah_hari
@@ -25,43 +24,34 @@ if (!$reservation) {
     exit();
 }
 
-// ATURAN 1: HARUS SUDAH BAYAR UNTUK BISA EDIT (RESCHEDULE)
 if ($reservation['payment_status'] !== 'paid') {
     echo "<script>alert('Anda harus melakukan pembayaran terlebih dahulu untuk melakukan reschedule.'); window.location='reservations.php';</script>";
     exit();
 }
 
-// Simpan info asli
 $original_days = intval($reservation['jumlah_hari']);
 $original_check_in = $reservation['check_in'];
 
 $error = '';
 $success = '';
 
-// Handle POST
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $new_check_in = sanitize($_POST['check_in']);
     
-    // Kalkulasi check-out otomatis berdasarkan durasi asli
     $expected_check_out = date('Y-m-d', strtotime($new_check_in . ' + ' . $original_days . ' days'));
 
-    // Validasi Dasar
     if (empty($new_check_in)) {
         $error = 'Tanggal check-in wajib diisi.';
     } elseif (strtotime($new_check_in) < strtotime(date('Y-m-d'))) {
         $error = 'Tanggal check-in tidak boleh kurang dari hari ini.';
     }
 
-    // ATURAN 2: TANGGAL BARU HARUS SETELAH TANGGAL ASLI
-    // Jika tanggal baru <= tanggal asli, tampilkan error
     if (empty($error) && strtotime($new_check_in) <= strtotime($original_check_in)) {
         $error = 'Sesuai ketentuan, Reschedule hanya diperbolehkan untuk memundurkan tanggal (setelah tanggal asli: ' . date('d M Y', strtotime($original_check_in)) . ').';
     }
 
     if (empty($error)) {
-        // Cek ketersediaan kamar pada tanggal baru
         $room_id = $reservation['id_kamar'];
-        // Kita hitung ketersediaan (mengabaikan booking kita sendiri saat ini)
         $allowed_rooms = intval($reservation['jumlah_tersedia']) + 1; 
 
         $checkStmt = $conn->prepare("SELECT COUNT(*) as cnt FROM reservation WHERE id_kamar = ? AND status IN ('pending','confirmed') AND id_reservation != ? AND NOT (check_out <= ? OR check_in >= ?)");
@@ -75,13 +65,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     if (empty($error)) {
-        // Update Reservation (Durasi & Total Harga tetap sama karena hanya geser tanggal)
         $updateStmt = $conn->prepare("UPDATE reservation SET check_in = ?, check_out = ? WHERE id_reservation = ? AND id_user = ?");
         $updateStmt->bind_param("ssii", $new_check_in, $expected_check_out, $id, $user_id);
         
         if ($updateStmt->execute()) {
             $success = 'Reservasi berhasil di-reschedule.';
-            // Refresh data
             $reservation['check_in'] = $new_check_in;
             $reservation['check_out'] = $expected_check_out;
         } else {
@@ -120,7 +108,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             min-height: 100vh;
         }
 
-        /* Top Navbar */
         .top-navbar {
             background: linear-gradient(180deg, #ff6b7d 0%, #ff8a94 100%);
             color: white;
@@ -326,7 +313,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </style>
 </head>
 <body>
-    <!-- Top Navbar -->
     <nav class="top-navbar">
         <div class="navbar-container">
             <div class="navbar-brand">

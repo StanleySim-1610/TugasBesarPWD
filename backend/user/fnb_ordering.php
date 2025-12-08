@@ -6,13 +6,11 @@ requireLogin();
 
 $user_id = $_SESSION['user_id'];
 
-// Get user data
 $stmt = $conn->prepare("SELECT * FROM user WHERE id_user = ?");
 $stmt->bind_param("i", $user_id);
 $stmt->execute();
 $user = $stmt->get_result()->fetch_assoc();
 
-// Get user's active reservations
 $stmt = $conn->prepare("
     SELECT r.id_reservation, r.check_in, r.check_out, k.tipe_kamar
     FROM reservation r
@@ -24,14 +22,12 @@ $stmt->bind_param("i", $user_id);
 $stmt->execute();
 $reservations = $stmt->get_result();
 
-// Get F&B menu items
 $menu_items = $conn->query("
     SELECT * FROM fnb_menu 
     WHERE ketersediaan = 1 
     ORDER BY kategori, nama_item ASC
 ");
 
-// Get user's F&B orders
 $user_orders = $conn->query("
     SELECT fo.*, r.check_in, r.check_out, k.tipe_kamar
     FROM fnb_order fo
@@ -68,7 +64,6 @@ $user_orders = $conn->query("
             min-height: 100vh;
         }
         
-        /* Top Navbar */
         .top-navbar {
             background: linear-gradient(180deg, #ff6b7d 0%, #ff8a94 100%);
             color: white;
@@ -469,7 +464,6 @@ $user_orders = $conn->query("
     </style>
 </head>
 <body>
-    <!-- Top Navbar -->
     <nav class="top-navbar">
         <div class="navbar-container">
             <div class="navbar-brand">
@@ -535,7 +529,6 @@ $user_orders = $conn->query("
                 <button class="tab-btn" onclick="switchTab('orders')">📦 My Orders</button>
             </div>
 
-            <!-- Menu Tab -->
             <div class="tab-content active" id="menu">
                 <section class="content-section">
                     <?php if ($reservations->num_rows > 0): ?>
@@ -575,7 +568,6 @@ $user_orders = $conn->query("
                 </section>
             </div>
 
-            <!-- Orders Tab -->
             <div class="tab-content" id="orders">
                 <section class="content-section">
                     <?php if ($user_orders->num_rows > 0): ?>
@@ -619,7 +611,6 @@ $user_orders = $conn->query("
             </div>
         </div>
 
-    <!-- Order Modal -->
     <div class="modal" id="orderModal">
         <div class="modal-content">
             <div class="modal-header">

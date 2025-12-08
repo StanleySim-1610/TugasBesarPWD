@@ -1,8 +1,4 @@
 <?php
-/**
- * Lentera Nusantara Hotel - Topnavbar Component
- * Modern Luxury Theme - Rose Pink & Soft Yellow
- */
 
 if (!isset($current_page)) {
     $current_page = basename($_SERVER['PHP_SELF']);
@@ -28,7 +24,6 @@ if (!isset($current_page)) {
             min-height: 100vh;
         }
         
-        /* Top Navbar */
         .top-navbar {
             background: linear-gradient(180deg, #ff6b7d 0%, #ff8a94 100%);
             color: white;

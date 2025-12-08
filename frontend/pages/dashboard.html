@@ -6,7 +6,6 @@
     <title>Dashboard - User</title>
     <link rel="stylesheet" href="../css/dashboard.css">
     <style>
-        /* Tambahan Style Khusus Dashboard agar gambar pas */
         .rooms-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -15,11 +14,11 @@
         .room-card {
             background: white;
             border-radius: 10px;
-            overflow: hidden; /* Agar gambar tidak keluar radius */
+            overflow: hidden;
             display: flex;
             flex-direction: column;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05); /* Sedikit bayangan agar rapi */
-            height: 100%; /* Pastikan tinggi kartu seragam */
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05); 
+            height: 100%; 
         }
         .room-image-dashboard {
             width: 100%;
@@ -53,26 +52,24 @@
             line-height: 1.4;
         }
         
-        /* PERBAIKAN UTAMA DI SINI */
         .room-footer {
             display: flex;
             justify-content: space-between;
-            align-items: center; /* Menjaga harga dan tombol sejajar vertikal */
+            align-items: center; 
             margin-top: auto;
-            gap: 10px; /* Jarak antara harga dan tombol */
+            gap: 10px; 
         }
 
         .room-price {
-            font-size: 16px; /* Ukuran font disesuaikan agar muat */
+            font-size: 16px; 
             font-weight: bold;
-            color: #ff4757; /* Warna merah muda sesuai desain */
-            white-space: nowrap; /* Mencegah teks turun ke baris baru */
+            color: #ff4757; 
+            white-space: nowrap; 
             display: flex;
-            flex-direction: column; /* Opsional: jika ingin /night di bawah harga, tapi nowrap di atas mencegahnya */
+            flex-direction: column; 
             line-height: 1.2;
         }
-        
-        /* Opsi Alternatif: Jika ingin satu baris lurus */
+
         .room-price {
             display: block; 
         }
@@ -83,7 +80,6 @@
             font-weight: normal;
         }
 
-        /* Pastikan tombol tidak mengecil */
         .room-footer .btn {
             white-space: nowrap;
             flex-shrink: 0;
@@ -157,14 +153,12 @@
             <section class="content-section">
                 <h2>Available Rooms</h2>
                 <div class="rooms-grid" id="roomsGrid">
-                    <!-- Rooms will be loaded here -->
                 </div>
             </section>
 
             <section class="content-section">
                 <h2>Recent Reservations</h2>
                 <div id="reservationsContainer">
-                    <!-- Reservations will be loaded here -->
                 </div>
             </section>
         </main>

@@ -1,10 +1,8 @@
-// Dashboard Page - Handle user dashboard interactions
 document.addEventListener('DOMContentLoaded', function() {
     initializeDashboard();
 });
 
 function initializeDashboard() {
-    // Add any dashboard-specific event listeners
     const bookingButtons = document.querySelectorAll('.book-now-btn');
     bookingButtons.forEach(btn => {
         btn.addEventListener('click', function() {
@@ -13,7 +11,6 @@ function initializeDashboard() {
         });
     });
 
-    // Format prices display
     const priceElements = document.querySelectorAll('[data-price]');
     priceElements.forEach(el => {
         const price = parseFloat(el.dataset.price);

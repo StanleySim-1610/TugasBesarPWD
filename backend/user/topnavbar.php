@@ -1,5 +1,4 @@
 <?php
-// Topnavbar Component - Include this in all user pages
 $current_page = basename($_SERVER['PHP_SELF'], '.php');
 ?>
 <style>
@@ -22,7 +21,6 @@ $current_page = basename($_SERVER['PHP_SELF'], '.php');
         min-height: 100vh;
     }
     
-    /* Top Navbar */
     .top-navbar {
         background: linear-gradient(180deg, #ff6b7d 0%, #ff8a94 100%);
         color: white;
@@ -95,7 +93,6 @@ $current_page = basename($_SERVER['PHP_SELF'], '.php');
         font-size: 1.2rem;
     }
     
-    /* Gradient Pattern */
     .chinese-pattern {
         background-image: 
             repeating-linear-gradient(45deg, transparent, transparent 20px, rgba(253, 255, 148, 0.05) 20px, rgba(253, 255, 148, 0.05) 40px),

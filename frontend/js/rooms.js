@@ -1,10 +1,8 @@
-// Rooms Page - Handle rooms list and interactions
 document.addEventListener('DOMContentLoaded', function() {
     initializeRooms();
 });
 
 function initializeRooms() {
-    // Handle book room buttons
     const bookButtons = document.querySelectorAll('.book-room-btn');
     bookButtons.forEach(btn => {
         btn.addEventListener('click', function(e) {
@@ -14,14 +12,12 @@ function initializeRooms() {
         });
     });
 
-    // Format prices display
     const priceElements = document.querySelectorAll('[data-price]');
     priceElements.forEach(el => {
         const price = parseFloat(el.dataset.price);
         el.textContent = formatRupiah(price);
     });
 
-    // Handle room filter if any
     const filterButtons = document.querySelectorAll('.filter-btn');
     filterButtons.forEach(btn => {
         btn.addEventListener('click', function() {

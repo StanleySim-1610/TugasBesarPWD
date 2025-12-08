@@ -8,7 +8,6 @@ $user_id = $_SESSION['user_id'];
 $error = '';
 $success = '';
 
-// Get multiple order IDs from POST or single ID from GET
 $order_ids = [];
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['order_ids'])) {
     $order_ids = array_map('intval', $_POST['order_ids']);
@@ -22,7 +21,6 @@ if (empty($order_ids)) {
     exit();
 }
 
-// Get all selected orders grouped by reservation
 $ids_string = implode(',', $order_ids);
 $query = "
     SELECT fo.*, r.id_reservation, r.check_in, r.check_out, k.tipe_kamar,
@@ -63,18 +61,15 @@ if (empty($orders_by_reservation)) {
     exit();
 }
 
-// Process payment when metode is submitted
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['metode'])) {
     $metode = sanitize($_POST['metode']);
     
     if (empty($metode)) {
         $error = 'Pilih metode pembayaran!';
     } else {
-        // Start transaction
         $conn->begin_transaction();
         
         try {
-            // Insert payment records for each order
             $stmt = $conn->prepare("INSERT INTO payment_fnb (id_fnb, total_bayar, metode, status, paid_at) VALUES (?, ?, ?, 'paid', NOW())");
             
             foreach ($orders_by_reservation as $group) {
@@ -82,7 +77,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['metode'])) {
                     $stmt->bind_param("ids", $order['id_fnb'], $order['subtotal'], $metode);
                     $stmt->execute();
                     
-                    // Update order status
                     $conn->query("UPDATE fnb_order SET status = 'confirmed' WHERE id_fnb = {$order['id_fnb']}");
                 }
             }

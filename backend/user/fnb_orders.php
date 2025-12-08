@@ -6,7 +6,6 @@ requireLogin();
 
 $user_id = $_SESSION['user_id'];
 
-// Get user's F&B orders grouped by reservation
 $fnb_orders = $conn->query("
     SELECT fo.*, r.id_reservation, r.check_in, r.check_out, k.tipe_kamar,
            (fo.qty * fo.harga) as subtotal
@@ -17,7 +16,6 @@ $fnb_orders = $conn->query("
     ORDER BY r.id_reservation DESC, fo.created_at DESC
 ");
 
-// Group orders by reservation
 $orders_by_reservation = [];
 while ($order = $fnb_orders->fetch_assoc()) {
     $res_id = $order['id_reservation'];
@@ -43,11 +41,9 @@ while ($order = $fnb_orders->fetch_assoc()) {
     }
 }
 
-// Handle delete
 if (isset($_GET['delete']) && isset($_GET['id'])) {
     $id_fnb = intval($_GET['id']);
     
-    // Verify order belongs to user
     $stmt = $conn->prepare("
         SELECT fo.id_fnb 
         FROM fnb_order fo
