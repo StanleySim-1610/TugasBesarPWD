@@ -110,20 +110,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // Query ini cari email yang sama TAPI id_user berbeda (user lain)
         // AND id_user != ? → Exclude user yang sedang login (boleh pakai email sendiri)
         $check = $conn->prepare("SELECT id_user FROM user WHERE email = ? AND id_user != ?");
-    if (empty($error)) {
-        // ============================================================================
-        // UPDATE DATABASE: Simpan perubahan profile termasuk foto profil
-        // ============================================================================
-        // Query UPDATE dengan prepared statement
-        // Update semua field: nama, email, no_telp, no_identitas, dan foto_profil
-        $stmt = $conn->prepare("UPDATE user SET nama = ?, email = ?, no_telp = ?, no_identitas = ?, foto_profil = ? WHERE id_user = ?");
-        
-        // Bind 6 parameter:
-        // "s" = string (nama, email, no_telp, no_identitas, foto_profil)
-        // "i" = integer (id_user)
-        // Urutan parameter harus sesuai dengan urutan placeholder (?)
-        $stmt->bind_param("sssssi", $nama, $email, $no_telp, $no_identitas, $foto_profil, $user_id);
-        // "i" = integer untuk id_user
         $check->bind_param("si", $email, $user_id);
         
         // Eksekusi query
@@ -138,7 +124,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // ============================================================================
     
     if (empty($error)) {
+        // ============================================================================
+        // UPDATE DATABASE: Simpan perubahan profile termasuk foto profil
+        // ============================================================================
+        // Query UPDATE dengan prepared statement
+        // Update semua field: nama, email, no_telp, no_identitas, dan foto_profil
         $stmt = $conn->prepare("UPDATE user SET nama = ?, email = ?, no_telp = ?, no_identitas = ?, foto_profil = ? WHERE id_user = ?");
+        
+        // Bind 6 parameter:
+        // "s" = string (nama, email, no_telp, no_identitas, foto_profil)
+        // "i" = integer (id_user)
+        // Urutan parameter harus sesuai dengan urutan placeholder (?)
         $stmt->bind_param("sssssi", $nama, $email, $no_telp, $no_identitas, $foto_profil, $user_id);
         
         if ($stmt->execute()) {
