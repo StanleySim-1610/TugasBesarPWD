@@ -463,7 +463,7 @@ $rooms = $conn->query("SELECT * FROM kamar WHERE jumlah_tersedia > 0 ORDER BY ha
     <!-- Main Content -->
     <div class="main-wrapper">
         <div class="welcome-section">
-            <h1 class="welcome-title">🏨 Selamat Datang, <?php echo htmlspecialchars($user['nama']); ?>!</h1>
+            <h1 class="welcome-title">🛕 Selamat Datang, <?php echo htmlspecialchars($user['nama']); ?>!</h1>
             <p class="welcome-subtitle">📧 <?php echo htmlspecialchars($user['email']); ?></p>
         </div>
 
@@ -497,7 +497,7 @@ $rooms = $conn->query("SELECT * FROM kamar WHERE jumlah_tersedia > 0 ORDER BY ha
             </div>
         </div>
 
-            <h2>🏨 Kamar Tersedia</h2>
+            <h2>🛕 Kamar Tersedia</h2>
                 <div class="rooms-grid">
                     <?php while($room = $rooms->fetch_assoc()): 
                         // Logika Penentuan Gambar

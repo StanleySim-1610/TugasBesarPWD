@@ -341,7 +341,7 @@ $rooms = $conn->query("SELECT * FROM kamar WHERE jumlah_tersedia > 0 ORDER BY ha
     <!-- Main Content -->
     <div class="main-wrapper">
         <div class="page-header">
-            <h1 class="page-title">🏨 Kamar Tersedia</h1>
+            <h1 class="page-title">🛕 Kamar Tersedia</h1>
             <p class="page-subtitle">Pilih kamar terbaik untuk menginap Anda</p>
         </div>
                 
