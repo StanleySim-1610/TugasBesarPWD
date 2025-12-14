@@ -9,7 +9,6 @@ function isAdmin() {
     return isset($_SESSION['email']) && $_SESSION['email'] === 'admin@gmail.com';
 }
 
-// Redirect if not logged in
 function requireLogin() {
     if (!isLoggedIn()) {
         header('Location: ../login.php');
@@ -29,27 +28,23 @@ function sanitize($data) {
     return htmlspecialchars(strip_tags(trim($data)));
 }
 
-// Validate email
 function validateEmail($email) {
     return filter_var($email, FILTER_VALIDATE_EMAIL);
 }
 
-// Hash password
 function hashPassword($password) {
     return password_hash($password, PASSWORD_DEFAULT);
 }
 
-// Verify password
+
 function verifyPassword($password, $hash) {
     return password_verify($password, $hash);
 }
 
-// Generate random string
 function generateRandomString($length = 10) {
     return bin2hex(random_bytes($length / 2));
 }
 
-// Format currency
 function formatRupiah($amount) {
     return 'Rp ' . number_format($amount, 0, ',', '.');
 }
